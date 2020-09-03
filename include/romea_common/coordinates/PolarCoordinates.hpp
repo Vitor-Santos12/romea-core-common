@@ -1,0 +1,154 @@
+#ifndef _romea_PolarCoordinates_hpp
+#define _romea_PolarCoordinates_hpp
+
+#include "CartesianCoordinates.hpp"
+#include "HomogeneousCoordinates.hpp"
+
+namespace romea {
+
+
+//-----------------------------------------------------------------------------
+template < typename Scalar>
+class PolarCoordinates
+{
+
+public :
+
+  PolarCoordinates(Scalar range, Scalar azimut):
+    range_(range),
+    azimut_(azimut)
+  {
+
+  }
+
+  virtual ~PolarCoordinates()=default;
+
+public :
+
+  const Scalar & getRange()const
+  {
+    return range_;
+  }
+
+  const Scalar & getAzimut()const
+  {
+    return azimut_;
+  }
+
+private :
+
+  Scalar range_;
+  Scalar azimut_;
+};
+
+//-----------------------------------------------------------------------------
+struct PolarTransform
+{
+
+  template<typename Scalar>
+  static Scalar azimut(const Scalar x, const Scalar & y)
+  {
+    return std::atan2(y,x);
+  }
+
+  template<typename Scalar>
+  static Scalar azimut(const CartesianCoordinates2<Scalar> & point)
+  {
+    return std::atan2(point.y(),point.x());
+  }
+
+  template<typename Scalar>
+  static Scalar azimut(const HomogeneousCoordinates2<Scalar> & point)
+  {
+    return std::atan2(point.y(),point.x());
+  }
+
+  template<typename Scalar>
+  static Scalar range(const Scalar x, const Scalar & y)
+  {
+    return std::sqrt(x*x+y*y);
+  }
+
+  template<typename Scalar>
+  static Scalar range(const CartesianCoordinates2<Scalar> & point)
+  {
+    return point.norm();
+  }
+
+  template<typename Scalar>
+  static Scalar range(const HomogeneousCoordinates2<Scalar> & point)
+  {
+    return point.template segment<2>(0).norm();
+  }
+
+  template<typename Scalar>
+  static Scalar x(const Scalar & range , const Scalar & azimut)
+  {
+    return range*std::cos(azimut);
+  }
+
+  template<typename Scalar>
+  static Scalar x(const PolarCoordinates<Scalar> & point)
+  {
+    return x(point.getRange(),point.getAzimut());
+  }
+
+
+  template<typename Scalar>
+  static Scalar y(const Scalar & range , const Scalar & azimut)
+  {
+    return range*std::sin(azimut);
+  }
+
+  template<typename Scalar>
+  static Scalar y(const PolarCoordinates<Scalar> & point)
+  {
+    return y(point.getRange(),point.getAzimut());
+  }
+
+};
+
+
+
+
+
+//-----------------------------------------------------------------------------
+template<typename Scalar>
+PolarCoordinates<Scalar> toPolar(const CartesianCoordinates2<Scalar> & point)
+{
+  return PolarCoordinates<Scalar>(PolarTransform::range(point),
+                                  PolarTransform::azimut(point));
+}
+
+//-----------------------------------------------------------------------------
+template<typename Scalar>
+PolarCoordinates<Scalar> toHomogeneous(const HomogeneousCoordinates2<Scalar> & point)
+{
+  return PolarCoordinates<Scalar>(PolarTransform::range(point),
+                                  PolarTransform::azimut(point));
+}
+
+
+
+//-----------------------------------------------------------------------------
+template<typename Scalar>
+CartesianCoordinates2<Scalar> toCartesian(const PolarCoordinates<Scalar> & point)
+{
+  return CartesianCoordinates2<Scalar>(PolarTransform::x(point),
+                                       PolarTransform::y(point));
+}
+
+//-----------------------------------------------------------------------------
+template<typename Scalar>
+HomogeneousCoordinates2<Scalar> toHomogeneous(const PolarCoordinates<Scalar> & point)
+{
+  return HomogeneousCoordinates2<Scalar>(PolarTransform::x(point),
+                                         PolarTransform::y(point));
+
+}
+
+
+
+}
+
+#endif
