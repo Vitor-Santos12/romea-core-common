@@ -6,10 +6,11 @@
 
 //std
 #include <sstream>
+#include <list>
 #include <map>
 
 //romea
-#include "DiagnosticStatus.hpp"
+#include "Diagnostic.hpp"
 
 namespace romea
 {
@@ -17,14 +18,13 @@ namespace romea
 struct DiagnosticReport
 {
   DiagnosticReport();
-
-  DiagnosticStatus status;
-  std::string message;
+  std::list<Diagnostic> diagnostics;
   std::map<std::string,std::string> info;
 
 };
 
 std::ostream & operator <<(std::ostream & os, const DiagnosticReport & report);
+
 DiagnosticReport & operator+=(DiagnosticReport & report1, const DiagnosticReport & report2);
 
 //-----------------------------------------------------------------------------

@@ -18,6 +18,13 @@ public:
 
   const DiagnosticReport & getReport()const;
 
+private :
+
+  void setRelabilityValue_(const double & reliability);
+
+  void setDiagnostic_(const DiagnosticStatus & status,
+                      const std::string & messageEnd);
+
 private:
 
   double low_reliability_theshold_;

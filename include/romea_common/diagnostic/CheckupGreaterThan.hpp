@@ -2,14 +2,14 @@
 #define _romea_DiagnosticGreaterThan2_hpp_
 
 
-#include "DiagnosticCompareTo.hpp"
+#include "CheckupCompareWith.hpp"
 
 namespace romea {
 
 
 
 template <typename T>
-class  DiagnosticGreaterThan2 final : public DiagnosticCompareTo<T>
+class  DiagnosticGreaterThan2 final : public CheckCompareWith<T>
 {
 public:
 
@@ -28,7 +28,7 @@ template< typename T>
 DiagnosticGreaterThan2<T>::DiagnosticGreaterThan2(const std::string &name,
                                                   const T &minimal_value,
                                                   const T &epsilon):
-  DiagnosticCompareTo<T>(name,minimal_value,epsilon)
+  CheckCompareWith<T>(name,minimal_value,epsilon)
 {
 
 }
@@ -39,16 +39,14 @@ DiagnosticStatus DiagnosticGreaterThan2<T>::evaluate(const T & value)
 {
   if(value > this->value_to_compare_with_-this->epsilon_)
   {
-    this->report_.status=DiagnosticStatus::OK;
-    this->report_.message=this->getValueName_()+ " is OK.";
+    this->setDiagnostic_(DiagnosticStatus::OK," is OK.");
   }
   else
   {
-    this->report_.status=DiagnosticStatus::ERROR;
-    this->report_.message=this->getValueName_()+ " is too low.";
+    this->setDiagnostic_(DiagnosticStatus::ERROR," is too low.");
   }
   this->setValue_(value);
-  return this->report_.status;
+  return this->getStatus_();;
 }
 
 }

@@ -4,30 +4,41 @@ namespace romea {
 
 //-----------------------------------------------------------------------------
 DiagnosticReport::DiagnosticReport():
-  status(DiagnosticStatus::STALE),
-  message(),
+  diagnostics(),
   info()
 {
 }
 
 
-////-----------------------------------------------------------------------------
-//std::ostream & operator <<(std::ostream & os, const DiagnosticReport & report)
-//{
-//  os<<
-//}
+//-----------------------------------------------------------------------------
+std::ostream & operator <<(std::ostream & os, const DiagnosticReport & report)
+{
+  os<<" Messages : " <<std::endl;
+  for(const auto message : report.diagnostics)
+  {
+    os << " "<< message;
+  }
+  os<<" Additional info :";
+  //TODO use strutured binding >= c++17
+  for(const auto p : report.info)
+  {
+    os<< " "<< p.first <<" = "<< p.second << std::endl;
+  }
+  return os;
+}
 
-////-----------------------------------------------------------------------------
-//DiagnosticReport & operator+=(DiagnosticReport & report1, const DiagnosticReport & report2)
-//{
+//-----------------------------------------------------------------------------
+DiagnosticReport & operator+=(DiagnosticReport & report1, const DiagnosticReport & report2)
+{
+  report1.diagnostics.insert(std::end(report1.diagnostics),
+                          std::cbegin(report2.diagnostics),
+                          std::cend(report2.diagnostics));
 
-//}
+  report1.info.insert(std::cbegin(report2.info),
+                      std::cend(report2.info));
 
-////-----------------------------------------------------------------------------
-//DiagnosticReport DiagnosticReport::operator+=(const DiagnosticReport & report)
-//{
-//  if(status==DiagnosticStatus::STALE)
-//}
+  return report1;
+}
 
 
 }// namespace

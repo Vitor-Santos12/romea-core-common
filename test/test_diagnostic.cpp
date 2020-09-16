@@ -2,11 +2,11 @@
 #include <gtest/gtest.h>
 
 //romea
-#include "romea_common/diagnostic/DiagnosticEqualTo.hpp"
-#include "romea_common/diagnostic/DiagnosticGreaterThan.hpp"
-#include "romea_common/diagnostic/DiagnosticLowerThan.hpp"
-#include "romea_common/diagnostic/DiagnosticReliability.hpp"
-#include "romea_common/diagnostic/DiagnosticRate.hpp"
+#include "romea_common/diagnostic/CheckupEqualTo.hpp"
+#include "romea_common/diagnostic/CheckupGreaterThan.hpp"
+#include "romea_common/diagnostic/CheckupLowerThan.hpp"
+#include "romea_common/diagnostic/CheckupReliability.hpp"
+#include "romea_common/diagnostic/CheckupRate.hpp"
 
 
 //-----------------------------------------------------------------------------
@@ -67,6 +67,14 @@ TEST(TestReport, setReportOtionalInfosValues)
   EXPECT_STREQ(report.info.at("bar").c_str(),"");
 }
 
+////-----------------------------------------------------------------------------
+//TEST_F(TestRate, agreagate)
+//{
+////  romea::DiagnosticReport report1;
+////  report1.status= romea::DiagnosticStatus::ERROR;
+////  report1.messages.push_back();
+//}
+
 class TestEqualTo : public ::testing::Test
 {
  public:
@@ -77,15 +85,15 @@ class TestEqualTo : public ::testing::Test
 
   }
 
-  romea::DiagnosticEqualTo2<double> diagnostic;
+  romea::CheckEqualTo<double> diagnostic;
 };
 
 //-----------------------------------------------------------------------------
 TEST_F(TestEqualTo, compareWithLowerValue)
 {
   EXPECT_EQ(diagnostic.evaluate(0.5),romea::DiagnosticStatus::ERROR);
-  EXPECT_EQ(diagnostic.getReport().status,romea::DiagnosticStatus::ERROR);
-  EXPECT_STREQ(diagnostic.getReport().message.c_str(),"foo is too low.");
+  EXPECT_EQ(diagnostic.getReport().diagnostics.front().status,romea::DiagnosticStatus::ERROR);
+  EXPECT_STREQ(diagnostic.getReport().diagnostics.front().message.c_str(),"foo is too low.");
   EXPECT_STREQ(diagnostic.getReport().info.at("foo").c_str(),"0.5");
 }
 
@@ -93,8 +101,8 @@ TEST_F(TestEqualTo, compareWithLowerValue)
 TEST_F(TestEqualTo, compareWithEqualValue)
 {
   EXPECT_EQ(diagnostic.evaluate(0.85),romea::DiagnosticStatus::OK);
-  EXPECT_EQ(diagnostic.getReport().status,romea::DiagnosticStatus::OK);
-  EXPECT_STREQ(diagnostic.getReport().message.c_str(),"foo is OK.");
+  EXPECT_EQ(diagnostic.getReport().diagnostics.front().status,romea::DiagnosticStatus::OK);
+  EXPECT_STREQ(diagnostic.getReport().diagnostics.front().message.c_str(),"foo is OK.");
   EXPECT_STREQ(diagnostic.getReport().info.at("foo").c_str(),"0.85");
 }
 
@@ -102,8 +110,8 @@ TEST_F(TestEqualTo, compareWithEqualValue)
 TEST_F(TestEqualTo, compareWithHigherValue)
 {
   EXPECT_EQ(diagnostic.evaluate(1.11),romea::DiagnosticStatus::ERROR);
-  EXPECT_EQ(diagnostic.getReport().status,romea::DiagnosticStatus::ERROR);
-  EXPECT_STREQ(diagnostic.getReport().message.c_str(),"foo is too high.");
+  EXPECT_EQ(diagnostic.getReport().diagnostics.front().status,romea::DiagnosticStatus::ERROR);
+  EXPECT_STREQ(diagnostic.getReport().diagnostics.front().message.c_str(),"foo is too high.");
   EXPECT_STREQ(diagnostic.getReport().info.at("foo").c_str(),"1.11");
 }
 
@@ -125,8 +133,8 @@ class TestGreaterThan : public ::testing::Test
 TEST_F(TestGreaterThan, compareWithLowerValue)
 {
   EXPECT_EQ(diagnostic.evaluate(-0.5),romea::DiagnosticStatus::ERROR);
-  EXPECT_EQ(diagnostic.getReport().status,romea::DiagnosticStatus::ERROR);
-  EXPECT_STREQ(diagnostic.getReport().message.c_str(),"foo is too low.");
+  EXPECT_EQ(diagnostic.getReport().diagnostics.front().status,romea::DiagnosticStatus::ERROR);
+  EXPECT_STREQ(diagnostic.getReport().diagnostics.front().message.c_str(),"foo is too low.");
   EXPECT_STREQ(diagnostic.getReport().info.at("foo").c_str(),"-0.5");
 }
 
@@ -134,8 +142,8 @@ TEST_F(TestGreaterThan, compareWithLowerValue)
 TEST_F(TestGreaterThan, compareWithHigherValue)
 {
   EXPECT_EQ(diagnostic.evaluate(-0.25),romea::DiagnosticStatus::OK);
-  EXPECT_EQ(diagnostic.getReport().status,romea::DiagnosticStatus::OK);
-  EXPECT_STREQ(diagnostic.getReport().message.c_str(),"foo is OK.");
+  EXPECT_EQ(diagnostic.getReport().diagnostics.front().status,romea::DiagnosticStatus::OK);
+  EXPECT_STREQ(diagnostic.getReport().diagnostics.front().message.c_str(),"foo is OK.");
   EXPECT_STREQ(diagnostic.getReport().info.at("foo").c_str(),"-0.25");
 }
 
@@ -157,8 +165,8 @@ class TestLowerThan : public ::testing::Test
 TEST_F(TestLowerThan, compareWithLowerValue)
 {
   EXPECT_EQ(diagnostic.evaluate(1.5),romea::DiagnosticStatus::OK);
-  EXPECT_EQ(diagnostic.getReport().status,romea::DiagnosticStatus::OK);
-  EXPECT_STREQ(diagnostic.getReport().message.c_str(),"foo is OK.");
+  EXPECT_EQ(diagnostic.getReport().diagnostics.front().status,romea::DiagnosticStatus::OK);
+  EXPECT_STREQ(diagnostic.getReport().diagnostics.front().message.c_str(),"foo is OK.");
   EXPECT_STREQ(diagnostic.getReport().info.at("foo").c_str(),"1.5");
 }
 
@@ -166,8 +174,8 @@ TEST_F(TestLowerThan, compareWithLowerValue)
 TEST_F(TestLowerThan, compareWithHigherValue)
 {
   EXPECT_EQ(diagnostic.evaluate(1.7),romea::DiagnosticStatus::ERROR);
-  EXPECT_EQ(diagnostic.getReport().status,romea::DiagnosticStatus::ERROR);
-  EXPECT_STREQ(diagnostic.getReport().message.c_str(),"foo is too high.");
+  EXPECT_EQ(diagnostic.getReport().diagnostics.front().status,romea::DiagnosticStatus::ERROR);
+  EXPECT_STREQ(diagnostic.getReport().diagnostics.front().message.c_str(),"foo is too high.");
   EXPECT_STREQ(diagnostic.getReport().info.at("foo").c_str(),"1.7");
 }
 
@@ -188,8 +196,8 @@ class TestReliability : public ::testing::Test
 TEST_F(TestReliability, compareWithLowReliability)
 {
   EXPECT_EQ(diagnostic.evaluate(0.6),romea::DiagnosticStatus::ERROR);
-  EXPECT_EQ(diagnostic.getReport().status,romea::DiagnosticStatus::ERROR);
-  EXPECT_STREQ(diagnostic.getReport().message.c_str(),"foo is too low.");
+  EXPECT_EQ(diagnostic.getReport().diagnostics.front().status,romea::DiagnosticStatus::ERROR);
+  EXPECT_STREQ(diagnostic.getReport().diagnostics.front().message.c_str(),"foo is too low.");
   EXPECT_STREQ(diagnostic.getReport().info.at("foo").c_str(),"0.6");
 }
 
@@ -197,8 +205,8 @@ TEST_F(TestReliability, compareWithLowReliability)
 TEST_F(TestReliability, compareWithUncertainReliability)
 {
   EXPECT_EQ(diagnostic.evaluate(0.75),romea::DiagnosticStatus::WARN);
-  EXPECT_EQ(diagnostic.getReport().status,romea::DiagnosticStatus::WARN);
-  EXPECT_STREQ(diagnostic.getReport().message.c_str(),"foo is uncertain.");
+  EXPECT_EQ(diagnostic.getReport().diagnostics.front().status,romea::DiagnosticStatus::WARN);
+  EXPECT_STREQ(diagnostic.getReport().diagnostics.front().message.c_str(),"foo is uncertain.");
   EXPECT_STREQ(diagnostic.getReport().info.at("foo").c_str(),"0.75");
 }
 
@@ -206,8 +214,8 @@ TEST_F(TestReliability, compareWithUncertainReliability)
 TEST_F(TestReliability, compareWithHighReliability)
 {
   EXPECT_EQ(diagnostic.evaluate(0.95),romea::DiagnosticStatus::OK);
-  EXPECT_EQ(diagnostic.getReport().status,romea::DiagnosticStatus::OK);
-  EXPECT_STREQ(diagnostic.getReport().message.c_str(),"foo is high.");
+  EXPECT_EQ(diagnostic.getReport().diagnostics.front().status,romea::DiagnosticStatus::OK);
+  EXPECT_STREQ(diagnostic.getReport().diagnostics.front().message.c_str(),"foo is high.");
   EXPECT_STREQ(diagnostic.getReport().info.at("foo").c_str(),"0.95");
 }
 
@@ -224,7 +232,7 @@ class TestRate : public ::testing::Test
   }
 
   romea::Duration stamp;
-  romea::DiagnosticRate diagnostic;
+  romea::CheckupRate diagnostic;
 };
 
 //-----------------------------------------------------------------------------
@@ -234,20 +242,21 @@ TEST_F(TestRate, testCheckWithUpperRate)
 
   stamp = romea::durationFromSecond(0);
   EXPECT_EQ(diagnostic.evaluate(stamp),romea::DiagnosticStatus::ERROR);
-  EXPECT_EQ(diagnostic.getReport().status,romea::DiagnosticStatus::ERROR);
-  EXPECT_STREQ(diagnostic.getReport().message.c_str(),"foo_rate is too low.");
+  EXPECT_EQ(diagnostic.getReport().diagnostics.front().status,romea::DiagnosticStatus::ERROR);
+  EXPECT_STREQ(diagnostic.getReport().diagnostics.front().message.c_str(),"foo_rate is too low.");
   EXPECT_STREQ(diagnostic.getReport().info.at("foo_rate").c_str(),"0");
 
   for(size_t n=1;n<2/static_cast<size_t>(rate);++n)
   {
     stamp = romea::durationFromSecond(n/rate);
     EXPECT_EQ(diagnostic.evaluate(stamp),romea::DiagnosticStatus::OK);
-    EXPECT_EQ(diagnostic.getReport().status,romea::DiagnosticStatus::OK);
-    EXPECT_STREQ(diagnostic.getReport().message.c_str(),"foo rate is OK.");
+    EXPECT_EQ(diagnostic.getReport().diagnostics.front().status,romea::DiagnosticStatus::OK);
+    EXPECT_STREQ(diagnostic.getReport().diagnostics.front().message.c_str(),"foo rate is OK.");
     EXPECT_STREQ(diagnostic.getReport().info.at("foo_rate").c_str(),"0");
   }
 
 }
+
 
 //-----------------------------------------------------------------------------
 int main(int argc, char **argv){

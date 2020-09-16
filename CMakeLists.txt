@@ -35,8 +35,9 @@ add_library(romea_common
     src/containers/grid/RayTracing.cpp
     src/containers/boundingbox/AxisAlignedBoundingBox.cpp
     src/containers/boundingbox/OrientedBoundingBox.cpp
-    src/diagnostics/DiagnosticRate.cpp
-    src/diagnostics/DiagnosticReliability.cpp
+    src/diagnostics/CheckupRate.cpp
+    src/diagnostics/CheckupReliability.cpp
+    src/diagnostics/Diagnostic.cpp
     src/diagnostics/DiagnosticReport.cpp
     src/diagnostics/DiagnosticStatus.cpp
     src/geometry/Circle.cpp
