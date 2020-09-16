@@ -8,6 +8,28 @@
 #include "romea_common/diagnostic/DiagnosticReliability.hpp"
 #include "romea_common/diagnostic/DiagnosticRate.hpp"
 
+
+//-----------------------------------------------------------------------------
+TEST(TestDiagnosticStatus, compare)
+{
+  EXPECT_TRUE(romea::DiagnosticStatus::OK<romea::DiagnosticStatus::WARN);
+  EXPECT_TRUE(romea::DiagnosticStatus::WARN<romea::DiagnosticStatus::ERROR);
+  EXPECT_TRUE(romea::DiagnosticStatus::ERROR<romea::DiagnosticStatus::STALE);
+}
+
+//-----------------------------------------------------------------------------
+TEST(TestDiagnosticStatus, getWorse)
+{
+  EXPECT_EQ(worse(romea::DiagnosticStatus::OK,
+                  romea::DiagnosticStatus::OK),romea::DiagnosticStatus::OK);
+
+  EXPECT_EQ(worse(romea::DiagnosticStatus::OK,
+                  romea::DiagnosticStatus::WARN),romea::DiagnosticStatus::WARN);
+
+}
+
+
+
 //-----------------------------------------------------------------------------
 TEST(TestReport, setReportInfosValues)
 {

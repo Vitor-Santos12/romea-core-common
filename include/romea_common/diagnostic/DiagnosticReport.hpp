@@ -9,24 +9,19 @@
 #include <sstream>
 #include <map>
 
+//romea
+#include "DiagnosticStatus.hpp"
+
 namespace romea
 {
-
-enum class DiagnosticStatus
-{
-  OK = 0,
-  WARN = 1,
-  ERROR = 2,
-  STALE = 3
-};
 
 struct DiagnosticReport
 {
   DiagnosticReport();
-
   DiagnosticStatus status;
   std::string message;
   std::map<std::string,std::string> info;
+
 };
 
 //-----------------------------------------------------------------------------

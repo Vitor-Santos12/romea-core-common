@@ -38,6 +38,7 @@ add_library(romea_common
     src/diagnostics/DiagnosticRate.cpp
     src/diagnostics/DiagnosticReliability.cpp
     src/diagnostics/DiagnosticReport.cpp
+    src/diagnostics/DiagnosticStatus.cpp
     src/geometry/Circle.cpp
     src/geometry/Ellipse.cpp
     src/geodesy/EarthEllipsoid.cpp
