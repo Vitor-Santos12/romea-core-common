@@ -1,6 +1,8 @@
 #ifndef _romea_DiagnosticStatus_hpp_
 #define _romea_DiagnosticStatus_hpp_
 
+#include <ostream>
+#include <string>
 
 namespace romea
 {
@@ -13,7 +15,11 @@ enum class DiagnosticStatus
   STALE = 3
 };
 
-DiagnosticStatus worse(DiagnosticStatus status1,DiagnosticStatus status2);
+std::string toString(const DiagnosticStatus & status);
+
+std::ostream& operator<<(std::ostream & os, const DiagnosticStatus & status);
+
+DiagnosticStatus worse(const DiagnosticStatus & status1 , const DiagnosticStatus &status2);
 
 }
 

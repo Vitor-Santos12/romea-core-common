@@ -5,7 +5,6 @@
 #include <boost/optional.hpp>
 
 //std
-#include <string>
 #include <sstream>
 #include <map>
 
@@ -18,11 +17,15 @@ namespace romea
 struct DiagnosticReport
 {
   DiagnosticReport();
+
   DiagnosticStatus status;
   std::string message;
   std::map<std::string,std::string> info;
 
 };
+
+std::ostream & operator <<(std::ostream & os, const DiagnosticReport & report);
+DiagnosticReport & operator+=(DiagnosticReport & report1, const DiagnosticReport & report2);
 
 //-----------------------------------------------------------------------------
 template <typename T>

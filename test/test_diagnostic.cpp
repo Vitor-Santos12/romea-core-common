@@ -28,6 +28,15 @@ TEST(TestDiagnosticStatus, getWorse)
 
 }
 
+//-----------------------------------------------------------------------------
+TEST(TestDiagnosticStatus, toString)
+{
+  EXPECT_STREQ(toString(romea::DiagnosticStatus::OK).c_str(),"OK");
+  EXPECT_STREQ(toString(romea::DiagnosticStatus::WARN).c_str(),"WARN");
+  EXPECT_STREQ(toString(romea::DiagnosticStatus::ERROR).c_str(),"ERROR");
+  EXPECT_STREQ(toString(romea::DiagnosticStatus::STALE).c_str(),"STALE");
+
+}
 
 
 //-----------------------------------------------------------------------------
