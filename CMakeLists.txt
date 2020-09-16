@@ -35,6 +35,9 @@ add_library(romea_common
     src/containers/grid/RayTracing.cpp
     src/containers/boundingbox/AxisAlignedBoundingBox.cpp
     src/containers/boundingbox/OrientedBoundingBox.cpp
+    src/diagnostics/DiagnosticRate.cpp
+    src/diagnostics/DiagnosticReliability.cpp
+    src/diagnostics/DiagnosticReport.cpp
     src/geometry/Circle.cpp
     src/geometry/Ellipse.cpp
     src/geodesy/EarthEllipsoid.cpp

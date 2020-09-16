@@ -41,3 +41,6 @@ target_link_libraries(${PROJECT_NAME}_test_containers_ray ${PROJECT_NAME})
 catkin_add_gtest(${PROJECT_NAME}_test_monitoring test_monitoring.cpp )
 target_link_libraries(${PROJECT_NAME}_test_monitoring ${PROJECT_NAME})
 
+catkin_add_gtest(${PROJECT_NAME}_test_diagnostic test_diagnostic.cpp )
+target_link_libraries(${PROJECT_NAME}_test_diagnostic ${PROJECT_NAME})
+
