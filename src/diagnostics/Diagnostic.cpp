@@ -12,6 +12,16 @@ Diagnostic::Diagnostic():
 }
 
 //-----------------------------------------------------------------------------
+Diagnostic::Diagnostic(const DiagnosticStatus & status,
+                       const std::string & message):
+  status(status),
+  message(message)
+
+{
+
+}
+
+//-----------------------------------------------------------------------------
 DiagnosticStatus worseStatus(const std::list<Diagnostic> & diagnostics)
 {
   assert(!diagnostics.empty());

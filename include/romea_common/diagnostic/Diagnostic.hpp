@@ -14,6 +14,9 @@ struct Diagnostic
 {
   Diagnostic();
 
+  Diagnostic(const DiagnosticStatus & status,
+             const std::string & message);
+
   DiagnosticStatus status;
   std::string message;
 };

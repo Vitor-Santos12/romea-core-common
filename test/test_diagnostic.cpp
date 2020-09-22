@@ -8,6 +8,12 @@
 #include "romea_common/diagnostic/CheckupReliability.hpp"
 #include "romea_common/diagnostic/CheckupRate.hpp"
 
+//-----------------------------------------------------------------------------
+const romea::Diagnostic & diagnostic(const romea::DiagnosticReport & report,
+                                     const size_t & index)
+{
+  return *std::next(std::cbegin(report.diagnostics),index);
+}
 
 //-----------------------------------------------------------------------------
 TEST(TestDiagnosticStatus, compare)
@@ -67,17 +73,37 @@ TEST(TestReport, setReportOtionalInfosValues)
   EXPECT_STREQ(report.info.at("bar").c_str(),"");
 }
 
-////-----------------------------------------------------------------------------
-//TEST_F(TestRate, agreagate)
-//{
-////  romea::DiagnosticReport report1;
-////  report1.status= romea::DiagnosticStatus::ERROR;
-////  report1.messages.push_back();
-//}
+//-----------------------------------------------------------------------------
+TEST(TestReport, agreagate)
+{
+  romea::DiagnosticReport report1;
+  report1.diagnostics.emplace_back(romea::DiagnosticStatus::OK,std::string("foo"));
+  report1.info["foo"]="0.1";
+
+  romea::DiagnosticReport report2;
+  report2.diagnostics.emplace_back(romea::DiagnosticStatus::OK,"bar");
+  report2.diagnostics.emplace_back(romea::DiagnosticStatus::ERROR,"baz");
+  report2.info["bar"]="enable";
+  report2.info["baz"]="disable";
+
+  romea::DiagnosticReport report3;
+  report3+=report1;
+  report3+=report2;
+
+  EXPECT_EQ(diagnostic(report3,0).status,romea::DiagnosticStatus::OK);
+  EXPECT_EQ(diagnostic(report3,0).message,"foo");
+  EXPECT_EQ(diagnostic(report3,1).status,romea::DiagnosticStatus::OK);
+  EXPECT_EQ(diagnostic(report3,1).message,"bar");
+  EXPECT_EQ(diagnostic(report3,2).status,romea::DiagnosticStatus::ERROR);
+  EXPECT_EQ(diagnostic(report3,2).message,"baz");
+  EXPECT_STREQ(report3.info["foo"].c_str(),"0.1");
+  EXPECT_STREQ(report3.info["bar"].c_str(),"enable");
+  EXPECT_STREQ(report3.info["baz"].c_str(),"disable");
+}
 
 class TestEqualTo : public ::testing::Test
 {
- public:
+public:
 
   TestEqualTo():
     diagnostic("foo",0.8,0.1)
@@ -118,7 +144,7 @@ TEST_F(TestEqualTo, compareWithHigherValue)
 
 class TestGreaterThan : public ::testing::Test
 {
- public:
+public:
 
   TestGreaterThan():
     diagnostic("foo",-0.3,0.1)
@@ -149,7 +175,7 @@ TEST_F(TestGreaterThan, compareWithHigherValue)
 
 class TestLowerThan : public ::testing::Test
 {
- public:
+public:
 
   TestLowerThan():
     diagnostic("foo",1.45,0.1)
@@ -181,7 +207,7 @@ TEST_F(TestLowerThan, compareWithHigherValue)
 
 class TestReliability : public ::testing::Test
 {
- public:
+public:
 
   TestReliability():
     diagnostic("foo",0.7,0.9)
@@ -222,7 +248,7 @@ TEST_F(TestReliability, compareWithHighReliability)
 
 class TestRate : public ::testing::Test
 {
- public:
+public:
 
   TestRate():
     stamp(),
