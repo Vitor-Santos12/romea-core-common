@@ -70,6 +70,12 @@ Eigen::Matrix<Scalar,3,1> rotation3DToEulerAngles(const Eigen::Matrix<Scalar,3,3
   return eulerAngles;
 }
 
+//-----------------------------------------------------------------------------
+template <typename Scalar>
+Eigen::Matrix<Scalar,3,1> quaternionToEulerAngles(const Eigen::Quaternion<Scalar> & quaternion)
+{
+  return rotation3DToEulerAngles(quaternion.normalized().toRotationMatrix());
+}
 
 //-----------------------------------------------------------------------------
 template <typename Scalar>

@@ -78,6 +78,20 @@ TEST(TestEuler, testR)
 }
 
 //-----------------------------------------------------------------------------
+TEST(TestEuler, quaternionToEulerAngles)
+{
+  double roll=0.8;
+  double pitch=-0.2;
+  double yaw=2.1;
+  Eigen::Vector3d eulerAngles(roll,pitch,yaw);
+  Eigen::Quaterniond q=Eigen::Quaterniond(romea::eulerAnglesToRotation3D(eulerAngles));
+  eulerAngles =romea::quaternionToEulerAngles(q);
+  EXPECT_NEAR(eulerAngles.x(),romea::between0And2Pi(roll),0.001);
+  EXPECT_NEAR(eulerAngles.y(),romea::between0And2Pi(pitch),0.001);
+  EXPECT_NEAR(eulerAngles.z(),romea::between0And2Pi(yaw),0.001);
+}
+
+//-----------------------------------------------------------------------------
 inline void testRotationPrediction(const Eigen::Vector3d & initialEulerAngles,
                                    const Eigen::Vector3d & angularSpeeds,
                                    const double & dt)
