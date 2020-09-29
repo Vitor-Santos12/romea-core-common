@@ -6,17 +6,17 @@
 
 namespace romea {
 
-
 class  CheckupRate
 {
 public:
-
 
   CheckupRate(const std::string &name,
               const double & minimalRate,
               const double & espilon= std::numeric_limits<double>::epsilon());
 
   DiagnosticStatus evaluate(const Duration & stamp);
+
+  bool heartBeatCallback(const Duration & stamp);
 
   const DiagnosticReport & getReport()const;
 

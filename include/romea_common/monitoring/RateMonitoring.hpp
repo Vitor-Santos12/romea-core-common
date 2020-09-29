@@ -28,7 +28,7 @@ class RateMonitoring
 
   double getRate()const;
 
-  bool timeout(const Duration & duration)const;
+  bool timeout(const Duration & duration);
 
  private :
 

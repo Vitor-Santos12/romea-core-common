@@ -78,10 +78,15 @@ double RateMonitoring::getRate()const
 }
 
 //-----------------------------------------------------------------------------
-bool RateMonitoring::timeout(const Duration & duration)const
+bool RateMonitoring::timeout(const Duration & duration)
 {
+  if(!periods_.empty() &&
+     durationToSecond(duration-lastDuration_.load())>0.5)
+  {
+     rate_.store(0.);
+     return true;
+  }
   return false;
-  //return durationToSecond(duration-lastDuration_.load())>0.5;
 }
 
 }

@@ -36,7 +36,7 @@ DiagnosticStatus CheckupRate::evaluate(const Duration & stamp)
 }
 
 //-----------------------------------------------------------------------------
-const DiagnosticReport & CheckupRate::getReport()const
+const DiagnosticReport & CheckupRate::getReport() const
 {
   return report_;
 }
@@ -55,6 +55,19 @@ void CheckupRate::setRateValue_()
 {
   report_.info.begin()->second=toStringInfoValue(rateMonitoring_.getRate());
 }
+
+//-----------------------------------------------------------------------------
+bool CheckupRate::heartBeatCallback(const Duration & stamp)
+{
+  if(rateMonitoring_.timeout(stamp))
+  {
+     setDiagnostic_(DiagnosticStatus::ERROR," timeout");
+     setRateValue_();
+     return false;
+  }
+  return true;
+}
+
 
 }// namespace
 
