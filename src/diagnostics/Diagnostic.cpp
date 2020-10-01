@@ -38,6 +38,12 @@ DiagnosticStatus worseStatus(const std::list<Diagnostic> & diagnostics)
 }
 
 //-----------------------------------------------------------------------------
+bool allOK(const std::list<Diagnostic> & diagnostics)
+{
+  return worseStatus(diagnostics)==DiagnosticStatus::OK;
+}
+
+//-----------------------------------------------------------------------------
 std::ostream & operator <<(std::ostream & os, const Diagnostic & diagnostic)
 {
   os<< diagnostic.status <<" : "<< diagnostic.message;

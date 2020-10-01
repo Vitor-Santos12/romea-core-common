@@ -25,6 +25,8 @@ std::ostream & operator <<(std::ostream & os, const Diagnostic & diagnostic);
 
 DiagnosticStatus worseStatus(const std::list<Diagnostic> & diagnostics);
 
+bool allOK(const std::list<Diagnostic> & diagnostics);
+
 }
 
 #endif
