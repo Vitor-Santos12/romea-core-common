@@ -1,5 +1,5 @@
-#ifndef _romea_DiagnosticGreaterThan2_hpp_
-#define _romea_DiagnosticGreaterThan2_hpp_
+#ifndef _romea_CheckupGreaterThan_hpp_
+#define _romea_CheckupGreaterThan_hpp_
 
 
 #include "CheckupCompareWith.hpp"
@@ -9,14 +9,14 @@ namespace romea {
 
 
 template <typename T>
-class  DiagnosticGreaterThan2 final : public CheckCompareWith<T>
+class  CheckupGreaterThan final : public CheckCompareWith<T>
 {
 public:
 
 
-  DiagnosticGreaterThan2(const std::string &name,
-                         const T &minimal_value,
-                         const T &epsilon= std::numeric_limits<T>::epsilon());
+  CheckupGreaterThan(const std::string &name,
+                     const T &minimal_value,
+                     const T &epsilon= std::numeric_limits<T>::epsilon());
 
 
   DiagnosticStatus evaluate(const T & value) override;
@@ -25,9 +25,9 @@ public:
 
 //-----------------------------------------------------------------------------
 template< typename T>
-DiagnosticGreaterThan2<T>::DiagnosticGreaterThan2(const std::string &name,
-                                                  const T &minimal_value,
-                                                  const T &epsilon):
+CheckupGreaterThan<T>::CheckupGreaterThan(const std::string &name,
+                                          const T &minimal_value,
+                                          const T &epsilon):
   CheckCompareWith<T>(name,minimal_value,epsilon)
 {
 
@@ -35,7 +35,7 @@ DiagnosticGreaterThan2<T>::DiagnosticGreaterThan2(const std::string &name,
 
 //-----------------------------------------------------------------------------
 template <typename T>
-DiagnosticStatus DiagnosticGreaterThan2<T>::evaluate(const T & value)
+DiagnosticStatus CheckupGreaterThan<T>::evaluate(const T & value)
 {
   if(value > this->value_to_compare_with_-this->epsilon_)
   {

@@ -1,5 +1,5 @@
-#ifndef _romea_DiagnosticLowerThan2_hpp_
-#define _romea_DiagnosticLowerThan2_hpp_
+#ifndef _romea_CheckupLowerThan_hpp_
+#define _romea_CheckupLowerThan_hpp_
 
 
 #include "CheckupCompareWith.hpp"
@@ -9,15 +9,15 @@ namespace romea {
 
 
 template <typename T>
-class  DiagnosticLowerThan2 final : public CheckCompareWith<T>
+class  CheckupLowerThan final : public CheckCompareWith<T>
 {
 
 public:
 
 
-  DiagnosticLowerThan2(const std::string &name,
-                       const T &maximal_value,
-                       const T &epsilon);
+  CheckupLowerThan(const std::string &name,
+                   const T &maximal_value,
+                   const T &epsilon);
 
   DiagnosticStatus evaluate(const T & value) override;
 
@@ -27,9 +27,9 @@ public:
 
 //-----------------------------------------------------------------------------
 template< typename T>
-DiagnosticLowerThan2<T>::DiagnosticLowerThan2(const std::string & name,
-                                              const T & maximal_value,
-                                              const T & epsilon):
+CheckupLowerThan<T>::CheckupLowerThan(const std::string & name,
+                                      const T & maximal_value,
+                                      const T & epsilon):
   CheckCompareWith<T>(name,maximal_value,epsilon)
 {
 
@@ -37,7 +37,7 @@ DiagnosticLowerThan2<T>::DiagnosticLowerThan2(const std::string & name,
 
 //-----------------------------------------------------------------------------
 template <typename T>
-DiagnosticStatus DiagnosticLowerThan2<T>::evaluate(const T & value)
+DiagnosticStatus CheckupLowerThan<T>::evaluate(const T & value)
 {
   if(value < this->value_to_compare_with_+this->epsilon_)
   {

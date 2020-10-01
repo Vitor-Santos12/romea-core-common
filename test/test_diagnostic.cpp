@@ -34,6 +34,7 @@ TEST(TestDiagnosticStatus, getWorse)
 
 }
 
+
 //-----------------------------------------------------------------------------
 TEST(TestDiagnosticStatus, toString)
 {
@@ -152,7 +153,7 @@ public:
 
   }
 
-  romea::DiagnosticGreaterThan2<double> diagnostic;
+  romea::CheckupGreaterThan<double> diagnostic;
 };
 
 //-----------------------------------------------------------------------------
@@ -183,7 +184,7 @@ public:
 
   }
 
-  romea::DiagnosticLowerThan2<double> diagnostic;
+  romea::CheckupLowerThan<double> diagnostic;
 };
 
 
@@ -215,7 +216,7 @@ public:
 
   }
 
-  romea::DiagnosticReliability2 diagnostic;
+  romea::CheckupReliability diagnostic;
 };
 
 //-----------------------------------------------------------------------------

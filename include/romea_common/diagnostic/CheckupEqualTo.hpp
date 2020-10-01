@@ -1,5 +1,5 @@
-#ifndef _romea_DiagnosticEqualTo2_hpp_
-#define _romea_DiagnosticEqualTo2_hpp_
+#ifndef _romea_CheckEqualTo_hpp_
+#define _romea_CheckEqualTo_hpp_
 
 #include "CheckupCompareWith.hpp"
 
