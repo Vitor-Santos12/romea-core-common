@@ -13,7 +13,7 @@ CheckupRate::CheckupRate(const std::string &name,
   report_()
 {
   report_.info[name+"_rate"]="";
-  report_.diagnostics.push_back(Diagnostic());
+  report_.diagnostics.push_back(Diagnostic(DiagnosticStatus::ERROR,"no data received from "+name));
 }
 
 
