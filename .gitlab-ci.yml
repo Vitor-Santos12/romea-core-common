@@ -12,7 +12,8 @@ kinetic_catkin_tests:
    - apt-get install -y -qq libgtest-dev
    - (cd /usr/src/gtest; cmake . && make && cp *.a /usr/lib/)
   script:
-    - catkin build romea_common --cmake-args -DBUILD_TESTS=ON
+    - cmake .
+    - make
     - ctest --output-on-failure
 
 
