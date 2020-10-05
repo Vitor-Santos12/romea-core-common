@@ -12,6 +12,7 @@ kinetic_catkin_tests:
    - apt-get install -y -qq libgtest-dev
    - (cd /usr/src/gtest; cmake . && make && cp *.a /usr/lib/)
   script:
+    - cd romea_common
     - cmake .
     - make
     - ctest --output-on-failure
