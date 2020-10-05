@@ -36,7 +36,7 @@ TEST(TestTime, durationToString)
 }
 
 //-----------------------------------------------------------------------------
-TEST(TestTime, makeTimePoint)
+TEST(TestTime, DISABLED_makeTimePoint)
 {
   EXPECT_EQ(romea::makeTimePoint(1977,7,17,4,30,7.7).time_since_epoch().count(),237954607000000000);
   EXPECT_EQ(romea::makeTimePoint(2016,3,12,8,20,50.7).time_since_epoch().count(),1457767250000000000);
