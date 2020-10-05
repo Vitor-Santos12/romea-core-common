@@ -12,10 +12,9 @@ kinetic_catkin_tests:
    - apt-get install -y -qq libgtest-dev
    - (cd /usr/src/gtest; cmake . && make && cp *.a /usr/lib/)
   script:
-    - cd src/romea_common
-    - cmake .  -DBUILD_TESTS=ON
-    - make
-    - ctest --output-on-failure
+    - catkin build romea_common --cmake-args -DBUILD_TESTS=ON
+    - cd build/romea_common
+    - GTEST_COLOR=1 ctest --output-on-failure
 
 
 melodic_catkin_tests:
