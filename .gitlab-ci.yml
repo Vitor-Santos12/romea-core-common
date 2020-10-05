@@ -13,7 +13,7 @@ kinetic_catkin_tests:
    - (cd /usr/src/gtest; cmake . && make && cp *.a /usr/lib/)
   script:
     - cd src/romea_common
-    - cmake .
+    - cmake .  -DBUILD_TESTS=ON
     - make
     - ctest --output-on-failure
 
