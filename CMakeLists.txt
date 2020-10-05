@@ -1,122 +1,110 @@
-cmake_minimum_required(VERSION 2.8.3)
-project(romea_common)
+cmake_minimum_required(VERSION 3.5)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Weffc++ -Wall -Wextra -std=c++17 -O3")
+project(
+  "romea_common"
+  VERSION 0.1.0
+  #  DESCRIPTION
+  #  HOMEPAGE_URL
+  LANGUAGES CXX)
 
-#######################
-## Find dependencies ##
-#######################
-find_package(catkin REQUIRED COMPONENTS roscpp)
-find_package(Boost REQUIRED COMPONENTS system)
 
 find_package( PkgConfig )
 pkg_check_modules( EIGEN3 REQUIRED eigen3 )
 
+add_library(${PROJECT_NAME} SHARED
+  src/containers/grid/GridIndexMapping.cpp
+  src/containers/grid/RayTracing.cpp
+  src/containers/boundingbox/AxisAlignedBoundingBox.cpp
+  src/containers/boundingbox/OrientedBoundingBox.cpp
+  src/diagnostics/CheckupRate.cpp
+  src/diagnostics/CheckupReliability.cpp
+  src/diagnostics/Diagnostic.cpp
+  src/diagnostics/DiagnosticReport.cpp
+  src/diagnostics/DiagnosticStatus.cpp
+  src/geometry/Circle.cpp
+  src/geometry/Ellipse.cpp
+  src/geodesy/EarthEllipsoid.cpp
+  src/geodesy/ECEFConverter.cpp
+  src/geodesy/ENUConverter.cpp
+  src/geodesy/GeodeticCoordinates.cpp
+  src/geodesy/WGS84Coordinates.cpp
+  src/monitoring/RateMonitoring.cpp
+  src/monitoring/OnlineAverage.cpp
+  src/monitoring/OnlineVariance.cpp
+  src/regression/leastsquares/LeastSquares.cpp
+  src/regression/leastsquares/MEstimator.cpp
+  src/regression/leastsquares/NLSE.cpp
+  src/regression/ransac/Ransac.cpp
+  src/regression/ransac/RansacModel.cpp
+  src/regression/ransac/RansacIterations.cpp
+  src/regression/ransac/RansacRandomCorrespondences.cpp
+  src/pointset/algorithms/Correspondence.cpp
+  src/pointset/algorithms/PointSetPreconditioner.cpp
+  src/pointset/algorithms/PreconditionedPointSet.cpp
+  src/pointset/algorithms/NormalAndCurvatureEstimation.cpp
+  src/pointset/KdTree.cpp
+  src/signal/Noise.cpp
+  src/signal/FirstOrderButterworth.cpp
+  src/transform/estimation/FindRigidTransformationByICP.cpp
+  src/transform/estimation/FindRigidTransformationByLeastSquares.cpp
+  src/transform/estimation/RansacRigidTransformationModel.cpp
+  src/transform/estimation/FindRigidTransformationBySVD.cpp
+  src/transform/SmartRotation3D.cpp
+  )
 
-###################################
-## catkin specific configuration ##
-###################################
-catkin_package(
-    INCLUDE_DIRS include
-    LIBRARIES ${PROJECT_NAME}
-    CATKIN_DEPENDS ${${PROJECT_NAME}_CATKIN_DEPS})
+target_include_directories( ${PROJECT_NAME} PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+  )
 
-###########
-## Build ##
-###########
+target_include_directories( ${PROJECT_NAME} SYSTEM PUBLIC
+  ${EIGEN3_INCLUDE_DIRS}
+  )
 
-include_directories(
-    include
-    SYSTEM ${catkin_INCLUDE_DIRS}
-    SYSTEM ${EIGEN3_INCLUDE_DIRS})
+target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -O3 -std=c++17)
 
-add_library(romea_common
-    src/containers/grid/GridIndexMapping.cpp
-    src/containers/grid/RayTracing.cpp
-    src/containers/boundingbox/AxisAlignedBoundingBox.cpp
-    src/containers/boundingbox/OrientedBoundingBox.cpp
-    src/diagnostics/CheckupRate.cpp
-    src/diagnostics/CheckupReliability.cpp
-    src/diagnostics/Diagnostic.cpp
-    src/diagnostics/DiagnosticReport.cpp
-    src/diagnostics/DiagnosticStatus.cpp
-    src/geometry/Circle.cpp
-    src/geometry/Ellipse.cpp
-    src/geodesy/EarthEllipsoid.cpp
-    src/geodesy/ECEFConverter.cpp
-    src/geodesy/ENUConverter.cpp
-    src/geodesy/GeodeticCoordinates.cpp
-    src/geodesy/WGS84Coordinates.cpp
-    src/monitoring/RateMonitoring.cpp
-    src/monitoring/OnlineAverage.cpp
-    src/monitoring/OnlineVariance.cpp
-    src/regression/leastsquares/LeastSquares.cpp
-    src/regression/leastsquares/MEstimator.cpp
-    src/regression/leastsquares/NLSE.cpp
-    src/regression/ransac/Ransac.cpp
-    src/regression/ransac/RansacModel.cpp
-    src/regression/ransac/RansacIterations.cpp
-    src/regression/ransac/RansacRandomCorrespondences.cpp
-    src/pointset/algorithms/Correspondence.cpp
-    src/pointset/algorithms/PointSetPreconditioner.cpp
-    src/pointset/algorithms/PreconditionedPointSet.cpp
-    src/pointset/algorithms/NormalAndCurvatureEstimation.cpp
-    src/pointset/KdTree.cpp
-    src/signal/Noise.cpp
-    src/signal/FirstOrderButterworth.cpp
-    src/transform/estimation/FindRigidTransformationByICP.cpp
-    src/transform/estimation/FindRigidTransformationByLeastSquares.cpp
-    src/transform/estimation/RansacRigidTransformationModel.cpp
-    src/transform/estimation/FindRigidTransformationBySVD.cpp
-    src/transform/SmartRotation3D.cpp
-    )
+include(GNUInstallDirs)
 
-target_link_libraries(romea_common ${catkin_LIBRARIES})
+install(
+  TARGETS ${PROJECT_NAME}
+  EXPORT ${PROJECT_NAME}_Targets
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+
+install(FILES package.xml DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME})
+
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file(
+  "${PROJECT_NAME}ConfigVersion.cmake"
+  VERSION ${PROJECT_VERSION}
+  COMPATIBILITY SameMajorVersion)
+
+configure_package_config_file(
+  "${PROJECT_SOURCE_DIR}/cmake/${PROJECT_NAME}Config.cmake.in"
+  "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake" INSTALL_DESTINATION
+  ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/cmake)
+
+install(
+  EXPORT ${PROJECT_NAME}_Targets
+  FILE ${PROJECT_NAME}Targets.cmake
+  NAMESPACE ${PROJECT_NAME}::
+  DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/cmake)
+
+install(FILES "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
+  "${PROJECT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
+  DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/cmake)
+
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/${PROJECT_NAME}
+  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+
+set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE")
 
 
-#############
-## Install ##
-#############
+#include_directories(include  ${EIGEN3_INCLUDE_DIRS})
 
-# all install targets should use catkin DESTINATION variables
-# See http://ros.org/doc/api/catkin/html/adv_user_guide/variables.html
-
-## Mark executable scripts (Python etc.) for installation
-## in contrast to setup.py, you can choose the destination
-# install(PROGRAMS
-#   scripts/my_python_script
-#   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-# )
-
-## Mark executables and/or libraries for installation
-#install(TARGETS romea
-#    ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#    LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#    RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-#    )
-
-## Mark cpp header files for installation
-#install(DIRECTORY include/${PROJECT_NAME}/
-#    DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-#    FILES_MATCHING PATTERN "*.hpp"
-#    PATTERN ".svn" EXCLUDE
-#    )
-
-## Mark other files for installation (e.g. launch and bag files, etc.)
-# install(FILES
-#   # myfile1
-#   # myfile2
-#   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-# )
-
-#############
-## Testing ##
-#############
-
-#get_filename_component(TEST_WITH_DATA_TEST_DIR "test/data" ABSOLUTE)
-#configure_file(test/test_helper.h.in test/test_helper.h)
-#include_directories(${CMAKE_CURRENT_BINARY_DIR}/test)
-
-if(CATKIN_ENABLE_TESTING)
+option(BUILD_TESTS "BUILD WITH TESTS" OFF)
+if(BUILD_TESTS)
+  enable_testing()
   add_subdirectory(test)
-endif(CATKIN_ENABLE_TESTING)
+endif(BUILD_TESTS)

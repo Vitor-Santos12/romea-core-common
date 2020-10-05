@@ -2,31 +2,41 @@ cache:
   paths:
     - ccache/
 
-before_script:
- - apt update >/dev/null && apt install -y git >/dev/null
- - git clone https://gitlab.com/VictorLamoine/ros_gitlab_ci.git
- - source ros_gitlab_ci/gitlab-ci.bash >/dev/null
-
-# kinetic
-kinetic_catkin_build:
+kinetic_catkin_tests:
   image: ros:kinetic-robot
   stage: build
+  before_script:
+   - apt update >/dev/null && apt install -y git >/dev/null
+   - git clone https://gitlab.com/VictorLamoine/ros_gitlab_ci.git
+   - source ros_gitlab_ci/gitlab-ci.bash >/dev/null
+   - apt-get install -y -qq libgtest-dev
+   - (cd /usr/src/gtest; cmake . && make && cp *.a /usr/lib/)
   script:
-    - catkin build --summarize --no-status --force-color
-    - catkin run_tests --no-status --force-color
+    - catkin build romea_common --cmake-args -DBUILD_TESTS=ON
+    - catkin test romea_common
 
-# melodic
-melodic_catkin_build:
+
+melodic_catkin_tests:
   image: ros:melodic-robot
   stage: build
+  before_script:
+   - apt update >/dev/null && apt install -y git >/dev/null
+   - git clone https://gitlab.com/VictorLamoine/ros_gitlab_ci.git
+   - source ros_gitlab_ci/gitlab-ci.bash >/dev/null
+   - apt-get install -y -qq libgtest-dev
+   - (cd /usr/src/gtest; cmake . && make && cp *.a /usr/lib/)
   script:
-    - catkin build --summarize --no-status --force-color
-    - catkin run_tests --no-status --force-color
+    - catkin build romea_common --cmake-args -DBUILD_TESTS=ON
+    - catkin test romea_common
 
 # noetic
 noetic_catkin_build:
   image: ros:noetic-robot
-  stage: build
+  stage: test
+  before_script:
+   - apt update >/dev/null && apt install -y git >/dev/null
+   - git clone https://gitlab.com/VictorLamoine/ros_gitlab_ci.git
+   - source ros_gitlab_ci/gitlab-ci.bash >/dev/null
   script:
-    - catkin build --summarize --no-status --force-color
-    - catkin run_tests --no-status --force-color
+    - catkin build romea_common --cmake-args -DBUILD_TESTS=ON
+    - catkin test romea_common
