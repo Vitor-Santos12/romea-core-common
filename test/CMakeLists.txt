@@ -12,7 +12,7 @@ add_test(test_transform ${PROJECT_NAME}_test_transform)
 add_executable(${PROJECT_NAME}_test_time test_time.cpp )
 target_link_libraries(${PROJECT_NAME}_test_time ${PROJECT_NAME} GTest::GTest GTest::Main)
 target_compile_options(${PROJECT_NAME}_test_time PRIVATE -std=c++17)
-add_test(test_time test_time ${PROJECT_NAME})
+add_test(test_time ${PROJECT_NAME}_test_time)
 
 add_executable(${PROJECT_NAME}_test_pointset test_pointset.cpp )
 target_link_libraries(${PROJECT_NAME}_test_pointset ${PROJECT_NAME} GTest::GTest GTest::Main)
