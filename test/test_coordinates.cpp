@@ -8,7 +8,7 @@
 #include <iostream>
 
 //-----------------------------------------------------------------------------
-TEST(TestCoordinates, testPolar)
+TEST(TestCoordinates, polarToCartesianConversion)
 {
 
   romea::CartesianCoordinates2<double> cartesianPoint(10,34.8);
@@ -22,7 +22,7 @@ TEST(TestCoordinates, testPolar)
 }
 
 //-----------------------------------------------------------------------------
-TEST(TestCoordinates, testSpherical)
+TEST(TestCoordinates, sphericalToCartesianConversion)
 {
 
   romea::CartesianCoordinates3<double> cartesianPoint(-9.4,20.2,-3.4);

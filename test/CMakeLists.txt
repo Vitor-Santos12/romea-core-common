@@ -74,3 +74,7 @@ target_link_libraries(${PROJECT_NAME}_test_diagnostic ${PROJECT_NAME} GTest::GTe
 target_compile_options(${PROJECT_NAME}_test_diagnostic PRIVATE -std=c++17)
 add_test(test_diagnostic ${PROJECT_NAME}_test_diagnostic)
 
+add_executable(${PROJECT_NAME}_test_lexical_cast test_lexical_cast.cpp )
+target_link_libraries(${PROJECT_NAME}_test_lexical_cast ${PROJECT_NAME} GTest::GTest GTest::Main)
+target_compile_options(${PROJECT_NAME}_test_lexical_cast PRIVATE -std=c++17)
+add_test(test_lexical_cast ${PROJECT_NAME}_test_lexical_cast)

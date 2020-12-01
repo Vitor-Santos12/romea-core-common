@@ -16,7 +16,7 @@ const romea::Diagnostic & diagnostic(const romea::DiagnosticReport & report,
 }
 
 //-----------------------------------------------------------------------------
-TEST(TestDiagnosticStatus, compare)
+TEST(TestDiagnosticStatus, checkComparison)
 {
   EXPECT_TRUE(romea::DiagnosticStatus::OK<romea::DiagnosticStatus::WARN);
   EXPECT_TRUE(romea::DiagnosticStatus::WARN<romea::DiagnosticStatus::ERROR);
@@ -24,7 +24,7 @@ TEST(TestDiagnosticStatus, compare)
 }
 
 //-----------------------------------------------------------------------------
-TEST(TestDiagnosticStatus, getWorse)
+TEST(TestDiagnosticStatus, checkWorseStatus)
 {
   EXPECT_EQ(worse(romea::DiagnosticStatus::OK,
                   romea::DiagnosticStatus::OK),romea::DiagnosticStatus::OK);
@@ -36,7 +36,7 @@ TEST(TestDiagnosticStatus, getWorse)
 
 
 //-----------------------------------------------------------------------------
-TEST(TestDiagnosticStatus, toString)
+TEST(TestDiagnosticStatus, checkToStringConversion)
 {
   EXPECT_STREQ(toString(romea::DiagnosticStatus::OK).c_str(),"OK");
   EXPECT_STREQ(toString(romea::DiagnosticStatus::WARN).c_str(),"WARN");
@@ -47,7 +47,7 @@ TEST(TestDiagnosticStatus, toString)
 
 
 //-----------------------------------------------------------------------------
-TEST(TestReport, setReportInfosValues)
+TEST(TestDiagnosticReport, checkSetInfosValues)
 {
   romea::DiagnosticReport report;
 
@@ -61,7 +61,7 @@ TEST(TestReport, setReportInfosValues)
 }
 
 //-----------------------------------------------------------------------------
-TEST(TestReport, setReportOtionalInfosValues)
+TEST(TestDiagnosticReport, checkSetReportOtionalInfosValues)
 {
   romea::DiagnosticReport report;
   boost::optional<double> foo(7.77);
@@ -75,7 +75,7 @@ TEST(TestReport, setReportOtionalInfosValues)
 }
 
 //-----------------------------------------------------------------------------
-TEST(TestReport, agreagate)
+TEST(TestReport, checkAgregation)
 {
   romea::DiagnosticReport report1;
   report1.diagnostics.emplace_back(romea::DiagnosticStatus::OK,std::string("foo"));
