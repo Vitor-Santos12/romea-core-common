@@ -57,10 +57,7 @@ target_include_directories( ${PROJECT_NAME} PUBLIC
   $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
   )
 
-target_include_directories( ${PROJECT_NAME} SYSTEM PUBLIC
-  ${EIGEN3_INCLUDE_DIRS}
-  )
-
+target_include_directories( ${PROJECT_NAME} SYSTEM PUBLIC ${EIGEN3_INCLUDE_DIRS})
 target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -O3 -std=c++17)
 
 include(GNUInstallDirs)
@@ -73,6 +70,7 @@ install(
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 install(FILES package.xml DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME})
+
 
 include(CMakePackageConfigHelpers)
 write_basic_package_version_file(
