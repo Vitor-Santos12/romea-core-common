@@ -127,7 +127,6 @@ static bool isApproximatelyZero(RealType a,
 
 //    return false;
 //}
-
 ////--------------------------------------------------------------------------
 //template<typename RealType>
 //static bool isDefinitelyGreaterThan(RealType a,
