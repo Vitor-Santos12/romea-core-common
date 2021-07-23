@@ -54,7 +54,7 @@ RealType clamp(const RealType & value ,
                const RealType & minValue,
                const RealType & maxValue)
 {
-  assert(minValue<maxValue);
+  assert(minValue<=maxValue);
   return std::max(minValue,std::min(maxValue,value));
 }
 
