@@ -79,11 +79,18 @@ Eigen::Matrix<Scalar,3,1> quaternionToEulerAngles(const Eigen::Quaternion<Scalar
 
 //-----------------------------------------------------------------------------
 template <typename Scalar>
+Eigen::Quaternion<Scalar> eulerAnglesToQuaternion(const Eigen::Matrix<Scalar,3,1> & inEulerAngles)
+{
+  return Eigen::AngleAxis<Scalar>(inEulerAngles(2), Eigen::Matrix<Scalar,3,1> ::UnitZ()) *
+          Eigen::AngleAxis<Scalar>(inEulerAngles(1), Eigen::Matrix<Scalar,3,1> ::UnitY()) *
+          Eigen::AngleAxis<Scalar>(inEulerAngles(0), Eigen::Matrix<Scalar,3,1> ::UnitX());
+}
+
+//-----------------------------------------------------------------------------
+template <typename Scalar>
 Eigen::Matrix<Scalar,3,3> eulerAnglesToRotation3D(const Eigen::Matrix<Scalar,3,1> & inEulerAngles)
 {
-  return  Eigen::Matrix<Scalar,3,3>( Eigen::AngleAxis<Scalar>(inEulerAngles(2), Eigen::Matrix<Scalar,3,1> ::UnitZ()) *
-                                     Eigen::AngleAxis<Scalar>(inEulerAngles(1), Eigen::Matrix<Scalar,3,1> ::UnitY()) *
-                                     Eigen::AngleAxis<Scalar>(inEulerAngles(0), Eigen::Matrix<Scalar,3,1> ::UnitX()));
+  return  Eigen::Matrix<Scalar,3,3>(eulerAnglesToQuaternion(inEulerAngles));
 }
 
 }//romea
