@@ -23,6 +23,14 @@ add_library(${PROJECT_NAME} SHARED
   src/diagnostics/DiagnosticStatus.cpp
   src/geometry/Circle.cpp
   src/geometry/Ellipse.cpp
+  src/geometry/Pose2D.cpp
+  src/geometry/Pose3D.cpp
+  src/geometry/PoseAndTwist2D.cpp
+  src/geometry/PoseAndTwist3D.cpp
+  src/geometry/Position2D.cpp
+  src/geometry/Position3D.cpp
+  src/geometry/Twist2D.cpp
+  src/geometry/Twist3D.cpp
   src/geodesy/EarthEllipsoid.cpp
   src/geodesy/ECEFConverter.cpp
   src/geodesy/ENUConverter.cpp
