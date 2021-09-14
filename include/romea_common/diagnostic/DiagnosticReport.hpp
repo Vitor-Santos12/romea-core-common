@@ -1,10 +1,8 @@
 #ifndef _romea_DiagnosticReport_hpp_
 #define _romea_DiagnosticReport_hpp_
 
-//boost
-#include <boost/optional.hpp>
-
 //std
+#include <optional>
 #include <sstream>
 #include <list>
 #include <map>
@@ -49,9 +47,9 @@ void setReportInfo(DiagnosticReport & report,
 template <typename T>
 void setReportInfo(DiagnosticReport & report,
                    const std::string & infoName,
-                   const boost::optional<T> & infoValue)
+                   const std::optional<T> & infoValue)
 {
-  if(infoValue.is_initialized())
+  if(infoValue.has_value())
   {
     setReportInfo(report,infoName,*infoValue);
   }

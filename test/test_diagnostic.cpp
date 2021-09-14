@@ -64,8 +64,8 @@ TEST(TestDiagnosticReport, checkSetInfosValues)
 TEST(TestDiagnosticReport, checkSetReportOtionalInfosValues)
 {
   romea::DiagnosticReport report;
-  boost::optional<double> foo(7.77);
-  boost::optional<std::string> bar;
+  std::optional<double> foo(7.77);
+  std::optional<std::string> bar;
 
   romea::setReportInfo(report,"foo",foo);
   romea::setReportInfo(report,"bar",bar);

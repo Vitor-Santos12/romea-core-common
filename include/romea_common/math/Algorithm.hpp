@@ -7,7 +7,7 @@
 #include <limits>
 #include <algorithm>
 #include <iostream>
-#include <boost/optional.hpp>
+#include <optional>
 
 namespace romea{
 
@@ -68,16 +68,16 @@ RealType symmetricClamp(const RealType & value ,
 
 //--------------------------------------------------------------------------
 template <typename RealType >
-boost::optional<RealType> safeDivide(const RealType & numerator,
+std::optional<RealType> safeDivide(const RealType & numerator,
                                      const RealType & denominator)
 {
   if(std::abs(denominator)<std::numeric_limits<RealType>::epsilon())
   {
-    return boost::optional<RealType>();
+    return std::optional<RealType>();
   }
   else
   {
-    return boost::optional<RealType>(numerator/denominator);
+    return std::optional<RealType>(numerator/denominator);
   }
 
 }

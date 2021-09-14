@@ -19,10 +19,9 @@ std::ostream & operator <<(std::ostream & os, const DiagnosticReport & report)
     os << " "<< message << std::endl;
   }
   os<<" Additional info :"<< std::endl;
-  //TODO use strutured binding >= c++17
-  for(const auto p : report.info)
+  for(const auto & [info_name , info_status] : report.info)
   {
-    os<< " "<< p.first <<" = "<< p.second << std::endl;
+    os<< " "<< info_name <<" = "<< info_status << std::endl;
   }
   return os;
 }
