@@ -31,8 +31,8 @@ TEST(TestAlgorithm, testSymmetricClamp)
 //-----------------------------------------------------------------------------
 TEST(TestAlgorithm, safe_divide)
 {
-  EXPECT_DOUBLE_EQ(romea::safeDivide(1.,2.).get(),0.5);
-  EXPECT_FALSE(romea::safeDivide(1.,0.).is_initialized());
+  EXPECT_DOUBLE_EQ(romea::safeDivide(1.,2.).value(),0.5);
+  EXPECT_FALSE(romea::safeDivide(1.,0.).has_value());
 }
 
 //-----------------------------------------------------------------------------
