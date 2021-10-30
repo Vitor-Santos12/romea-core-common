@@ -77,10 +77,10 @@ void SmartRotation3D::init(const double & angleAroundXAxis,
   dRxdAngleX_(2,2)=-sinx;
 
   // compute derivative of Ry with respect y axis angle
-  dRdAngleY_(0,0)=-sinx;
-  dRdAngleY_(0,2)= cosy;
-  dRdAngleY_(2,0)=-cosy;
-  dRdAngleY_(2,2)=-siny;
+  dRydAngleY_(0,0)=-siny;
+  dRydAngleY_(0,2)= cosy;
+  dRydAngleY_(2,0)=-cosy;
+  dRydAngleY_(2,2)=-siny;
 
   // compute derivative of Rz with respect z axis angle
   dRzdAngleZ_(0,0)=-sinz;
@@ -92,7 +92,6 @@ void SmartRotation3D::init(const double & angleAroundXAxis,
   dRdAngleX_= Rz_*Ry_*dRxdAngleX_;
   dRdAngleY_= Rz_*dRydAngleY_*Rx_;
   dRdAngleZ_= dRzdAngleZ_*Ry_*Rx_;
-
 }
 
 //-----------------------------------------------------------------------------
