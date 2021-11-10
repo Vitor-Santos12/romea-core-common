@@ -1,7 +1,7 @@
 // gtest
 #include <gtest/gtest.h>
 #include "test_helper.h"
-#include "test_pointset_utils.hpp"
+#include "../pointset/test_pointset_utils.hpp"
 
 //romea
 #include "romea_common/transform/estimation/FindRigidTransformationByLeastSquares.hpp"

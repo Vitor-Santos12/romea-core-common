@@ -2,51 +2,11 @@
 #include <gtest/gtest.h>
 #include "test_helper.h"
 #include "test_pointset_utils.hpp"
-#include <fstream>
-
-//-----------------------------------------------------------------------------
-template <class PointType> size_t testCorrespondence(const std::string & dataFileName)
-{
-  //load data
-  romea::PointSet<Eigen::Vector2d> pointSet=loadScan<Eigen::Vector2d>(dataFileName);
-  romea::KdTree<Eigen::Vector2d> kdTree(pointSet);
-
-  //Search nearest point;
-  size_t nearestIndex;
-  double nearestNeighborSquareDistance;
-  std::vector<romea::Correspondence> correspondences;
-
-  //Find correpondences
-  for(size_t n=0;n<pointSet.size();++n){
-    kdTree.findNearestNeighbor(pointSet[n],nearestIndex,nearestNeighborSquareDistance);
-    correspondences.emplace_back(nearestIndex,n,nearestNeighborSquareDistance);
-  }
-
-  //Remove wrong correspondences
-  std::vector<romea::Correspondence>::iterator itEnd;
-  std::sort(std::begin(correspondences),
-            std::end(correspondences),
-            romea::sortBySourceIndexAndDistancePredicate);
-
-  itEnd = std::unique(std::begin(correspondences),
-                      std::end(correspondences),
-                      romea::equalSourceIndexesPredicate);
-
-  return static_cast<size_t>(std::distance(std::begin(correspondences),itEnd));
-}
-
-//-----------------------------------------------------------------------------
-TEST(TestPoinsSet, testCorrespondences)
-{
-  EXPECT_EQ(702,testCorrespondence<Eigen::Vector2d>("/scan2d.txt"));
-  EXPECT_EQ(99426,testCorrespondence<Eigen::Vector3d>("/scan3d.txt"));
-}
 
 
 //-----------------------------------------------------------------------------
-TEST(TestPoinsSet, testNormals2d)
+TEST(TestComputeNormal, checkComputeNormals2d)
 {
-
 
   //load scan data and compute normals and curvatures
   romea::PointSet<Eigen::Vector2d> pointSet=loadScan<Eigen::Vector2d>("/scan2d.txt");
@@ -78,7 +38,7 @@ TEST(TestPoinsSet, testNormals2d)
 }
 
 //-----------------------------------------------------------------------------
-TEST(TestPoinsSet, testNormals3d)
+TEST(TestComputeNormal, checkComputeNormals3d)
 {
 
   //load scan data and compute normals and curvatures
