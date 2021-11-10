@@ -18,9 +18,9 @@ ECEFConverter::ECEFConverter(const EarthEllipsoid & earthEllipsoid):
 //--------------------------------------------------------------------------
 Eigen::Vector3d ECEFConverter::toECEF(const GeodeticCoordinates & geodeticCoordinates) const
 {
-  const double longitude = geodeticCoordinates.getLongitude();
-  const double latitude = geodeticCoordinates.getLatitude();
-  const double altitude = geodeticCoordinates.getAltitude();
+  const double longitude = geodeticCoordinates.longitude;
+  const double latitude = geodeticCoordinates.latitude;
+  const double altitude = geodeticCoordinates.altitude;
 
   Eigen::Vector3d ecef;
   const double N = ellipsoid_.a / (sqrt(1.0 - ellipsoid_.e2 * sin(latitude) * sin(latitude)));
@@ -63,8 +63,7 @@ GeodeticCoordinates  ECEFConverter::toWGS84(const Eigen::Vector3d & ecefPosition
   double s2 = sin(latitude)*sin(latitude);
   double altitude = norm / cos(latitude) - ellipsoid_.a / sqrt(1.0 - ellipsoid_.e2 * s2);
 
-
-  return  GeodeticCoordinates(latitude,longitude,altitude);
+  return  makeGeodeticCoordinates(latitude,longitude,altitude);
 }
 
 

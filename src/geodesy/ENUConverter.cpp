@@ -47,8 +47,8 @@ void ENUConverter::setAnchor(const GeodeticCoordinates & anchor)
 
   // Rotation matrix giving attitude of tangent plane
   // Plane axis are East North Up
-  double latitude  =anchor.getLatitude();
-  double longitude =anchor.getLongitude();
+  double latitude  =anchor.latitude;
+  double longitude =anchor.longitude;
 
   enu2ecef_.linear().col(0) << -std::sin(longitude), std::cos(longitude)  ,  0;
   enu2ecef_.linear().col(1) << -std::sin(latitude)*std::cos(longitude),-std::sin(latitude)*sin(longitude), cos(latitude);
@@ -109,7 +109,7 @@ Eigen::Vector3d ENUConverter::toENU(const  GeodeticCoordinates & geodeticCoordin
 //--------------------------------------------------------------------------
 Eigen::Vector3d ENUConverter::toENU(const  WGS84Coordinates & wgs84Coordinates)
 {
-  return toENU(GeodeticCoordinates(wgs84Coordinates,wgs84Anchor_.getAltitude()));
+  return toENU(makeGeodeticCoordinates(wgs84Coordinates,wgs84Anchor_.altitude));
 }
 
 //--------------------------------------------------------------------------

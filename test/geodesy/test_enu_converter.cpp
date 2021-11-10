@@ -21,7 +21,7 @@ inline void checkConversions(const romea::GeodeticCoordinates & llh,
 //-----------------------------------------------------------------------------
 TEST(testENUConverter, checkConversions)
 {
-  romea::GeodeticCoordinates llh(-37/180.*M_PI,144.96/180.*M_PI,10);
+  auto llh = romea::makeGeodeticCoordinates(-37/180.*M_PI,144.96/180.*M_PI,10);
   checkConversions(llh,Eigen::Vector3d::Zero());
   checkConversions(llh,Eigen::Vector3d(1,-4 ,10));
   checkConversions(llh,Eigen::Vector3d(-0.4, 2,-7.8));
@@ -30,9 +30,9 @@ TEST(testENUConverter, checkConversions)
 //-----------------------------------------------------------------------------
 TEST(testENUConverter, checkConversionPrecision)
 {
-  romea::GeodeticCoordinates llh1(45.7800/180*M_PI,3.0800/180*M_PI,365);
-  romea::GeodeticCoordinates llh2(45.7801/180*M_PI,3.0801/180*M_PI,365);
-  romea::GeodeticCoordinates llh3(45.7802/180*M_PI,3.0802/180*M_PI,365);
+  auto llh1 = romea::makeGeodeticCoordinates(45.7800/180*M_PI,3.0800/180*M_PI,365);
+  auto llh2 = romea::makeGeodeticCoordinates(45.7801/180*M_PI,3.0801/180*M_PI,365);
+  auto llh3 = romea::makeGeodeticCoordinates(45.7802/180*M_PI,3.0802/180*M_PI,365);
 
   romea::ENUConverter enuConverter1(llh1);
   romea::ENUConverter enuConverter2(llh2);

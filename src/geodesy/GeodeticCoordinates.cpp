@@ -1,47 +1,45 @@
 //romea
 #include "romea_common/geodesy/GeodeticCoordinates.hpp"
 
+//std
+#include <cmath>
+#include <cassert>
 
 namespace romea {
 
 //--------------------------------------------------------------------------
-GeodeticCoordinates::GeodeticCoordinates():
-  WGS84Coordinates(0,0),
-  altitude_(0)
+GeodeticCoordinates makeGeodeticCoordinates(const double & latitude,
+                                            const double & longitude,
+                                            const double & altitude)
 {
+  assert(latitude >= - M_PI_2 && latitude <= M_PI_2);
+  assert(longitude >= - M_PI && longitude <= M_PI);
 
+  GeodeticCoordinates geodetic_coordinates;
+  geodetic_coordinates.latitude=latitude;
+  geodetic_coordinates.longitude=longitude;
+  geodetic_coordinates.altitude=altitude;
+  return geodetic_coordinates;
 }
 
 //--------------------------------------------------------------------------
-GeodeticCoordinates::GeodeticCoordinates(double latitude,
-                                         double longitude,
-                                         double altitude):
-  WGS84Coordinates(latitude,longitude),
-  altitude_(altitude)
+GeodeticCoordinates makeGeodeticCoordinates(const WGS84Coordinates & wgs84Coordinates,
+                                            const double &altitude)
 {
+  GeodeticCoordinates geodetic_coordinates;
+  geodetic_coordinates.latitude=wgs84Coordinates.latitude;
+  geodetic_coordinates.longitude=wgs84Coordinates.longitude;
+  geodetic_coordinates.altitude=altitude;
+  return geodetic_coordinates;
 
 }
 
-//--------------------------------------------------------------------------
-GeodeticCoordinates::GeodeticCoordinates(const WGS84Coordinates & wgs84Coordinates,
-                                         double altitude):
-  WGS84Coordinates(wgs84Coordinates),
-  altitude_(altitude)
-{
-
-}
-
-//--------------------------------------------------------------------------
-double GeodeticCoordinates::getAltitude() const
-{
-  return altitude_;
-}
 
 //--------------------------------------------------------------------------
 std::ostream & operator<<(std::ostream & os, const GeodeticCoordinates & geodeticCoordinates)
 {
   os << static_cast<WGS84Coordinates>(geodeticCoordinates);
-  os << "altitude in meter" << geodeticCoordinates.getAltitude();
+  os << "altitude in meter" << geodeticCoordinates.altitude;
   return os;
 }
 

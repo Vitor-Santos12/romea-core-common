@@ -6,27 +6,17 @@
 
 namespace romea {
 
-class GeodeticCoordinates : public WGS84Coordinates
+struct GeodeticCoordinates : WGS84Coordinates
 {
-public:
-
-
-  GeodeticCoordinates();
-
-  GeodeticCoordinates(double latitude,
-                      double longitude,
-                      double altitude);
-
-  GeodeticCoordinates(const WGS84Coordinates & wgs84Coordinates,
-                      double altitude);
-
-  double getAltitude() const;
-
-protected :
-
-  double altitude_;
-
+  double altitude;
 };
+
+GeodeticCoordinates makeGeodeticCoordinates(const WGS84Coordinates & wgs84Coordinates,
+                                            const double &altitude);
+
+GeodeticCoordinates makeGeodeticCoordinates(const double & latitude,
+                                            const double & longitude,
+                                            const double & altitude);
 
 std::ostream & operator<<(std::ostream & os, const GeodeticCoordinates & geodeticCoordinates);
 

@@ -6,24 +6,14 @@
 
 namespace romea {
 
-class WGS84Coordinates
+struct WGS84Coordinates
 {
-public:
-
-  WGS84Coordinates();
-
-  WGS84Coordinates(double latitude,
-                   double longitude);
-
-  double getLatitude() const;
-  double getLongitude() const;
-
-protected :
-
-  double latitude_;
-  double longitude_;
-
+  double latitude;
+  double longitude;
 };
+
+WGS84Coordinates makeWGS84Coordinates(const double & latitude,
+                                      const double & longitude);
 
 std::ostream & operator<<(std::ostream & os, const WGS84Coordinates & wgs84Coordinates);
 
