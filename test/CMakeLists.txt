@@ -7,6 +7,7 @@ find_package(GTest REQUIRED)
 add_subdirectory(containers)
 add_subdirectory(math)
 add_subdirectory(geodesy)
+add_subdirectory(geometry)
 add_subdirectory(pointset)
 add_subdirectory(transform)
 
