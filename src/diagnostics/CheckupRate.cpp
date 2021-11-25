@@ -61,7 +61,7 @@ bool CheckupRate::heartBeatCallback(const Duration & stamp)
 {
   if(rateMonitoring_.timeout(stamp))
   {
-     setDiagnostic_(DiagnosticStatus::ERROR," timeout");
+     setDiagnostic_(DiagnosticStatus::STALE," timeout");
      setRateValue_();
      return false;
   }
