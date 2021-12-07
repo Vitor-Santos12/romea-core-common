@@ -4,9 +4,9 @@
 #include "../pointset/test_pointset_utils.hpp"
 
 //romea
-#include "romea_common/transform/estimation/FindRigidTransformationByLeastSquares.hpp"
-#include "romea_common/transform/estimation/FindRigidTransformationBySVD.hpp"
-#include "romea_common/transform/estimation/FindRigidTransformationByICP.hpp"
+#include "romea_core_common/transform/estimation/FindRigidTransformationByLeastSquares.hpp"
+#include "romea_core_common/transform/estimation/FindRigidTransformationBySVD.hpp"
+#include "romea_core_common/transform/estimation/FindRigidTransformationByICP.hpp"
 
 const Eigen::Affine2d transformation2d =
     Eigen::Translation2d(0.1,0.2)*

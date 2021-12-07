@@ -1,4 +1,4 @@
-#include "romea_common/geometry/PoseAndTwist3D.hpp"
+#include "romea_core_common/geometry/PoseAndTwist3D.hpp"
 
 namespace romea
 {

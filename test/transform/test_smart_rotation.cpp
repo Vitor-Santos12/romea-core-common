@@ -1,6 +1,6 @@
 // gtest
 #include <gtest/gtest.h>
-#include <romea_common/transform/SmartRotation3D.hpp>
+#include <romea_core_common/transform/SmartRotation3D.hpp>
 
 const double a = 60/180.*M_PI;
 const double cosa = std::cos(60/180.*M_PI);

@@ -1,5 +1,5 @@
 //romea
-#include "romea_common/geometry/Position3D.hpp"
+#include "romea_core_common/geometry/Position3D.hpp"
 
 namespace romea {
 

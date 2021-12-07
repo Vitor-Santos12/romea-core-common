@@ -2,8 +2,8 @@
 #include <fstream>
 
 //romea
-#include "romea_common/pointset/algorithms/Correspondence.hpp"
-#include "romea_common/pointset/algorithms/NormalAndCurvatureEstimation.hpp"
+#include "romea_core_common/pointset/algorithms/Correspondence.hpp"
+#include "romea_core_common/pointset/algorithms/NormalAndCurvatureEstimation.hpp"
 
 //-----------------------------------------------------------------------------
 template < class PointType>

@@ -1,5 +1,5 @@
 //romea
-#include "romea_common/geodesy/EarthEllipsoid.hpp"
+#include "romea_core_common/geodesy/EarthEllipsoid.hpp"
 
 //std
 #include <cmath>

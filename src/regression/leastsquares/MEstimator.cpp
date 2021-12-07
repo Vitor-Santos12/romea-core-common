@@ -1,5 +1,5 @@
 //romea
-#include "romea_common/regression/leastsquares/MEstimator.hpp"
+#include "romea_core_common/regression/leastsquares/MEstimator.hpp"
 
 //std
 #include <algorithm>

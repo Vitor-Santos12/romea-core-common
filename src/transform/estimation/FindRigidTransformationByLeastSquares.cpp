@@ -1,5 +1,5 @@
 //romea
-#include "romea_common/transform/estimation/FindRigidTransformationByLeastSquares.hpp"
+#include "romea_core_common/transform/estimation/FindRigidTransformationByLeastSquares.hpp"
 
 namespace romea {
 

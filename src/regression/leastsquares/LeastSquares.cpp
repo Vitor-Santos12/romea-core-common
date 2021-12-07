@@ -1,5 +1,5 @@
 //romea
-#include "romea_common/regression/leastsquares/LeastSquares.hpp"
+#include "romea_core_common/regression/leastsquares/LeastSquares.hpp"
 
 //Eigen
 #include <Eigen/LU>

@@ -2,8 +2,8 @@
 #include <gtest/gtest.h>
 #
 //romea
-#include "romea_common/monitoring/RateMonitoring.hpp"
-#include "romea_common/monitoring/OnlineVariance.hpp"
+#include "romea_core_common/monitoring/RateMonitoring.hpp"
+#include "romea_core_common/monitoring/OnlineVariance.hpp"
 
 //std
 #include <random>

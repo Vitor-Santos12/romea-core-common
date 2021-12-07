@@ -1,5 +1,5 @@
 //romea
-#include "romea_common/pointset/KdTree.hpp"
+#include "romea_core_common/pointset/KdTree.hpp"
 
 namespace romea{
 

@@ -2,9 +2,9 @@
 #include <gtest/gtest.h>
 
 //romea
-#include "romea_common/containers/grid/GridIndexMapping.hpp"
-#include "romea_common/containers/grid/WrappableGrid.hpp"
-#include "romea_common/containers/grid/RayTracing.hpp"
+#include "romea_core_common/containers/grid/GridIndexMapping.hpp"
+#include "romea_core_common/containers/grid/WrappableGrid.hpp"
+#include "romea_core_common/containers/grid/RayTracing.hpp"
 
 #include <iostream>
 #include <chrono>

@@ -1,4 +1,4 @@
-#include "romea_common/monitoring/RateMonitoring.hpp"
+#include "romea_core_common/monitoring/RateMonitoring.hpp"
 
 namespace {
 const size_t MINIMAL_WINDOW_SIZE =4;

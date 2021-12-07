@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 
 //romea
-#include "romea_common/math/Matrix.hpp"
+#include "romea_core_common/math/Matrix.hpp"
 
 
 //-----------------------------------------------------------------------------

@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 
 //romea
-#include "romea_common/time/Time.hpp"
+#include "romea_core_common/time/Time.hpp"
 
 //-----------------------------------------------------------------------------
 TEST(TestTime, convertion)

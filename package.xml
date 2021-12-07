@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="3">
-  <name>romea_common</name>
+  <name>romea_core_common</name>
   <version>0.0.0</version>
-  <description>The romea package common</description>
+  <description>The romea core common package </description>
   <author email="jean.laneurit@inrae.fr">Jean Laneurit</author>
   <maintainer email="jean.laneurit@inrae.fr">Jean Laneurit</maintainer>
   <license>TODO</license>

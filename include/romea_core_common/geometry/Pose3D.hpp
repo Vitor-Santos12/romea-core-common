@@ -7,7 +7,7 @@
 //romea
 #include "Pose2D.hpp"
 #include "Position3D.hpp"
-#include "romea_common/math/Matrix.hpp"
+#include "romea_core_common/math/Matrix.hpp"
 
 namespace romea {
 

@@ -1,5 +1,5 @@
 //romea
-#include "romea_common/geodesy/ENUConverter.hpp"
+#include "romea_core_common/geodesy/ENUConverter.hpp"
 
 //std
 #include <cassert>

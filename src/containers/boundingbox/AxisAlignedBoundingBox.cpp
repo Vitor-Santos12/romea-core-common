@@ -1,5 +1,5 @@
 //romea
-#include "romea_common/containers/boundingbox/AxisAlignedBoundingBox.hpp"
+#include "romea_core_common/containers/boundingbox/AxisAlignedBoundingBox.hpp"
 
 namespace romea{
 

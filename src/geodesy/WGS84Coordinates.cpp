@@ -1,5 +1,5 @@
 //romea
-#include "romea_common/geodesy/WGS84Coordinates.hpp"
+#include "romea_core_common/geodesy/WGS84Coordinates.hpp"
 
 //std
 #include <cassert>

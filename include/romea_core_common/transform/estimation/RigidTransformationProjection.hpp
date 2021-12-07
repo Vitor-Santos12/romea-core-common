@@ -2,8 +2,8 @@
 #define romea_RigidTransformationProjection_hpp
 
 //romea
-#include <romea_common/coordinates/CartesianCoordinates.hpp>
-#include <romea_common/coordinates/HomogeneousCoordinates.hpp>
+#include <romea_core_common/coordinates/CartesianCoordinates.hpp>
+#include <romea_core_common/coordinates/HomogeneousCoordinates.hpp>
 
 namespace romea {
 

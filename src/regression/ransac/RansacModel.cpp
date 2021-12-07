@@ -1,5 +1,5 @@
 //romea
-#include "romea_common/regression/ransac/RansacModel.hpp"
+#include "romea_core_common/regression/ransac/RansacModel.hpp"
 
 namespace romea {
 

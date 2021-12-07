@@ -2,11 +2,11 @@
 #include <gtest/gtest.h>
 
 //romea
-#include "romea_common/diagnostic/CheckupEqualTo.hpp"
-#include "romea_common/diagnostic/CheckupGreaterThan.hpp"
-#include "romea_common/diagnostic/CheckupLowerThan.hpp"
-#include "romea_common/diagnostic/CheckupReliability.hpp"
-#include "romea_common/diagnostic/CheckupRate.hpp"
+#include "romea_core_common/diagnostic/CheckupEqualTo.hpp"
+#include "romea_core_common/diagnostic/CheckupGreaterThan.hpp"
+#include "romea_core_common/diagnostic/CheckupLowerThan.hpp"
+#include "romea_core_common/diagnostic/CheckupReliability.hpp"
+#include "romea_core_common/diagnostic/CheckupRate.hpp"
 
 //-----------------------------------------------------------------------------
 const romea::Diagnostic & diagnostic(const romea::DiagnosticReport & report,

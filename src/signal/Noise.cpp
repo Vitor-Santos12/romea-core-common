@@ -1,5 +1,5 @@
 //local
-#include "romea_common/signal/Noise.hpp"
+#include "romea_core_common/signal/Noise.hpp"
 
 //std
 #include <cmath>

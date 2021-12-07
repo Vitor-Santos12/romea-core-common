@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 
 //romea
-#include "romea_common/lexical/LexicalCast.hpp"
+#include "romea_core_common/lexical/LexicalCast.hpp"
 
 
 //-----------------------------------------------------------------------------

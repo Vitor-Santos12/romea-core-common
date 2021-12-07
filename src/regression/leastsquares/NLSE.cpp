@@ -1,4 +1,4 @@
-#include "romea_common/regression/leastsquares/NLSE.hpp"
+#include "romea_core_common/regression/leastsquares/NLSE.hpp"
 
 namespace {
 const double DEFAULT_ALPHA = 0.7;

@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 
 //romea
-#include "romea_common/math/EulerAngles.hpp"
+#include "romea_core_common/math/EulerAngles.hpp"
 
 //-----------------------------------------------------------------------------
 TEST(TestEuler, testRX)

@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 
 //romea
-#include "romea_common/geometry/Pose2D.hpp"
+#include "romea_core_common/geometry/Pose2D.hpp"
 
 
 //-----------------------------------------------------------------------------

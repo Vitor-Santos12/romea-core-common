@@ -2,8 +2,8 @@
 #include <gtest/gtest.h>
 
 //romea
-#include "romea_common/coordinates/PolarCoordinates.hpp"
-#include "romea_common/coordinates/SphericalCoordinates.hpp"
+#include "romea_core_common/coordinates/PolarCoordinates.hpp"
+#include "romea_core_common/coordinates/SphericalCoordinates.hpp"
 
 #include <iostream>
 

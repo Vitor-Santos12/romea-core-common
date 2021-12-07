@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 
 //romea
-#include "romea_common/geodesy/ENUConverter.hpp"
+#include "romea_core_common/geodesy/ENUConverter.hpp"
 
 //-----------------------------------------------------------------------------
 inline void checkConversions(const romea::GeodeticCoordinates & llh,

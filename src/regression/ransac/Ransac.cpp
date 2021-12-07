@@ -1,6 +1,6 @@
 //romea
-#include "romea_common/regression/ransac/Ransac.hpp"
-#include "romea_common/regression/ransac/RansacIterations.hpp"
+#include "romea_core_common/regression/ransac/Ransac.hpp"
+#include "romea_core_common/regression/ransac/RansacIterations.hpp"
 
 //std
 #include <limits>

@@ -1,5 +1,5 @@
 //romea
-#include "romea_common/geometry/Circle.hpp"
+#include "romea_core_common/geometry/Circle.hpp"
 
 namespace romea {
 

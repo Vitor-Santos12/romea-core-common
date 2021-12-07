@@ -1,4 +1,4 @@
-#include "romea_common/diagnostic/CheckupRate.hpp"
+#include "romea_core_common/diagnostic/CheckupRate.hpp"
 #include <sstream>
 
 namespace romea {

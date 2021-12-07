@@ -1,5 +1,5 @@
 //romea
-#include "romea_common/pointset/algorithms/Correspondence.hpp"
+#include "romea_core_common/pointset/algorithms/Correspondence.hpp"
 
 namespace romea {
 

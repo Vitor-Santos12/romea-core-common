@@ -1,5 +1,5 @@
 //romea
-#include "romea_common/transform/SmartRotation3D.hpp"
+#include "romea_core_common/transform/SmartRotation3D.hpp"
 
 namespace romea {
 

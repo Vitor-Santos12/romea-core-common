@@ -1,5 +1,5 @@
 //romea
-#include "romea_common/monitoring/OnlineAverage.hpp"
+#include "romea_core_common/monitoring/OnlineAverage.hpp"
 
 namespace romea {
 

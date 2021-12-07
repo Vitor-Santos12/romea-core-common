@@ -1,5 +1,5 @@
 //romea
-#include "romea_common/pointset/algorithms/PreconditionedPointSet.hpp"
+#include "romea_core_common/pointset/algorithms/PreconditionedPointSet.hpp"
 
 namespace romea{
 

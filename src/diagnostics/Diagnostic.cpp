@@ -1,4 +1,4 @@
-#include "romea_common/diagnostic/Diagnostic.hpp"
+#include "romea_core_common/diagnostic/Diagnostic.hpp"
 
 #include <cassert>
 

@@ -1,4 +1,4 @@
-#include "romea_common/diagnostic/CheckupReliability.hpp"
+#include "romea_core_common/diagnostic/CheckupReliability.hpp"
 #include <sstream>
 
 namespace romea {

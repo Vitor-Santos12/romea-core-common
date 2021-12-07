@@ -1,7 +1,7 @@
 //romea
-#include "romea_common/geometry/Pose3D.hpp"
-#include "romea_common/math/EulerAngles.hpp"
-#include "romea_common/transform/SmartRotation3D.hpp"
+#include "romea_core_common/geometry/Pose3D.hpp"
+#include "romea_core_common/math/EulerAngles.hpp"
+#include "romea_core_common/transform/SmartRotation3D.hpp"
 
 namespace romea {
 

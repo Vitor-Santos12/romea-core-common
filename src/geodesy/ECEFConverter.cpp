@@ -1,6 +1,6 @@
 //romea
-#include "romea_common/geodesy/ECEFConverter.hpp"
-#include "romea_common/geodesy/EarthEllipsoid.hpp"
+#include "romea_core_common/geodesy/ECEFConverter.hpp"
+#include "romea_core_common/geodesy/EarthEllipsoid.hpp"
 
 namespace {
 const double EPSILON = 1e-11;

@@ -1,4 +1,4 @@
-#include "romea_common/transform/estimation/RansacRigidTransformationModel.hpp"
+#include "romea_core_common/transform/estimation/RansacRigidTransformationModel.hpp"
 #include <iostream>
 
 namespace romea {

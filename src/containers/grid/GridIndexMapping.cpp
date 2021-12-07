@@ -1,4 +1,4 @@
-#include "romea_common/containers/grid/GridIndexMapping.hpp"
+#include "romea_core_common/containers/grid/GridIndexMapping.hpp"
 
 namespace romea {
 

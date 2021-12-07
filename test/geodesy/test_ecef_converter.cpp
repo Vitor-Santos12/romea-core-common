@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 
 //romea
-#include "romea_common/geodesy/ECEFConverter.hpp"
+#include "romea_core_common/geodesy/ECEFConverter.hpp"
 
 inline void checkConversions(const romea::GeodeticCoordinates & llh,
                             const Eigen::Vector3d & ecef)

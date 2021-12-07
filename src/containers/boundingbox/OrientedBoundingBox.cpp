@@ -1,5 +1,5 @@
 //romea
-#include "romea_common/containers/boundingbox/OrientedBoundingBox.hpp"
+#include "romea_core_common/containers/boundingbox/OrientedBoundingBox.hpp"
 
 namespace romea{
 

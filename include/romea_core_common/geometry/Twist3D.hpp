@@ -3,7 +3,7 @@
 
 //romea
 #include "Twist2D.hpp"
-#include "romea_common/math/Matrix.hpp"
+#include "romea_core_common/math/Matrix.hpp"
 
 namespace romea
 {

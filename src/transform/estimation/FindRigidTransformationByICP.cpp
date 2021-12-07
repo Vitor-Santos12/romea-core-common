@@ -1,6 +1,6 @@
 //romea
-#include "romea_common/transform/estimation/FindRigidTransformationByICP.hpp"
-#include "romea_common/pointset/algorithms/NormalAndCurvatureEstimation.hpp"
+#include "romea_core_common/transform/estimation/FindRigidTransformationByICP.hpp"
+#include "romea_core_common/pointset/algorithms/NormalAndCurvatureEstimation.hpp"
 
 namespace {
 const size_t ICP_MAXIMAL_NUMBER_OF_ITERATIONS =10;

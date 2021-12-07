@@ -1,6 +1,6 @@
 //romea
-#include "romea_common/transform/estimation/FindRigidTransformationBySVD.hpp"
-#include "romea_common/containers/Eigen/EigenContainers.hpp"
+#include "romea_core_common/transform/estimation/FindRigidTransformationBySVD.hpp"
+#include "romea_core_common/containers/Eigen/EigenContainers.hpp"
 
 namespace romea {
 

@@ -1,4 +1,4 @@
-#include "romea_common/diagnostic/DiagnosticReport.hpp"
+#include "romea_core_common/diagnostic/DiagnosticReport.hpp"
 
 namespace romea {
 

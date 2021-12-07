@@ -1,5 +1,5 @@
 //romea
-#include "romea_common/geometry/Ellipse.hpp"
+#include "romea_core_common/geometry/Ellipse.hpp"
 
 //eigen
 #include <Eigen/SVD>
