@@ -12,8 +12,8 @@ melodic_catkin_tests:
    - apt-get install -y -qq libgtest-dev
    - (cd /usr/src/gtest; cmake . && make && cp *.a /usr/lib/)
   script:
-   - catkin build romea_common --cmake-args -DBUILD_TESTS=ON
-   - cd build/romea_common
+   - catkin build romea_core_common --cmake-args -DBUILD_TESTS=ON
+   - cd build/romea_core_common
    - GTEST_COLOR=1 ctest --output-on-failure
 
 # noetic
@@ -25,6 +25,6 @@ noetic_catkin_build:
    - git clone https://gitlab.com/VictorLamoine/ros_gitlab_ci.git
    - source ros_gitlab_ci/gitlab-ci.bash >/dev/null
   script:
-   - catkin build romea_common --cmake-args -DBUILD_TESTS=ON
-   - cd build/romea_common
+   - catkin build romea_core_common --cmake-args -DBUILD_TESTS=ON
+   - cd build/romea_core_common
    - GTEST_COLOR=1 ctest --output-on-failure
