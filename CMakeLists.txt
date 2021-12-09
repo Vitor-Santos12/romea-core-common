@@ -16,6 +16,7 @@ add_library(${PROJECT_NAME} SHARED
   src/containers/grid/RayTracing.cpp
   src/containers/boundingbox/AxisAlignedBoundingBox.cpp
   src/containers/boundingbox/OrientedBoundingBox.cpp
+  src/control/PID.cpp
   src/diagnostics/CheckupRate.cpp
   src/diagnostics/CheckupReliability.cpp
   src/diagnostics/Diagnostic.cpp
