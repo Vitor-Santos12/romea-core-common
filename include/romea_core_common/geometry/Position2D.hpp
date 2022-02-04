@@ -12,7 +12,7 @@ struct Position2D {
 
   Eigen::Vector2d position;
   Eigen::Matrix2d covariance;
-  EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
 };
 
@@ -25,4 +25,3 @@ std::ostream & operator <<(std::ostream & os,const Position2D & position2d);
 
 
 #endif
-
