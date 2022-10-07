@@ -1,12 +1,13 @@
 #include "romea_core_common/diagnostic/CheckupRate.hpp"
 #include <sstream>
+#include <iostream>
 
 namespace romea {
 
 //-----------------------------------------------------------------------------
 CheckupRate::CheckupRate(const std::string &name,
-                     const double & minimalRate,
-                     const double & espilon):
+                         const double & minimalRate,
+                         const double & espilon):
   rateMonitoring_(minimalRate),
   minimalRate_(minimalRate),
   epsilon_(espilon),
@@ -22,6 +23,7 @@ DiagnosticStatus CheckupRate::evaluate(const Duration & stamp)
 {
   double rate=rateMonitoring_.update(stamp);
 
+  std::lock_guard<std::mutex> lock(mutex_);
   if(rate > minimalRate_-epsilon_)
   {
     setDiagnostic_(DiagnosticStatus::OK," is OK.");
@@ -36,14 +38,15 @@ DiagnosticStatus CheckupRate::evaluate(const Duration & stamp)
 }
 
 //-----------------------------------------------------------------------------
-const DiagnosticReport & CheckupRate::getReport() const
+DiagnosticReport CheckupRate::getReport() const
 {
+  std::lock_guard<std::mutex> lock(mutex_);
   return report_;
 }
 
 //-----------------------------------------------------------------------------
 void CheckupRate::setDiagnostic_(const DiagnosticStatus & status,
-                               const std::string & diagnosticEnd)
+                                 const std::string & diagnosticEnd)
 {
   Diagnostic & message = report_.diagnostics.front();
   message.message = report_.info.begin()->first + diagnosticEnd;
@@ -61,9 +64,10 @@ bool CheckupRate::heartBeatCallback(const Duration & stamp)
 {
   if(rateMonitoring_.timeout(stamp))
   {
-     setDiagnostic_(DiagnosticStatus::STALE," timeout");
-     setRateValue_();
-     return false;
+    std::lock_guard<std::mutex> lock(mutex_);
+    setDiagnostic_(DiagnosticStatus::STALE," timeout");
+    setRateValue_();
+    return false;
   }
   return true;
 }

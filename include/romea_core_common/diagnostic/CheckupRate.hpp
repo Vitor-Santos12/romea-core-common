@@ -18,7 +18,7 @@ public:
 
   bool heartBeatCallback(const Duration & stamp);
 
-  const DiagnosticReport & getReport()const;
+  DiagnosticReport getReport()const;
 
 private :
 
@@ -34,6 +34,7 @@ private :
   double minimalRate_;
   double epsilon_;
 
+  mutable std::mutex mutex_;
   DiagnosticReport report_;
 };
 

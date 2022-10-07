@@ -2,6 +2,7 @@
 #define _romea_CheckupReliability_hpp_
 
 #include "DiagnosticReport.hpp"
+#include <mutex>
 
 namespace romea {
 
@@ -16,7 +17,7 @@ public:
 
   DiagnosticStatus evaluate(const double & reliability);
 
-  const DiagnosticReport & getReport()const;
+  DiagnosticReport getReport()const;
 
 private :
 
@@ -30,6 +31,7 @@ private:
   double low_reliability_theshold_;
   double high_reliability_theshold_;
 
+  mutable std::mutex mutex_;
   DiagnosticReport report_;
 };
 

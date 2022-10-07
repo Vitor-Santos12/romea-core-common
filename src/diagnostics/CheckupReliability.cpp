@@ -18,6 +18,7 @@ CheckupReliability::CheckupReliability(const std::string &name,
 //-----------------------------------------------------------------------------
 DiagnosticStatus CheckupReliability::evaluate(const double & reliability)
 {
+  std::lock_guard<std::mutex> lock(mutex_);
   if(reliability < low_reliability_theshold_ )
   {
     setDiagnostic_(DiagnosticStatus::ERROR," is too low.");
@@ -36,8 +37,9 @@ DiagnosticStatus CheckupReliability::evaluate(const double & reliability)
 }
 
 //-----------------------------------------------------------------------------
-const DiagnosticReport & CheckupReliability::getReport()const
+DiagnosticReport CheckupReliability::getReport()const
 {
+  std::lock_guard<std::mutex> lock(mutex_);
   return report_;
 }
 
