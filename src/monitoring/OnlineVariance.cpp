@@ -12,8 +12,8 @@ OnlineVariance::OnlineVariance(const double & averagePrecision,size_t windowSize
   windowSizeMinusOne_(windowSize-1),
   squaredMultiplier_(multiplier_*multiplier_),
   squaredData_(),
-  sumOfSquaredData_(),
-  variance_(0)
+  sumOfSquaredData_(0),
+  variance_(std::numeric_limits<double>::quiet_NaN())
 {
 
 }
@@ -33,7 +33,7 @@ OnlineVariance::OnlineVariance(const OnlineVariance & onlineVariance):
   squaredMultiplier_(onlineVariance.squaredMultiplier_),
   squaredData_(onlineVariance.squaredData_),
   sumOfSquaredData_(onlineVariance.sumOfSquaredData_),
-  variance_(onlineVariance.variance_.load())
+  variance_(onlineVariance.variance_)
 {
 }
 
@@ -50,14 +50,15 @@ void OnlineVariance::setWindowSize(const size_t & windowSize)
 //-----------------------------------------------------------------------------
 double OnlineVariance::getVariance()const
 {
-  return variance_.load();
+  std::lock_guard<std::mutex> lock(mutex_);
+  return variance_;
 }
-
 
 //-----------------------------------------------------------------------------
 void OnlineVariance::update(const double & value)
 {
 
+  std::lock_guard<std::mutex> lock(mutex_);
   long long int integerValue = static_cast<long long int>(value*multiplier_);
   long long int squaredIntegerValue = integerValue*integerValue;
 
@@ -81,11 +82,27 @@ void OnlineVariance::update(const double & value)
   double average = sumOfData_/(double(multiplier_)*data_.size());
   double squaredAverage= (sumOfSquaredData_)/double(squaredMultiplier_);
   double variance = (squaredAverage - data_.size()*average*average)/(windowSizeMinusOne_);
-  average_.store(average);
-  variance_.store(variance);
+  average_=average;
+  variance_=variance;
 
 
   index_ = (index_+1)%windowSize_;
+}
+
+//-----------------------------------------------------------------------------
+void OnlineVariance::reset()
+{
+  std::lock_guard<std::mutex> lock(mutex_);
+
+  data_.clear();
+  squaredData_.clear();
+
+  sumOfData_=0;
+  sumOfSquaredData_=0;
+
+  average_=std::numeric_limits<double>::quiet_NaN();
+  variance_=std::numeric_limits<double>::quiet_NaN();
+
 }
 
 }

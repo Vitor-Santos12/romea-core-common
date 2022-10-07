@@ -37,17 +37,18 @@ public :
 
   double getAverage()const;
 
+  virtual void reset();
 
 protected :
 
   size_t index_;
   size_t windowSize_;
-
   int multiplier_;
+
+  mutable std::mutex mutex_;
   std::vector<long long int> data_;
   long long int sumOfData_;
-
-  std::atomic<double> average_;
+  double average_;
 
 };
 

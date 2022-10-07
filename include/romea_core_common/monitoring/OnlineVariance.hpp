@@ -25,18 +25,18 @@ public :
 
   virtual void update(const double &value) override;
 
-  double getVariance()const;
+  virtual void reset() override;
 
+  double getVariance()const;
 
 private :
 
   size_t windowSizeMinusOne_;
-
   int squaredMultiplier_;
+
   std::vector<long long int> squaredData_;
   long long int sumOfSquaredData_;
-
-  std::atomic<double> variance_;
+  double variance_;
 
 };
 

@@ -9,8 +9,8 @@ OnlineAverage::OnlineAverage(const double & averagePrecision,size_t windowSize):
   windowSize_(windowSize),
   multiplier_(static_cast<int>(1/averagePrecision)),
   data_(),
-  sumOfData_(),
-  average_()
+  sumOfData_(0.0),
+  average_(std::numeric_limits<double>::quiet_NaN())
 {
 }
 
@@ -28,7 +28,7 @@ OnlineAverage::OnlineAverage(const OnlineAverage & onlineAverage):
   multiplier_(onlineAverage.multiplier_),
   data_(onlineAverage.data_),
   sumOfData_(onlineAverage.sumOfData_),
-  average_(onlineAverage.average_.load())
+  average_(onlineAverage.average_)
 {
 }
 
@@ -50,7 +50,8 @@ const size_t & OnlineAverage::getWindowSize() const
 //-----------------------------------------------------------------------------
 double OnlineAverage::getAverage()const
 {
-  return average_.load();
+  std::lock_guard<std::mutex> lock(mutex_);
+  return average_;
 }
 
 
@@ -58,8 +59,8 @@ double OnlineAverage::getAverage()const
 void OnlineAverage::update(const double & value)
 {
 
+  std::lock_guard<std::mutex> lock(mutex_);
   long long int integerValue = static_cast<long long int>(value*multiplier_);
-
 
   sumOfData_+=integerValue;
   if(data_.size()!=windowSize_)
@@ -71,7 +72,7 @@ void OnlineAverage::update(const double & value)
     sumOfData_-=data_[index_];
     data_[index_]= integerValue;
   }
-  average_.store(sumOfData_/(double(multiplier_)*data_.size()));
+  average_ = sumOfData_/(double(multiplier_)*data_.size());
   index_ = (index_+1)%windowSize_;
 }
 
@@ -82,5 +83,13 @@ bool OnlineAverage::isAvailable()const
   return data_.size() == windowSize_;
 }
 
+//-----------------------------------------------------------------------------
+void OnlineAverage::reset()
+{
+  std::lock_guard<std::mutex> lock(mutex_);
+  data_.clear();
+  sumOfData_=0;
+  average_=std::numeric_limits<double>::quiet_NaN();
+}
 
 }
