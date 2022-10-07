@@ -10,6 +10,7 @@ add_subdirectory(geodesy)
 add_subdirectory(geometry)
 add_subdirectory(pointset)
 add_subdirectory(transform)
+add_subdirectory(monitoring)
 
 
 add_executable(${PROJECT_NAME}_test_time test_time.cpp )

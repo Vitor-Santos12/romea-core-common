@@ -17,3 +17,8 @@ add_executable(${PROJECT_NAME}_test_math_matrix test_math_matrix.cpp )
 target_link_libraries(${PROJECT_NAME}_test_math_matrix ${PROJECT_NAME} GTest::GTest GTest::Main)
 target_compile_options(${PROJECT_NAME}_test_math_matrix PRIVATE -std=c++17)
 add_test(test_math_matrix ${PROJECT_NAME}_test_math_matrix)
+
+add_executable(${PROJECT_NAME}_test_transformation test_transformation.cpp )
+target_link_libraries(${PROJECT_NAME}_test_transformation ${PROJECT_NAME} GTest::GTest GTest::Main)
+target_compile_options(${PROJECT_NAME}_test_transformation PRIVATE -std=c++17)
+add_test(test_math_matrix ${PROJECT_NAME}_test_transformation)
