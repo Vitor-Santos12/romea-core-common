@@ -1,9 +1,10 @@
-#ifndef _romea_DiagnosticCompare_hpp_
-#define _romea_DiagnosticCompare_hpp_
+#ifndef _romea_Checkup_hpp_
+#define _romea_Checkup_hpp_
 
 //std
 #include <limits>
 #include <sstream>
+#include <mutex>
 
 //romea
 #include "DiagnosticReport.hpp"
@@ -12,16 +13,17 @@ namespace romea {
 
 
 template <typename T>
-class  CheckCompareWith
+class  Checkup
 {
 
 public:
 
-  CheckCompareWith(const std::string &name,
-                   const T & value_to_compare_with_,
-                   const T & epsilon);
+  Checkup(const std::string &name,
+          const T & value_to_compare_with_,
+          const T & epsilon,
+          const Diagnostic & diagnostic = Diagnostic());
 
-  virtual ~ CheckCompareWith()=default;
+  virtual ~ Checkup()=default;
 
 public :
 
@@ -29,9 +31,9 @@ public :
 
   const DiagnosticReport & getReport() const;
 
-protected:
+  void timeout();
 
-//  const std::string & getValueName_() const;
+protected:
 
   void setValue_(const T & value);
 
@@ -45,47 +47,54 @@ protected:
   T value_to_compare_with_;
   T epsilon_;
 
+  mutable std::mutex mutex_;
   DiagnosticReport report_;
 };
 
 //-----------------------------------------------------------------------------
 template <typename T>
-CheckCompareWith<T>::CheckCompareWith(const std::string & name,
-                                      const T & value_to_compare_with,
-                                      const T & epsilon):
+Checkup<T>::Checkup(const std::string & name,
+                    const T & value_to_compare_with,
+                    const T & epsilon,
+                    const Diagnostic & diagnostic):
   value_to_compare_with_(value_to_compare_with),
   epsilon_(epsilon),
+  mutex_(),
   report_()
 {
-  report_.diagnostics.push_back(Diagnostic());
+  report_.diagnostics.push_back(diagnostic);
   report_.info[name]="";
 }
 
 //-----------------------------------------------------------------------------
 template <typename T>
-const DiagnosticReport & CheckCompareWith<T>::getReport() const
+const DiagnosticReport & Checkup<T>::getReport() const
 {
+  std::lock_guard<std::mutex> lock(mutex_);
   return report_;
 }
 
-////-----------------------------------------------------------------------------
-//template <typename T>
-//const std::string & CheckCompareWith<T>::getValueName_() const
-//{
-//  return report_.info.begin()->first;
-//}
+//-----------------------------------------------------------------------------
+template <typename T>
+void Checkup<T>::timeout()
+{
+  std::lock_guard<std::mutex> lock(mutex_);
+  setDiagnostic_(DiagnosticStatus::STALE," timeout.");
+  report_.info.begin()->second="";
+}
+
 
 //-----------------------------------------------------------------------------
 template <typename T>
-void CheckCompareWith<T>::setValue_(const T & value)
+void Checkup<T>::setValue_(const T & value)
 {
   report_.info.begin()->second= toStringInfoValue(value);
 }
 
 //-----------------------------------------------------------------------------
 template <typename T>
-void CheckCompareWith<T>::setDiagnostic_(const DiagnosticStatus & status,
-                                         const std::string & messageEnd)
+void Checkup<T>::setDiagnostic_(const DiagnosticStatus & status,
+                                const std::string & messageEnd)
 {
   Diagnostic & diagnostic= report_.diagnostics.front();
   diagnostic.message = report_.info.begin()->first + messageEnd;
@@ -94,7 +103,7 @@ void CheckCompareWith<T>::setDiagnostic_(const DiagnosticStatus & status,
 
 //-----------------------------------------------------------------------------
 template <typename T>
-const DiagnosticStatus & CheckCompareWith<T>::getStatus_() const
+const DiagnosticStatus & Checkup<T>::getStatus_() const
 {
   return this->report_.diagnostics.front().status;
 }

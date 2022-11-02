@@ -5,73 +5,48 @@
 namespace romea {
 
 //-----------------------------------------------------------------------------
-CheckupRate::CheckupRate(const std::string &name,
-                         const double & minimalRate,
-                         const double & espilon):
-  rateMonitoring_(minimalRate),
-  minimalRate_(minimalRate),
-  epsilon_(espilon),
-  report_()
+template <typename CheckupType>
+CheckupRate<CheckupType>::CheckupRate(const std::string &name,
+                                      const double & rate,
+                                      const double & espilon):
+  rateMonitoring_(rate),
+  checkup_(name+"_rate",
+           rate,
+           espilon,
+           Diagnostic(DiagnosticStatus::ERROR,"no data received from "+name))
 {
-  report_.info[name+"_rate"]="";
-  report_.diagnostics.push_back(Diagnostic(DiagnosticStatus::ERROR,"no data received from "+name));
 }
 
 
 //-----------------------------------------------------------------------------
-DiagnosticStatus CheckupRate::evaluate(const Duration & stamp)
+template <typename CheckupType>
+DiagnosticStatus CheckupRate<CheckupType>::evaluate(const Duration & stamp)
 {
   double rate=rateMonitoring_.update(stamp);
-
-  std::lock_guard<std::mutex> lock(mutex_);
-  if(rate > minimalRate_-epsilon_)
-  {
-    setDiagnostic_(DiagnosticStatus::OK," is OK.");
-  }
-  else
-  {
-    setDiagnostic_(DiagnosticStatus::ERROR," is too low.");
-  }
-
-  setRateValue_();
-  return report_.diagnostics.front().status;
+  return checkup_.evaluate(rate);
 }
 
 //-----------------------------------------------------------------------------
-DiagnosticReport CheckupRate::getReport() const
+template <typename CheckupType>
+DiagnosticReport CheckupRate<CheckupType>::getReport() const
 {
-  std::lock_guard<std::mutex> lock(mutex_);
-  return report_;
+  return checkup_.getReport();
 }
 
 //-----------------------------------------------------------------------------
-void CheckupRate::setDiagnostic_(const DiagnosticStatus & status,
-                                 const std::string & diagnosticEnd)
-{
-  Diagnostic & message = report_.diagnostics.front();
-  message.message = report_.info.begin()->first + diagnosticEnd;
-  message.status = status;
-}
-
-//-----------------------------------------------------------------------------
-void CheckupRate::setRateValue_()
-{
-  report_.info.begin()->second=toStringInfoValue(rateMonitoring_.getRate());
-}
-
-//-----------------------------------------------------------------------------
-bool CheckupRate::heartBeatCallback(const Duration & stamp)
+template <typename CheckupType>
+bool CheckupRate<CheckupType>::heartBeatCallback(const Duration & stamp)
 {
   if(rateMonitoring_.timeout(stamp))
   {
-    std::lock_guard<std::mutex> lock(mutex_);
-    setDiagnostic_(DiagnosticStatus::STALE," timeout");
-    setRateValue_();
+    checkup_.timeout();
     return false;
   }
   return true;
 }
 
+template class CheckupRate<CheckupGreaterThan<double>>;
+template class CheckupRate<CheckupEqualTo<double>>;
 
 }// namespace
 

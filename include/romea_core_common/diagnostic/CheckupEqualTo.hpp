@@ -1,20 +1,21 @@
 #ifndef _romea_CheckEqualTo_hpp_
 #define _romea_CheckEqualTo_hpp_
 
-#include "CheckupCompareWith.hpp"
+#include "Checkup.hpp"
 
 namespace romea {
 
 
 template <typename T>
-class  CheckEqualTo final : public CheckCompareWith<T>
+class  CheckupEqualTo : public Checkup<T>
 {
 
 public:
 
-  CheckEqualTo(const std::string &name,
-               const T & desired_value,
-               const T & epsilon = std::numeric_limits<T>::epsilon());
+  CheckupEqualTo(const std::string &name,
+                 const T & desired_value,
+                 const T & epsilon,
+                 const Diagnostic & initialDiagnostic=Diagnostic());
 
   DiagnosticStatus evaluate(const T & value) override;
 
@@ -22,17 +23,18 @@ public:
 
 //-----------------------------------------------------------------------------
 template <typename T>
-CheckEqualTo<T>::CheckEqualTo(const std::string & name,
-                              const T & desired_value,
-                              const T & epsilon):
-  CheckCompareWith<T>(name,desired_value,epsilon)
+CheckupEqualTo<T>::CheckupEqualTo(const std::string & name,
+                                  const T & desired_value,
+                                  const T & epsilon,
+                                  const Diagnostic & initialDiagnostic):
+  Checkup<T>(name,desired_value,epsilon,initialDiagnostic)
 {
 
 }
 
 //-----------------------------------------------------------------------------
 template <typename T>
-DiagnosticStatus CheckEqualTo<T>::evaluate(const T & value)
+DiagnosticStatus CheckupEqualTo<T>::evaluate(const T & value)
 {
   if(value < this->value_to_compare_with_-this->epsilon_)
   {

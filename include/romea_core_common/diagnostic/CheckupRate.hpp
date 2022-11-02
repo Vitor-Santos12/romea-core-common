@@ -1,18 +1,20 @@
 #ifndef _romea_DiagnosticRate_hpp_
 #define _romea_DiagnosticRate_hpp_
 
-#include "DiagnosticReport.hpp"
+#include "CheckupEqualTo.hpp"
+#include "CheckupGreaterThan.hpp"
 #include "../monitoring/RateMonitoring.hpp"
 
 namespace romea {
 
+template <typename CheckupType>
 class  CheckupRate
 {
 public:
 
   CheckupRate(const std::string &name,
-              const double & minimalRate,
-              const double & espilon= std::numeric_limits<double>::epsilon());
+              const double & rate,
+              const double & espilon);
 
   DiagnosticStatus evaluate(const Duration & stamp);
 
@@ -22,21 +24,16 @@ public:
 
 private :
 
-  void setRateValue_();
-
-  void setDiagnostic_(const DiagnosticStatus & status,
-                      const std::string & diagnosticEnd);
-
-private :
-
   RateMonitoring rateMonitoring_;
-
-  double minimalRate_;
-  double epsilon_;
+  CheckupType checkup_;
 
   mutable std::mutex mutex_;
   DiagnosticReport report_;
 };
+
+
+using CheckupEqualToRate = CheckupRate<CheckupEqualTo<double>>;
+using CheckupGreaterThanRate = CheckupRate<CheckupGreaterThan<double>>;
 
 }
 

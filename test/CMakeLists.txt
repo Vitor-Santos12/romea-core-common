@@ -11,6 +11,7 @@ add_subdirectory(geometry)
 add_subdirectory(pointset)
 add_subdirectory(transform)
 add_subdirectory(monitoring)
+add_subdirectory(diagnostics)
 
 
 add_executable(${PROJECT_NAME}_test_time test_time.cpp )
@@ -22,11 +23,6 @@ add_executable(${PROJECT_NAME}_test_coordinates test_coordinates.cpp )
 target_link_libraries(${PROJECT_NAME}_test_coordinates ${PROJECT_NAME} GTest::GTest GTest::Main)
 target_compile_options(${PROJECT_NAME}_test_coordinates PRIVATE -std=c++17)
 add_test(test_coordinates ${PROJECT_NAME}_test_coordinates)
-
-add_executable(${PROJECT_NAME}_test_diagnostic test_diagnostic.cpp )
-target_link_libraries(${PROJECT_NAME}_test_diagnostic ${PROJECT_NAME} GTest::GTest GTest::Main)
-target_compile_options(${PROJECT_NAME}_test_diagnostic PRIVATE -std=c++17)
-add_test(test_diagnostic ${PROJECT_NAME}_test_diagnostic)
 
 add_executable(${PROJECT_NAME}_test_lexical_cast test_lexical_cast.cpp )
 target_link_libraries(${PROJECT_NAME}_test_lexical_cast ${PROJECT_NAME} GTest::GTest GTest::Main)
