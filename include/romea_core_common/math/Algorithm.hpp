@@ -1,7 +1,7 @@
-#ifndef romea_Algorithm_hpp
-#define romea_Algorithm_hpp
+#ifndef ROMEA_CORE_COMMON_MATH_ALGORITHM_HPP_
+#define ROMEA_CORE_COMMON_MATH_ALGORITHM_HPP_
 
-//std
+// std
 #include <cmath>
 #include <cassert>
 #include <limits>
@@ -22,27 +22,31 @@ RealType sign(const RealType  &x)
 template <typename RealType >
 double signedMin(const RealType & x, const RealType & y)
 {
-  if(x >= 0 || y >= 0)
-    return std::min(x,y);
-
-  return std::max(x,y);
+  if ( x >= 0 || y >= 0)
+  {
+    return std::min(x, y);
+  } else {
+    return std::max(x, y);
+  }
 }
 
 //--------------------------------------------------------------------------
 template <typename RealType >
 double signedFloor(const RealType & x)
 {
-  if(x>=0)
+  if (x >= 0)
+  {
     return std::floor(x);
-  else
+  }else{
     return std::ceil(x);
+  }
 }
 
 //--------------------------------------------------------------------------
 template <typename RealType >
 RealType near(const RealType & value1 ,
               const RealType & value2,
-              double epsilon =std::numeric_limits<RealType>::epsilon())
+              double epsilon  = std::numeric_limits<RealType>::epsilon())
 {
   return std::abs(value1-value2) < 0.00001;
 }
@@ -54,8 +58,8 @@ RealType clamp(const RealType & value ,
                const RealType & minValue,
                const RealType & maxValue)
 {
-  assert(minValue<=maxValue);
-  return std::max(minValue,std::min(maxValue,value));
+  assert(minValue <= maxValue);
+  return std::max(minValue, std::min(maxValue, value));
 }
 
 //--------------------------------------------------------------------------
@@ -63,7 +67,7 @@ template <typename RealType >
 RealType symmetricClamp(const RealType & value ,
                         const RealType & absoluteMaxValue)
 {
-  return clamp(value,-absoluteMaxValue,absoluteMaxValue);
+  return clamp(value, -absoluteMaxValue, absoluteMaxValue);
 }
 
 //--------------------------------------------------------------------------
@@ -71,15 +75,12 @@ template <typename RealType >
 std::optional<RealType> safeDivide(const RealType & numerator,
                                      const RealType & denominator)
 {
-  if(std::abs(denominator)<std::numeric_limits<RealType>::epsilon())
+  if (std::abs(denominator) < std::numeric_limits<RealType>::epsilon())
   {
     return std::optional<RealType>();
-  }
-  else
-  {
+  } else {
     return std::optional<RealType>(numerator/denominator);
   }
-
 }
 
 //--------------------------------------------------------------------------
@@ -108,43 +109,6 @@ static bool isApproximatelyZero(RealType a,
   return false;
 }
 
-////--------------------------------------------------------------------------
-//template<typename RealType>
-//static bool isDefinitelyLessThan(RealType a,
-//                                 RealType b,
-//                                 RealType tolerance = std::numeric_limits<RealType>::epsilon())
-//{
+}  // namespace romea
 
-////    return (b - a) > ( (fabs(a) < fabs(b) ? fabs(b) : fabs(a)) * tolerance);
-//    RealType diff = a - b;
-//    std::cout << "diff "<< diff<< std::endl;
-//    if (diff < tolerance)
-//        return true;
-
-//    std::cout << " rol tol " << std::fmax(std::fabs(a), std::fabs(b)) * tolerance<<std::endl;
-//    if (diff < std::fmax(std::fabs(a), std::fabs(b)) * tolerance)
-//        return true;
-
-//    return false;
-//}
-////--------------------------------------------------------------------------
-//template<typename RealType>
-//static bool isDefinitelyGreaterThan(RealType a,
-//                                    RealType b,
-//                                    RealType tolerance = std::numeric_limits<RealType>::epsilon())
-//{
-////  return (a - b) > ( (fabs(a) < fabs(b) ? fabs(b) : fabs(a)) * tolerance);
-//    RealType diff = a - b;
-//    if (diff > tolerance)
-//        return true;
-
-//    if (diff > std::fmax(std::fabs(a), std::fabs(b)) * tolerance)
-//        return true;
-
-//    return false;
-//}
-
-
-}//romea
-
-#endif
+#endif  // ROMEA_CORE_COMMON_MATH_ALGORITHM_HPP_

@@ -1,7 +1,7 @@
-//romea
+// romea
 #include "romea_core_common/regression/ransac/RansacRandomCorrespondences.hpp"
 
-//std
+// std
 #include <algorithm>
 #include <functional>
 
@@ -15,7 +15,7 @@ RansacRandomCorrespondences<PointType>::RansacRandomCorrespondences():
   weights_(),
   cumSumWeights_(),
   randomGenerator_(),
-  uniformDistribution_(0.0,1.0)
+  uniformDistribution_(0.0, 1.0)
 {
 
 }
@@ -25,7 +25,7 @@ template <class PointType> void
 RansacRandomCorrespondences<PointType>::computeScale(const PointType& pointSetMin,
                                                      const PointType& pointSetMax)
 {
-  scale_= 2*(pointSetMax-pointSetMin)/std::sqrt(12);
+  scale_ = 2*(pointSetMax-pointSetMin)/std::sqrt(12);
 }
 
 //-----------------------------------------------------------------------------
@@ -36,31 +36,30 @@ RansacRandomCorrespondences<PointType>::drawPoints(
     const std::vector<Correspondence> & correspondences,
     const size_t & numberOfRandomCorrespondences)
 {
-
   numberOfCorrespondences_ = correspondences.size();
   assert(numberOfCorrespondences_> numberOfRandomCorrespondences);
 
   weights_.resize(numberOfCorrespondences_);
   cumSumWeights_.resize(numberOfCorrespondences_);
-  for(size_t n=0;n<correspondences.size();n++){
-    weights_[n]=correspondences[n].weight;
+  for (size_t n = 0; n < correspondences.size(); n++){
+    weights_[n] = correspondences[n].weight;
   }
   computeCumSumWeights_();
 
-  std::vector<Correspondence> randomCorrespondences(numberOfRandomCorrespondences);
 
   // Draw randomly N correspondences
-  for(size_t n =1; n<= numberOfRandomCorrespondences; ++n)
+  std::vector<Correspondence> randomCorrespondences(numberOfRandomCorrespondences);
+
+  for (size_t n = 1; n<= numberOfRandomCorrespondences; ++n)
   {
     double * I = std::lower_bound(cumSumWeights_.data(),
                                   cumSumWeights_.data()+cumSumWeights_.size(),
                                   uniformDistribution_(randomGenerator_));
 
-    size_t index = size_t(std::distance(cumSumWeights_.data(),I));
+    size_t index = size_t(std::distance(cumSumWeights_.data(), I));
     randomCorrespondences[n-1] = correspondences[index];
 
-    updateWeights_(sourcePointSet,correspondences,index);
-
+    updateWeights_(sourcePointSet, correspondences, index);
   }
 
   return randomCorrespondences;
@@ -70,7 +69,7 @@ RansacRandomCorrespondences<PointType>::drawPoints(
 template <class PointType> void
 RansacRandomCorrespondences<PointType>::resetWeights_()
 {
-  weights_.assign(numberOfCorrespondences_,1.);
+  weights_.assign(numberOfCorrespondences_, 1.);
   computeCumSumWeights_();
 }
 
@@ -83,18 +82,17 @@ updateWeights_(const PointSet<PointType> & preconditionedSourcePointSet,
                const std::vector<Correspondence> & correspondences,
                const size_t & correspondenceIndex)
 {
-
   const size_t &drawSourceIndex = correspondences[correspondenceIndex].sourcePointIndex;
   const size_t &drawTargetIndex = correspondences[correspondenceIndex].targetPointIndex;
   const PointType & drawSourcePoint = preconditionedSourcePointSet[drawSourceIndex];
 
-  for(size_t n=0;n<numberOfCorrespondences_;++n)
+  for (size_t n = 0; n < numberOfCorrespondences_; ++n)
   {
     const size_t &sourceIndex = correspondences[n].sourcePointIndex;
     const size_t &targetIndex = correspondences[n].targetPointIndex;
-    if(targetIndex==drawTargetIndex){
-      weights_[n]=0;
-    }else{
+    if (targetIndex == drawTargetIndex){
+      weights_[n] = 0;
+    } else {
       const PointType point = preconditionedSourcePointSet[sourceIndex];
       weights_[n] *= 1 - std::exp(-((point-drawSourcePoint).array()*scale_.array()).square().sum());
     }
@@ -107,7 +105,6 @@ updateWeights_(const PointSet<PointType> & preconditionedSourcePointSet,
 template <class PointType> void
 RansacRandomCorrespondences<PointType>::computeCumSumWeights_()
 {
-
   std::partial_sum(cbegin(weights_),
                    std::cend(weights_),
                    std::begin(cumSumWeights_));
@@ -118,7 +115,6 @@ RansacRandomCorrespondences<PointType>::computeCumSumWeights_()
                  std::bind(std::divides<double>(),
                            std::placeholders::_1,
                            cumSumWeights_.back()));
-
 }
 
 template class RansacRandomCorrespondences<Eigen::Vector2f>;
@@ -130,4 +126,5 @@ template class RansacRandomCorrespondences<HomogeneousCoordinates2f>;
 template class RansacRandomCorrespondences<HomogeneousCoordinates2d>;
 template class RansacRandomCorrespondences<HomogeneousCoordinates3f>;
 template class RansacRandomCorrespondences<HomogeneousCoordinates3d>;
-}
+
+}  // namespace romea

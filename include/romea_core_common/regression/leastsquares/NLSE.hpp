@@ -1,33 +1,27 @@
-#ifndef romea_NLSE_hpp
-#define romea_NLSE_hpp
+#ifndef ROMEA_CORE_COMMON_REGRESSION_LEASTSQUARES_NLSE_HPP_
+#define ROMEA_CORE_COMMON_REGRESSION_LEASTSQUARES_NLSE_HPP_
 
-#include "LeastSquares.hpp"
+#include "romea_core_common/regression/leastsquares/LeastSquares.hpp"
 
 namespace romea {
 
 template <typename RealType>
 class NLSE
 {
+public :
+  using Vector = Eigen::Matrix<RealType, Eigen::Dynamic, 1>;
+  using Matrix = Eigen::Matrix<RealType, Eigen::Dynamic, Eigen::Dynamic>;
 
 public :
-
-
-  using Vector = Eigen::Matrix<RealType,Eigen::Dynamic,1>;
-  using Matrix = Eigen::Matrix<RealType,Eigen::Dynamic,Eigen::Dynamic>;
-
-public :
-
-
   NLSE();
 
-  NLSE(const double & estimateEpsilon);
+  explicit NLSE(const double & estimateEpsilon);
 
   NLSE(const double & estimateEpsilon, const RealType & alpha);
 
-  virtual ~NLSE()=default;
+  virtual ~NLSE() = default;
 
 public :
-
 
   virtual bool estimate(const size_t & maximalNumberOfIterations,
                         const double & dataStd);
@@ -42,9 +36,9 @@ public :
 
 protected :
 
-  virtual void computeGuess_()=0;
+  virtual void computeGuess_() = 0;
 
-  virtual void computeJacobianAndY_()=0;
+  virtual void computeJacobianAndY_() = 0;
 
 protected :
 
@@ -59,8 +53,6 @@ protected :
   double rmse_;
 };
 
+}  // namespace romea
 
-
-}
-
-#endif
+#endif  // ROMEA_CORE_COMMON_REGRESSION_LEASTSQUARES_NLSE_HPP_

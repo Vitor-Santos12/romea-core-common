@@ -1,29 +1,30 @@
-#ifndef romea_FindRigidTransformationByLeastSquares_hpp
-#define romea_FindRigidTransformationByLeastSquares_hpp
+#ifndef ROMEA_CORE_COMMON_TRANSFORM_ESTIMATION_FINDRIGIDTRANSFORMATIONBYLEASTSQUARES_HPP_
+#define ROMEA_CORE_COMMON_TRANSFORM_ESTIMATION_FINDRIGIDTRANSFORMATIONBYLEASTSQUARES_HPP_
 
-//romea
-#include "../../coordinates/CartesianCoordinates.hpp"
-#include "../../coordinates/HomogeneousCoordinates.hpp"
-#include "../../regression/leastsquares/LeastSquares.hpp"
-#include "../../pointset/algorithms/PreconditionedPointSet.hpp"
-#include "../../pointset/algorithms/Correspondence.hpp"
-#include "../../pointset/NormalSet.hpp"
+// std
+#include <vector>
+
+// romea
+#include "romea_core_common/coordinates/CartesianCoordinates.hpp"
+#include "romea_core_common/coordinates/HomogeneousCoordinates.hpp"
+#include "romea_core_common/regression/leastsquares/LeastSquares.hpp"
+#include "romea_core_common/pointset/algorithms/PreconditionedPointSet.hpp"
+#include "romea_core_common/pointset/algorithms/Correspondence.hpp"
+#include "romea_core_common/pointset/NormalSet.hpp"
 
 namespace romea {
 
 template <class PointType>
 class FindRigidTransformationByLeastSquares
 {
-
 public :
 
   using Scalar = typename PointType::Scalar ;
   static constexpr size_t CARTESIAN_DIM = PointTraits<PointType>::DIM;
   static constexpr size_t POINT_SIZE = PointTraits<PointType>::SIZE;
 
-
-  using PreconditionedPointSetType= PreconditionedPointSet<PointType >;
-  using TransformationMatrixType = Eigen::Matrix<Scalar,CARTESIAN_DIM +1,CARTESIAN_DIM +1>;
+  using PreconditionedPointSetType = PreconditionedPointSet<PointType >;
+  using TransformationMatrixType = Eigen::Matrix<Scalar, CARTESIAN_DIM +1, CARTESIAN_DIM +1>;
 
 public :
 
@@ -64,12 +65,10 @@ private :
 
 private :
 
-
   LeastSquares<Scalar> leastSquares_;
-
 };
 
-}
+}  // namespace romea
 
-#endif
+#endif  // ROMEA_CORE_COMMON_TRANSFORM_ESTIMATION_FINDRIGIDTRANSFORMATIONBYLEASTSQUARES_HPP_
 

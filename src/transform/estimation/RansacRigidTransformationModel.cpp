@@ -26,7 +26,6 @@ RansacRigidTransformationModel<PointType>
   findRigidTransformationBySVD_(),
   findRigidTransformationByLeastSquares_()
 {
-
 }
 
 
@@ -64,7 +63,7 @@ RansacRigidTransformationModel<PointType>::loadPointSets(const PointSet<PointTyp
 {
   assert(sourcePoints);
   assert(targetPoints);
-  assert(sourcePoints->size()==targetPoints->size());
+  assert(sourcePoints->size() == targetPoints->size());
 
   this->sourcePoints_ = sourcePoints;
   this->targetPoints_ = targetPoints;
@@ -73,15 +72,14 @@ RansacRigidTransformationModel<PointType>::loadPointSets(const PointSet<PointTyp
   this->targetPointsPreconditioner_.compute(*targetPoints);
 
   Scalar scale = this->targetPointsPreconditioner_.getScale();
-  this->precondionedSourcePoints_.compute(*sourcePoints,scale);
-  this->precondionedTargetPoints_.compute(*targetPoints,scale);
+  this->precondionedSourcePoints_.compute(*sourcePoints, scale);
+  this->precondionedTargetPoints_.compute(*targetPoints, scale);
 
   this->setPreconditioner_(this->precondionedSourcePoints_,
                            this->precondionedTargetPoints_);
 
   this->randomCorrespondences_.computeScale(this->sourcePointsPreconditioner_.getPointSetMin(),
                                             this->sourcePointsPreconditioner_.getPointSetMax());
-
 }
 
 
@@ -97,21 +95,20 @@ loadCorrespondences(const std::vector<Correspondence> * correspondences,
 
   allocate_(correspondences->size());
 
-  //Store correpondences data
-  correspondences_=correspondences;
+  // Store correpondences data
+  correspondences_ = correspondences;
   numberOfSourcePointsInCorrespondences_ = numberOfSourcePointsInCorrespondences;
 
-  //Sort correspondences by target index and distance
-  sortedCorrespondences_=*correspondences_;
+  // Sort correspondences by target index and distance
+  sortedCorrespondences_ = *correspondences_;
   std::sort(std::begin(sortedCorrespondences_),
             std::end(sortedCorrespondences_),
             sortByTargetIndexAndDistancePredicate);
 
-  //Clear data compute during the last estimation
+  // Clear data compute during the last estimation
   bestInlierCorrespondences_.clear();
-  bestRootMeanSquareError_=std::numeric_limits<double>::max();
-  assert(bestInlierCorrespondences_.capacity()>=correspondences->size());
-
+  bestRootMeanSquareError_ = std::numeric_limits<double>::max();
+  assert(bestInlierCorrespondences_.capacity() >= correspondences->size());
 }
 
 
@@ -120,22 +117,20 @@ template <class PointType> void
 RansacRigidTransformationModel<PointType>::
 loadTargetNormalSet(const NormalSet<PointType> * targetNormals)
 {
-  if(targetNormals)
-    assert(this->targetPoints_->size()==targetNormals->size());
+  if (targetNormals)
+    assert(this->targetPoints_->size() == targetNormals->size());
 
-  targetNormals_=targetNormals;
+  targetNormals_ = targetNormals;
 }
 
 //-----------------------------------------------------------------------------
 template <class PointType> size_t
 RansacRigidTransformationModel<PointType>::getNumberOfPointsToDrawModel()const
 {
-  if(CARTESIAN_DIM==2)
+  if (CARTESIAN_DIM == 2)
   {
     return 3;
-  }
-  else
-  {
+  } else {
     return 4;
   }
 }
@@ -155,12 +150,12 @@ compute_(const PreconditionedPointSetType &sourcePoints,
          const PreconditionedPointSetType &targetPoints,
          const std::vector<Correspondence> &correspondences)
 {
-  if(targetNormals_){
-    this->transformation_=findRigidTransformationByLeastSquares_.
-        find(sourcePoints,targetPoints,*targetNormals_, correspondences);
+  if (targetNormals_){
+    this->transformation_ = findRigidTransformationByLeastSquares_.
+        find(sourcePoints, targetPoints, *targetNormals_, correspondences);
   }else{
-    this->transformation_=findRigidTransformationBySVD_.
-        find(sourcePoints,targetPoints,correspondences);
+    this->transformation_ = findRigidTransformationBySVD_.
+        find(sourcePoints, targetPoints, correspondences);
   }
 }
 
@@ -179,7 +174,7 @@ setPreconditioner_(const PreconditionedPointSetType &preconditionedSourcePoints,
 template <class PointType>
 void RansacRigidTransformationModel<PointType>::allocate_(const size_t & numberOfCorrespondences)
 {
-  if(bestInlierCorrespondences_.capacity() < numberOfCorrespondences){
+  if (bestInlierCorrespondences_.capacity() < numberOfCorrespondences){
     sortedCorrespondences_.reserve(numberOfCorrespondences);
     bestInlierCorrespondences_.reserve(numberOfCorrespondences);
     inlierCorrespondences_.reserve(numberOfCorrespondences);
@@ -201,9 +196,8 @@ size_t RansacRigidTransformationModel<PointType>::getNumberOfPoints() const
 template <class PointType>
 bool RansacRigidTransformationModel<PointType>::draw(const double &modelDeviationError)
 {
-
   std::vector<Correspondence> sampleCorrespondences =
-      randomCorrespondences_.drawPoints(*sourcePoints_,*correspondences_,
+      randomCorrespondences_.drawPoints(*sourcePoints_, *correspondences_,
                                         getNumberOfPointsToDrawModel());
 
   //  for(size_t n=0, N=sampleCorrespondences.size() ; n< N ;++n)
@@ -224,56 +218,55 @@ bool RansacRigidTransformationModel<PointType>::draw(const double &modelDeviatio
 template <class PointType>
 size_t RansacRigidTransformationModel<PointType>::countInliers(const double &modelDeviationError)
 {
-
   const PointSet<PointType> & sourcePoints = * sourcePoints_;
   const PointSet<PointType> & targetPoints = * targetPoints_;
 
-  //Find inliers points Indexes
+  // Find inliers points Indexes
   inlierCorrespondences_.clear();
-  assert(inlierCorrespondences_.capacity()>=correspondences_->size());
+  assert(inlierCorrespondences_.capacity() >= correspondences_->size());
 
   PointType projectedSourcePoint;
   Scalar threshold = 9*modelDeviationError*modelDeviationError;
-  for(size_t n=0,N=sortedCorrespondences_.size();n<N;n++){
-
+  for (size_t n=0, N= sortedCorrespondences_.size();n < N;n++){
     const size_t sourcePointIndex = sortedCorrespondences_[n].sourcePointIndex;
     const size_t targetPointIndex = sortedCorrespondences_[n].targetPointIndex;
-    projection(transformation_,sourcePoints[sourcePointIndex],projectedSourcePoint);
-    Scalar squareError =(targetPoints[targetPointIndex]-projectedSourcePoint).array().square().sum();
+    projection(transformation_, sourcePoints[sourcePointIndex], projectedSourcePoint);
+    Scalar squareError = (targetPoints[targetPointIndex]-projectedSourcePoint).array().square().sum();
 
-    if(squareError<threshold)
+    if (squareError < threshold)
     {
-      std::cout << " inlier "<<  sourcePointIndex <<" "<< targetPointIndex << " "<< squareError<<std::endl;
-      inlierCorrespondences_.emplace_back(sourcePointIndex,targetPointIndex,squareError);
+      // std::cout << " inlier "
+      //           << sourcePointIndex <<" "
+      //           << targetPointIndex << " "
+      //           << squareError << std::endl;
+      inlierCorrespondences_.emplace_back(sourcePointIndex, targetPointIndex, squareError);
     }
-
   }
 
 
-  //Compute root mean square error
+  // Compute root mean square error
   std::unique(std::begin(inlierCorrespondences_),
               std::end(inlierCorrespondences_),
               equalTargetIndexesPredicate);
 
   double rootMeanSquareError = 0 ;
-  for(size_t n=0,N=inlierCorrespondences_.size();n<N;++n)
+  for (size_t n=0, N = inlierCorrespondences_.size(); n < N;++n)
     rootMeanSquareError+=inlierCorrespondences_[n].squareDistanceBetweenPoints;
-  rootMeanSquareError/=double(inlierCorrespondences_.size());
-  rootMeanSquareError=std::sqrt(rootMeanSquareError);
+  rootMeanSquareError /= double(inlierCorrespondences_.size());
+  rootMeanSquareError = std::sqrt(rootMeanSquareError);
 
-  //Backup inliers correspondences
-  if(inlierCorrespondences_.size()>=getMinimalNumberOfInliers() &&
+  // Backup inliers correspondences
+  if (inlierCorrespondences_.size() >= getMinimalNumberOfInliers() &&
      rootMeanSquareError < modelDeviationError)
   {
-    if(inlierCorrespondences_.size()>bestInlierCorrespondences_.size() ||
-       (inlierCorrespondences_.size()==bestInlierCorrespondences_.size() &&
+    if (inlierCorrespondences_.size() > bestInlierCorrespondences_.size() ||
+       (inlierCorrespondences_.size() == bestInlierCorrespondences_.size() &&
         rootMeanSquareError < bestRootMeanSquareError_))
     {
-      bestInlierCorrespondences_=inlierCorrespondences_;
-      bestRootMeanSquareError_=rootMeanSquareError;
+      bestInlierCorrespondences_ = inlierCorrespondences_;
+      bestRootMeanSquareError_ = rootMeanSquareError;
     }
   }
-
   return bestInlierCorrespondences_.size();
 }
 
@@ -295,14 +288,13 @@ check_(const PointSet<PointType> & sourcePoints,
        const std::vector<Correspondence> & sampleCorrespondences,
        const double &modelDeviationError)
 {
-
   float mse = 0;
   PointType projectedSourcePoint;
-  for(size_t n=0,N=sampleCorrespondences.size(); n<N ; ++n){
+  for (size_t n=0, N=sampleCorrespondences.size(); n < N ; ++n){
     const size_t sourcePointIndex = sampleCorrespondences[n].sourcePointIndex;
     const size_t targetPointIndex = sampleCorrespondences[n].targetPointIndex;
-    //transformation_(sourcePoints[sourcePointIndex], projectedSourcePoint);
-    projection(transformation_,sourcePoints[sourcePointIndex],projectedSourcePoint);
+    // transformation_(sourcePoints[sourcePointIndex], projectedSourcePoint);
+    projection(transformation_, sourcePoints[sourcePointIndex], projectedSourcePoint);
     mse += (targetPoints[targetPointIndex]-projectedSourcePoint).array().square().sum();
   }
 
@@ -334,4 +326,4 @@ template class RansacRigidTransformationModel<HomogeneousCoordinates2d>;
 template class RansacRigidTransformationModel<HomogeneousCoordinates3f>;
 template class RansacRigidTransformationModel<HomogeneousCoordinates3d>;
 
-}
+}  // namespace romea

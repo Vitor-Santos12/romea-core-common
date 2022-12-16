@@ -1,18 +1,18 @@
-//romea
+// romea
 #include "romea_core_common/containers/boundingbox/AxisAlignedBoundingBox.hpp"
 
 namespace romea{
 
 //-----------------------------------------------------------------------------
 template <typename Scalar, size_t DIM>
-AxisAlignedBoundingBox<Scalar,DIM>::AxisAlignedBoundingBox():
-  AxisAlignedBoundingBox(PointType::Zero(),PointType::Zero())
+AxisAlignedBoundingBox<Scalar, DIM>::AxisAlignedBoundingBox():
+  AxisAlignedBoundingBox(PointType::Zero(), PointType::Zero())
 {
 }
 
 //-----------------------------------------------------------------------------
 template <typename Scalar, size_t DIM>
-AxisAlignedBoundingBox<Scalar,DIM>::AxisAlignedBoundingBox(const IntervalType &extremities):
+AxisAlignedBoundingBox<Scalar, DIM>::AxisAlignedBoundingBox(const IntervalType &extremities):
   centerPosition_(extremities.center()),
   halfWidthExtents_(extremities.width()/2.)
 {
@@ -21,7 +21,7 @@ AxisAlignedBoundingBox<Scalar,DIM>::AxisAlignedBoundingBox(const IntervalType &e
 
 //-----------------------------------------------------------------------------
 template <typename Scalar, size_t DIM>
-AxisAlignedBoundingBox<Scalar,DIM>::AxisAlignedBoundingBox(const PointType & centerPosition,
+AxisAlignedBoundingBox<Scalar, DIM>::AxisAlignedBoundingBox(const PointType & centerPosition,
                                                            const PointType & halfWidthExtents):
   centerPosition_(centerPosition),
   halfWidthExtents_(halfWidthExtents)
@@ -30,24 +30,24 @@ AxisAlignedBoundingBox<Scalar,DIM>::AxisAlignedBoundingBox(const PointType & cen
 
 //-----------------------------------------------------------------------------
 template <typename Scalar, size_t DIM>
-typename AxisAlignedBoundingBox<Scalar,DIM>::IntervalType
-AxisAlignedBoundingBox<Scalar,DIM>::toInterval()const
+typename AxisAlignedBoundingBox<Scalar, DIM>::IntervalType
+AxisAlignedBoundingBox<Scalar, DIM>::toInterval()const
 {
-  return {centerPosition_-halfWidthExtents_,centerPosition_+halfWidthExtents_};
+  return {centerPosition_-halfWidthExtents_, centerPosition_+halfWidthExtents_};
 }
 
 //-----------------------------------------------------------------------------
 template <typename Scalar, size_t DIM>
-const typename AxisAlignedBoundingBox<Scalar,DIM>::PointType &
-AxisAlignedBoundingBox<Scalar,DIM>::getCenterPosition()const
+const typename AxisAlignedBoundingBox<Scalar, DIM>::PointType &
+AxisAlignedBoundingBox<Scalar, DIM>::getCenterPosition()const
 {
   return centerPosition_;
 }
 
 //-----------------------------------------------------------------------------
 template <typename Scalar, size_t DIM>
-const typename AxisAlignedBoundingBox<Scalar,DIM>::PointType &
-AxisAlignedBoundingBox<Scalar,DIM>::getHalfWidthExtents()const
+const typename AxisAlignedBoundingBox<Scalar, DIM>::PointType &
+AxisAlignedBoundingBox<Scalar, DIM>::getHalfWidthExtents()const
 {
   return halfWidthExtents_;
 }
@@ -73,15 +73,15 @@ AxisAlignedBoundingBox<Scalar,DIM>::getHalfWidthExtents()const
 
 //-----------------------------------------------------------------------------
 template <typename Scalar, size_t DIM> bool
-AxisAlignedBoundingBox<Scalar,DIM>::isInside(const PointType &point) const
+AxisAlignedBoundingBox<Scalar, DIM>::isInside(const PointType &point) const
 {
-  return ((point-centerPosition_).array().abs()<=halfWidthExtents_.array()).all();
+  return ((point-centerPosition_).array().abs() <= halfWidthExtents_.array()).all();
 }
 
 
-template class AxisAlignedBoundingBox<float,2>;
-template class AxisAlignedBoundingBox<float,3>;
-template class AxisAlignedBoundingBox<double,2>;
-template class AxisAlignedBoundingBox<double,3>;
+template class AxisAlignedBoundingBox<float, 2>;
+template class AxisAlignedBoundingBox<float, 3>;
+template class AxisAlignedBoundingBox<double, 2>;
+template class AxisAlignedBoundingBox<double, 3>;
 
-}
+}  // namespace romea

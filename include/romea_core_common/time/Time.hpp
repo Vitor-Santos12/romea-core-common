@@ -1,7 +1,7 @@
-#ifndef _romea_Time_hpp_
-#define _romea_Time_hpp_
+#ifndef ROMEA_CORE_COMMON_TIME_TIME_HPP_ 
+#define ROMEA_CORE_COMMON_TIME_TIME_HPP_ 
 
-//std
+// std
 #include <chrono>
 #include <ctime>
 #include <string>
@@ -11,9 +11,9 @@
 
 namespace romea {
 
-using Duration =std::chrono::duration<long long int ,std::nano>;
+using Duration = std::chrono::duration<long long int, std::nano>;
 
-using TimePoint =std::chrono::time_point<std::chrono::high_resolution_clock>;
+using TimePoint = std::chrono::time_point<std::chrono::high_resolution_clock>;
 
 //-----------------------------------------------------------------------------
 inline Duration duration(const TimePoint endDate , const TimePoint startDate)
@@ -80,9 +80,8 @@ inline Duration makeDuration(const int & hour,
 }
 
 //-----------------------------------------------------------------------------
-inline std::string asString (const Duration & duration)
+inline std::string asString(const Duration & duration)
 {
-
   double t = durationToSecond(duration);
 
   int hours = static_cast<int>(t/3600);
@@ -90,20 +89,24 @@ inline std::string asString (const Duration & duration)
   int mins  = static_cast<int>(t/60);
   t -= mins*60;
   int secs = static_cast<int>(t);
-  t -=secs;
+  t -= secs;
 
   std::stringstream ss;
-  ss<<std::setfill('0')<< std::setw(2)<<hours<<":"<<std::setw(2)<<mins <<":"<<std::setw(2)<<secs <<"."<< int(t*100);
+  ss << std::setfill('0');
+  ss << std::setw(2) << hours;
+  ss <<":"<< std::setw(2) << mins;
+  ss <<":"<< std::setw(2) << secs;
+  ss <<"."<< int(t*100);
   return ss.str();
 }
 
 //-----------------------------------------------------------------------------
-inline TimePoint makeTimePoint (const int & year,
-                                const int & mon,
-                                const int & day,
-                                const int & hour,
-                                const int & min,
-                                const double & sec)
+inline TimePoint makeTimePoint(const int & year,
+                               const int & mon,
+                               const int & day,
+                               const int & hour,
+                               const int & min,
+                               const double & sec)
 {
   std::tm tm;
   tm.tm_sec  = static_cast<int>(sec);       // second of minute (0 .. 59 and 60 for leap seconds)
@@ -118,17 +121,17 @@ inline TimePoint makeTimePoint (const int & year,
   assert(tt != -1);
 
   TimePoint date = std::chrono::system_clock::from_time_t(tt);
-  date+= std::chrono::seconds(int((sec-tm.tm_sec)));
+  date += std::chrono::seconds(int((sec - tm.tm_sec)));
 
   return date;
 }
 
 //-----------------------------------------------------------------------------
-inline std::string asString (const TimePoint & date)
+inline std::string asString(const TimePoint & date)
 {
   std::time_t time = std::chrono::system_clock::to_time_t(date);
-  std::string stringTime =  ctime(&time); // convert to calendar time
-  stringTime.resize(stringTime.size()-1); // skip trailing newline
+  std::string stringTime = ctime(&time);  // convert to calendar time
+  stringTime.resize(stringTime.size() - 1);  // skip trailing newline
   return stringTime;
 }
 
@@ -140,7 +143,6 @@ struct StampedWrapper
      stamp(stamp),
      data(data)
    {
-
    }
 
    StampedType stamp;
@@ -149,20 +151,20 @@ struct StampedWrapper
 
 //-----------------------------------------------------------------------------
 template<class StampedType , class DataType>
-bool operator<(const StampedWrapper<StampedType,DataType> & sd1,
-               const StampedWrapper<StampedType,DataType> & sd2)
+bool operator<(const StampedWrapper<StampedType, DataType> & sd1,
+               const StampedWrapper<StampedType, DataType> & sd2)
 {
   return sd1.stamp < sd2.stamp;
 }
 
 //-----------------------------------------------------------------------------
 template<class StampedType , class DataType>
-bool operator>(const StampedWrapper<StampedType,DataType> & sd1,
-               const StampedWrapper<StampedType,DataType> & sd2)
+bool operator>(const StampedWrapper<StampedType, DataType> & sd1,
+               const StampedWrapper<StampedType, DataType> & sd2)
 {
   return sd1.stamp > sd2.stamp;
 }
 
+}  // romea
 
-}//romea
-#endif
+#endif  // ROMEA_CORE_COMMON_TIME_TIME_HPP_ 

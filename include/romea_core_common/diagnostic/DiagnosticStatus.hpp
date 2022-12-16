@@ -1,5 +1,5 @@
-#ifndef _romea_DiagnosticStatus_hpp_
-#define _romea_DiagnosticStatus_hpp_
+#ifndef _ROMEA_CORE_COMMON_DIAGNOSTIC_DIAGNOSTICSTATUS_HPP_
+#define _ROMEA_CORE_COMMON_DIAGNOSTIC_DIAGNOSTICSTATUS_HPP_
 
 #include <ostream>
 #include <string>
@@ -21,6 +21,6 @@ std::ostream& operator<<(std::ostream & os, const DiagnosticStatus & status);
 
 DiagnosticStatus worse(const DiagnosticStatus & status1 , const DiagnosticStatus &status2);
 
-}
+}  // namespace romea
 
-#endif
+#endif  // ROMEA_CORE_COMMON_DIAGNOSTIC_DIAGNOSTICSTATUS_HPP_

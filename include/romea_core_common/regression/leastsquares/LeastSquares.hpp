@@ -1,26 +1,27 @@
-#ifndef romea_LeastSquares_hpp
-#define romea_LeastSquares_hpp
+#ifndef ROMEA_CORE_COMMON_REGRESSION_LEASTSQUARES_LEASTSQUARES_HPP_ 
+#define ROMEA_CORE_COMMON_REGRESSION_LEASTSQUARES_LEASTSQUARES_HPP_ 
 
-//Eigen
+// Eigen
 #include <Eigen/Eigen>
 
-namespace romea{
+namespace romea
+{
 
 template <typename RealType>
-class LeastSquares {
+class LeastSquares
+{
+public:
+  using Matrix = Eigen::Matrix<RealType, Eigen::Dynamic, Eigen::Dynamic>;
+  using Vector = Eigen::Matrix<RealType, Eigen::Dynamic, 1> ;
 
 public:
-
-  using Matrix = Eigen::Matrix<RealType,Eigen::Dynamic,Eigen::Dynamic>;
-  using Vector = Eigen::Matrix<RealType,Eigen::Dynamic,1> ;
-
   LeastSquares();
 
-  LeastSquares(const size_t &estimateSize);
+  explicit LeastSquares(const size_t &estimateSize);
 
   LeastSquares(const size_t &estimateSize, const size_t & dataSize);
 
-  virtual ~LeastSquares()=default;
+  virtual ~LeastSquares() = default;
 
   void setEstimateSize(const size_t & dataSize);
 
@@ -75,6 +76,6 @@ private :
   Vector JtY_;
 };
 
-}//romea
+}  // namespace romea
 
-#endif
+#endif  // ROMEA_CORE_COMMON_REGRESSION_LEASTSQUARES_LEASTSQUARES_HPP_ 

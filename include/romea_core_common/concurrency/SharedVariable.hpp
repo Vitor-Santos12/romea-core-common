@@ -1,5 +1,5 @@
-#ifndef _romea_SharedVariable_hpp_
-#define _romea_SharedVariable_hpp_
+#ifndef ROMEA_CORE_COMMON_CONCURRENCY_SHAREDVARIABLE_HPP_ 
+#define ROMEA_CORE_COMMON_CONCURRENCY_SHAREDVARIABLE_HPP_ 
 
 #include <mutex>
 
@@ -10,10 +10,11 @@ class SharedVariable
 {
 public:
   SharedVariable();
-  SharedVariable(const T & value);
+  explicit SharedVariable(const T & value);
+
   SharedVariable & operator=(const T & value);
-  SharedVariable(const SharedVariable &)=delete;
-  SharedVariable & operator=(const SharedVariable &)=delete;
+  SharedVariable(const SharedVariable &) = delete;
+  SharedVariable & operator=(const SharedVariable &) = delete;
 
 public :
 
@@ -22,7 +23,6 @@ public :
   T load() const;
 
 private:
-
   T value_;
   mutable std::mutex mutex_;
 };
@@ -73,6 +73,6 @@ T SharedVariable<T>::load() const
   return value_;
 }
 
-}
+}  // namespace romea
 
-#endif
+#endif  // ROMEA_CORE_COMMON_CONCURRENCY_SHAREDVARIABLE_HPP_ 

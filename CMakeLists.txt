@@ -8,8 +8,10 @@ project(
   LANGUAGES CXX)
 
 
-find_package( PkgConfig )
-pkg_check_modules( EIGEN3 REQUIRED eigen3 )
+#find_package( PkgConfig )
+#pkg_check_modules( EIGEN3 REQUIRED eigen3 )
+
+find_package (Eigen3 3.3 REQUIRED NO_MODULE)
 
 add_library(${PROJECT_NAME} SHARED
   src/containers/grid/GridIndexMapping.cpp
@@ -66,6 +68,7 @@ target_include_directories( ${PROJECT_NAME} PUBLIC
   $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
   )
 
+message(${EIGEN3_INCLUDE_DIRS})
 target_include_directories( ${PROJECT_NAME} SYSTEM PUBLIC ${EIGEN3_INCLUDE_DIRS})
 target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -O3 -std=c++17)
 
@@ -107,11 +110,10 @@ install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/${PROJECT_NAME}
 
 set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE")
 
+option(BUILD_TESTING "BUILD WITH TESTS" ON)
 
-#include_directories(include  ${EIGEN3_INCLUDE_DIRS})
-
-option(BUILD_TESTS "BUILD WITH TESTS" OFF)
-if(BUILD_TESTS)
+if(BUILD_TESTING)
+  message("testing")
   enable_testing()
   add_subdirectory(test)
-endif(BUILD_TESTS)
+endif(BUILD_TESTING)

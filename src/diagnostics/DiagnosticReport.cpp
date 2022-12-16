@@ -13,13 +13,13 @@ DiagnosticReport::DiagnosticReport():
 //-----------------------------------------------------------------------------
 std::ostream & operator <<(std::ostream & os, const DiagnosticReport & report)
 {
-  os<<" Messages : " <<std::endl;
-  for(const auto message : report.diagnostics)
+  os << " Messages : " << std::endl;
+  for (const auto message : report.diagnostics)
   {
-    os << " "<< message << std::endl;
+    os << " " << message << std::endl;
   }
-  os<<" Additional info :"<< std::endl;
-  for(const auto & [info_name , info_status] : report.info)
+  os << " Additional info :" << std::endl;
+  for (const auto & [info_name , info_status] : report.info)
   {
     os<< " "<< info_name <<" = "<< info_status << std::endl;
   }
@@ -40,7 +40,7 @@ DiagnosticReport & operator+=(DiagnosticReport & report1, const DiagnosticReport
 }
 
 
-}// namespace
+}  // namespace  romea
 
 
 

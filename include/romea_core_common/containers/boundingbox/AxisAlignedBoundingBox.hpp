@@ -1,34 +1,31 @@
-#ifndef romea_AxisAlignedBoundingBox_hpp
-#define romea_AxisAlignedBoundingBox_hpp
+#ifndef ROMEA_CORE_COMMON_CONTAINERS_BOUNDINGBOX_AXISALIGNEDBOUNDINGBOX_HPP
+#define ROMEA_CORE_COMMON_CONTAINERS_BOUNDINGBOX_AXISALIGNEDBOUNDINGBOX_HPP
 
-#include  "../../pointset/PointSet.hpp"
-#include  "../../pointset/PointTraits.hpp"
-#include  "../../math/Interval.hpp"
+#include  "romea_core_common/pointset/PointSet.hpp"
+#include  "romea_core_common/pointset/PointTraits.hpp"
+#include  "romea_core_common/math/Interval.hpp"
 
 namespace romea {
 
 template <typename Scalar, size_t DIM>
-class AxisAlignedBoundingBox{
+class AxisAlignedBoundingBox
+{
+public :
+  using PointType = Eigen::Matrix<Scalar, DIM, 1>;
+  using IntervalType = Interval<Scalar, DIM>;
 
 public :
-
-  using PointType = Eigen::Matrix<Scalar,DIM,1>;
-  using IntervalType = Interval<Scalar,DIM>;
-
-public :
-
   AxisAlignedBoundingBox();
 
-  AxisAlignedBoundingBox(const IntervalType & extremities);
+  explicit AxisAlignedBoundingBox(const IntervalType & extremities);
 
   AxisAlignedBoundingBox(const PointType & centerPosition,
                          const PointType & halfWidthExtents);
 
-  virtual ~AxisAlignedBoundingBox()=default;
+  virtual ~AxisAlignedBoundingBox() = default;
 
 
 public:
-
   const PointType & getCenterPosition()const;
 
   const PointType & getHalfWidthExtents()const;
@@ -39,22 +36,19 @@ public:
 
 
 protected :
-
   PointType centerPosition_;
   PointType halfWidthExtents_;
 
 public :
-
-  EIGEN_MAKE_ALIGNED_OPERATOR_NEW_IF_VECTORIZABLE_FIXED_SIZE(Scalar,DIM)
-
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW_IF_VECTORIZABLE_FIXED_SIZE(Scalar, DIM)
 };
 
 
-typedef AxisAlignedBoundingBox<float,2> AxisAlignedBoundingBox2f;
-typedef AxisAlignedBoundingBox<float,3> AxisAlignedBoundingBox3f;
-typedef AxisAlignedBoundingBox<double,2> AxisAlignedBoundingBox2d;
-typedef AxisAlignedBoundingBox<double,3> AxisAlignedBoundingBox3d;
+typedef AxisAlignedBoundingBox<float, 2> AxisAlignedBoundingBox2f;
+typedef AxisAlignedBoundingBox<float, 3> AxisAlignedBoundingBox3f;
+typedef AxisAlignedBoundingBox<double, 2> AxisAlignedBoundingBox2d;
+typedef AxisAlignedBoundingBox<double, 3> AxisAlignedBoundingBox3d;
 
-}
+}  // namespace romea
 
-#endif
+#endif  // ROMEA_CORE_COMMON_CONTAINERS_BOUNDINGBOX_AXISALIGNEDBOUNDINGBOX_HPP

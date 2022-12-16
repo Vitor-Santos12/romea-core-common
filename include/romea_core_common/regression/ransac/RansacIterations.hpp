@@ -1,13 +1,13 @@
-#ifndef romea_RansacIterations_hpp
-#define romea_RansacIterations_hpp
+#ifndef ROMEA_CORE_COMMON_REGRESSION_RANSAC_RANSACITERATIONS_HPP_
+#define ROMEA_CORE_COMMON_REGRESSION_RANSAC_RANSACITERATIONS_HPP_
 
-//std
+// std
 #include <cstddef>
 
 namespace romea {
 
-class RansacIterations{
-
+class RansacIterations
+{
 public :
 
   RansacIterations(const size_t & numberOfPoints,
@@ -24,8 +24,8 @@ private :
   double logOfFittingOppositeProbability_;
   double oneOverNumberOfPoints_;
   double numberOfIterations_;
-
 };
 
 }
-#endif
+
+#endif  // ROMEA_CORE_COMMON_REGRESSION_RANSAC_RANSACITERATIONS_HPP_

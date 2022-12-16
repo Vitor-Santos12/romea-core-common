@@ -11,7 +11,7 @@ namespace romea
 //-----------------------------------------------------------------------------
 template <typename RealType>
 NLSE<RealType>::NLSE():
-  NLSE(DEFAULT_ESTIMATE_EPSILON,DEFAULT_ALPHA)
+  NLSE(DEFAULT_ESTIMATE_EPSILON, DEFAULT_ALPHA)
 {
 
 }
@@ -19,14 +19,14 @@ NLSE<RealType>::NLSE():
 //-----------------------------------------------------------------------------
 template <typename RealType>
 NLSE<RealType>::NLSE(const double &estimateEpsilon):
-  NLSE(estimateEpsilon,DEFAULT_ALPHA)
+  NLSE(estimateEpsilon, DEFAULT_ALPHA)
 {
 
 }
 
 //-----------------------------------------------------------------------------
 template <typename RealType>
-NLSE<RealType>::NLSE(const double &estimateEpsilon,const RealType & alpha):
+NLSE<RealType>::NLSE(const double &estimateEpsilon, const RealType & alpha):
   alpha_(alpha),
   estimate_(),
   estimateDelta_(),
@@ -43,13 +43,12 @@ NLSE<RealType>::NLSE(const double &estimateEpsilon,const RealType & alpha):
 template <typename RealType>
 bool NLSE<RealType>::estimate(const size_t &maximalNumberOfIterations, const double &dataStd)
 {
-
   computeGuess_();
-  numberOfIterations_=0;
-  rmse_ =-1;
+  numberOfIterations_ = 0;
+  rmse_ = -1;
 
-  //estimate
-  while(numberOfIterations_ < maximalNumberOfIterations)
+  // estimate
+  while (numberOfIterations_ < maximalNumberOfIterations)
   {
     computeJacobianAndY_();
 
@@ -64,12 +63,12 @@ bool NLSE<RealType>::estimate(const size_t &maximalNumberOfIterations, const dou
     //    std::cout << " D " << std::endl;
     //    std::cout <<  estimateDelta_.transpose() << std::endl;
 
-    if(estimateDelta_.norm()<estimateEpsilon_)
+    if (estimateDelta_.norm() < estimateEpsilon_)
     {
       break;
     }
 
-    estimate_-=estimateDelta_;
+    estimate_ -= estimateDelta_;
 
     //    std::cout << " X " << std::endl;
     //    std::cout <<  estimate_.transpose() << std::endl;
@@ -77,7 +76,7 @@ bool NLSE<RealType>::estimate(const size_t &maximalNumberOfIterations, const dou
     ++numberOfIterations_;
   }
 
-  if(numberOfIterations_==maximalNumberOfIterations)
+  if (numberOfIterations_ == maximalNumberOfIterations)
   {
     return false;
   }
@@ -86,13 +85,13 @@ bool NLSE<RealType>::estimate(const size_t &maximalNumberOfIterations, const dou
 
   double dataVar = dataStd*dataStd;
   double mse = leastSquares_.getY().norm()/leastSquares_.getY().rows();
-  if(mse > 25* dataStd)
+  if (mse > 25* dataStd)
   {
     return false;
   }
 
-  rmse_= std::sqrt(mse);
-  estimateCovariance_=leastSquares_.computeEstimateCovariance(dataVar);
+  rmse_ = std::sqrt(mse);
+  estimateCovariance_ = leastSquares_.computeEstimateCovariance(dataVar);
   return true;
 }
 
@@ -127,4 +126,4 @@ const typename NLSE<RealType>::Matrix & NLSE<RealType>::getEstimateCovariance()
 template class NLSE<float>;
 template class NLSE<double>;
 
-}
+}  // namespace romea

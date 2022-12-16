@@ -1,7 +1,7 @@
-#ifndef _romea_RingOfEigenVector_HPP_
-#define _romea_RingOfEigenVector_HPP_
+#ifndef ROMEA_CORE_COMMON_CONTAINERS_EIGEN_RINGOFEIGENVECTOR_HPP_ 
+#define ROMEA_CORE_COMMON_CONTAINERS_EIGEN_RINGOFEIGENVECTOR_HPP_ 
 
-#include "VectorOfEigenVector.hpp"
+#include "romea_core_common/containers/Eigen/VectorOfEigenVector.hpp"
 
 namespace romea {
 
@@ -9,8 +9,7 @@ template <class EigenVectorType>
 class RingOfEigenVector
 {
 public :
-
-  RingOfEigenVector(size_t ringSize);
+  explicit RingOfEigenVector(size_t ringSize);
 
   void append(const EigenVectorType & position);
 
@@ -18,7 +17,7 @@ public :
 
   size_t size()const;
 
-  void clear ();
+  void clear();
 
   VectorOfEigenVector<EigenVectorType> & get();
 
@@ -27,10 +26,8 @@ public :
   size_t ringIndex_;
 
 private :
-
   size_t ringSize_;
   VectorOfEigenVector<EigenVectorType> ring_;
-
 };
 
 
@@ -62,22 +59,19 @@ const VectorOfEigenVector<EigenVectorType> & RingOfEigenVector<EigenVectorType>:
 template <class EigenVectorType>
 void RingOfEigenVector<EigenVectorType>::append(const EigenVectorType & position)
 {
-
   ringIndex_ = (ringIndex_+1)%ringSize_ ;
 
-  if(ring_.size() == ringSize_)
+  if (ring_.size() == ringSize_)
   {
     ring_[ringIndex_]= position;
-  }
-  else
-  {
+  }else{
     ring_.push_back(position);
   }
 }
 
 //-----------------------------------------------------------------------------
 template <class EigenVectorType>
-void RingOfEigenVector<EigenVectorType>::clear ()
+void RingOfEigenVector<EigenVectorType>::clear()
 {
   ring_.clear();
 }
@@ -97,5 +91,5 @@ const EigenVectorType & RingOfEigenVector<EigenVectorType>::operator[](size_t n)
 }
 
 
-}//romea
-#endif
+}  // namespace romea
+#endif  // ROMEA_CORE_COMMON_CONTAINERS_EIGEN_RINGOFEIGENVECTOR_HPP_ 

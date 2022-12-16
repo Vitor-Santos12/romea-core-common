@@ -1,11 +1,11 @@
-#ifndef romea_PointSetPreconditioner_hpp
-#define romea_PointSetPreconditioner_hpp
+#ifndef ROMEA_CORE_COMMON_POINTSET_ALGORITHMS_POINTSETPRECONDITIONER_HPP_
+#define ROMEA_CORE_COMMON_POINTSET_ALGORITHMS_POINTSETPRECONDITIONER_HPP_
 
-//romea
-#include "../PointSet.hpp"
-#include "../PointTraits.hpp"
+// romea
+#include "romea_core_common/pointset/PointSet.hpp"
+#include "romea_core_common/pointset/PointTraits.hpp"
 
-//Eigen
+// Eigen
 #include <unsupported/Eigen/MatrixFunctions>
 
 namespace romea{
@@ -15,17 +15,17 @@ class PointSetPreconditioner{
 
 public :
 
-  using Scalar =typename PointType::Scalar ;
+  using Scalar = typename PointType::Scalar ;
   static constexpr size_t CARTESIAN_DIM = PointTraits<PointType>::DIM;
   static constexpr size_t POINT_SIZE = PointTraits<PointType>::SIZE;
 
-  using TranslationVector=Eigen::Matrix<Scalar,CARTESIAN_DIM,1> ;
+  using TranslationVector = Eigen::Matrix<Scalar, CARTESIAN_DIM, 1> ;
 
 public :
 
   PointSetPreconditioner();
 
-  PointSetPreconditioner(const PointSet<PointType> & points);
+  explicit PointSetPreconditioner(const PointSet<PointType> & points);
 
   void compute(const PointSet<PointType> & points);
 
@@ -50,9 +50,9 @@ private :
 
 public :
 
-  EIGEN_MAKE_ALIGNED_OPERATOR_NEW_IF_VECTORIZABLE_FIXED_SIZE(Scalar,POINT_SIZE)
-
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW_IF_VECTORIZABLE_FIXED_SIZE(Scalar, POINT_SIZE)
 };
 
-}
-#endif
+}  // namespace romea
+
+#endif  // ROMEA_CORE_COMMON_POINTSET_ALGORITHMS_POINTSETPRECONDITIONER_HPP_

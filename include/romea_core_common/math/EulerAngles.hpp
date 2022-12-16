@@ -1,21 +1,18 @@
-#ifndef romea_EulerAngles_hpp
-#define romea_EulerAngles_hpp
+#ifndef ROMEA_CORE_COMMON_MATH_EULERANGLES_HPP_
+#define ROMEA_CORE_COMMON_MATH_EULERANGLES_HPP_
 
-//Eigen
+// std
+#include <cmath>
+
+// Eigen
 #include <Eigen/Core>
 #include <Eigen/Geometry>
 
-//std
-#include <cmath>
+namespace romea {
 
-namespace {
 
 static constexpr auto M_2PI    = 2 * M_PI;
 static constexpr auto M_4PI    = 4 * M_PI;
-}
-
-namespace romea {
-
 
 //-----------------------------------------------------------------------------
 template < typename Scalar>
@@ -45,54 +42,53 @@ Scalar betweenMinusPiAndPi(Scalar val)
 
 //-----------------------------------------------------------------------------
 template <typename Scalar>
-Scalar rotation2DToEulerAngle(const Eigen::Matrix<Scalar,2,2> & rotation)
+Scalar rotation2DToEulerAngle(const Eigen::Matrix<Scalar, 2, 2> & rotation)
 {
-  return between0And2Pi(std::atan2(rotation(1,0)-rotation(0,1),rotation(0,0) + rotation(1,1)));
+  return between0And2Pi(std::atan2(rotation(1, 0)-rotation(0, 1), rotation(0, 0) + rotation(1, 1)));
 }
 
 //-----------------------------------------------------------------------------
 template <typename Scalar>
-Eigen::Matrix<Scalar,2,2> eulerAngleToRotation2D(const Scalar & eulerAngle)
+Eigen::Matrix<Scalar, 2, 2> eulerAngleToRotation2D(const Scalar & eulerAngle)
 {
-  return (Eigen::Matrix<Scalar,2,2>()<<std::cos(eulerAngle), -std::sin(eulerAngle),
-          std::sin(eulerAngle),std::cos(eulerAngle)).finished();
+  return (Eigen::Matrix<Scalar, 2, 2>() << std::cos(eulerAngle), -std::sin(eulerAngle),
+          std::sin(eulerAngle), std::cos(eulerAngle)).finished();
 }
 
 //-----------------------------------------------------------------------------
 template <typename Scalar>
-Eigen::Matrix<Scalar,3,1> rotation3DToEulerAngles(const Eigen::Matrix<Scalar,3,3> & inRotation)
+Eigen::Matrix<Scalar, 3, 1> rotation3DToEulerAngles(const Eigen::Matrix<Scalar, 3, 3> & inRotation)
 {
-  Eigen::Matrix<Scalar,3,1> eulerAngles;
-  eulerAngles[0] = between0And2Pi(std::atan2(inRotation(2,1),inRotation(2,2)));
-  eulerAngles[1] = between0And2Pi(-std::asin(inRotation(2,0)));
-  eulerAngles[2] = between0And2Pi( std::atan2(inRotation(1,0),inRotation(0,0)));
-
+  Eigen::Matrix<Scalar, 3, 1> eulerAngles;
+  eulerAngles[0] = between0And2Pi(std::atan2(inRotation(2, 1), inRotation(2, 2)));
+  eulerAngles[1] = between0And2Pi(-std::asin(inRotation(2, 0)));
+  eulerAngles[2] = between0And2Pi(std::atan2(inRotation(1, 0), inRotation(0, 0)));
   return eulerAngles;
 }
 
 //-----------------------------------------------------------------------------
 template <typename Scalar>
-Eigen::Matrix<Scalar,3,1> quaternionToEulerAngles(const Eigen::Quaternion<Scalar> & quaternion)
+Eigen::Matrix<Scalar, 3, 1> quaternionToEulerAngles(const Eigen::Quaternion<Scalar> & quaternion)
 {
   return rotation3DToEulerAngles(quaternion.normalized().toRotationMatrix());
 }
 
 //-----------------------------------------------------------------------------
 template <typename Scalar>
-Eigen::Quaternion<Scalar> eulerAnglesToQuaternion(const Eigen::Matrix<Scalar,3,1> & inEulerAngles)
+Eigen::Quaternion<Scalar> eulerAnglesToQuaternion(const Eigen::Matrix<Scalar, 3, 1> & eulerAngles)
 {
-  return Eigen::AngleAxis<Scalar>(inEulerAngles(2), Eigen::Matrix<Scalar,3,1> ::UnitZ()) *
-          Eigen::AngleAxis<Scalar>(inEulerAngles(1), Eigen::Matrix<Scalar,3,1> ::UnitY()) *
-          Eigen::AngleAxis<Scalar>(inEulerAngles(0), Eigen::Matrix<Scalar,3,1> ::UnitX());
+  return Eigen::AngleAxis<Scalar>(eulerAngles(2), Eigen::Matrix<Scalar, 3, 1> ::UnitZ()) *
+          Eigen::AngleAxis<Scalar>(eulerAngles(1), Eigen::Matrix<Scalar, 3, 1> ::UnitY()) *
+          Eigen::AngleAxis<Scalar>(eulerAngles(0), Eigen::Matrix<Scalar, 3, 1> ::UnitX());
 }
 
 //-----------------------------------------------------------------------------
 template <typename Scalar>
-Eigen::Matrix<Scalar,3,3> eulerAnglesToRotation3D(const Eigen::Matrix<Scalar,3,1> & inEulerAngles)
+Eigen::Matrix<Scalar, 3, 3> eulerAnglesToRotation3D(const Eigen::Matrix<Scalar, 3, 1> & eulerAngles)
 {
-  return  Eigen::Matrix<Scalar,3,3>(eulerAnglesToQuaternion(inEulerAngles));
+  return  Eigen::Matrix<Scalar, 3, 3>(eulerAnglesToQuaternion(eulerAngles));
 }
 
-}//romea
+}  // namespace romea
 
-#endif
+#endif  // ROMEA_CORE_COMMON_MATH_EULERANGLES_HPP_

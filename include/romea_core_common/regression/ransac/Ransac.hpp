@@ -1,12 +1,11 @@
-#ifndef romea_Ransac_hpp
-#define romea_Ransac_hpp
+#ifndef ROMEA_CORE_COMMON_REGRESSION_RANSAC_RANSAC_HPP_
+#define ROMEA_CORE_COMMON_REGRESSION_RANSAC_RANSAC_HPP_
 
-#include "../../regression/ransac/RansacModel.hpp"
+#include "romea_core_common/regression/ransac/RansacModel.hpp"
 
 namespace romea {
 
 class Ransac{
-
 public :
 
   Ransac(RansacModel * ransacModel,
@@ -21,9 +20,8 @@ private :
   int maximalNumberOfIterations_;
 
   RansacModel * ransacModel_;
-
 };
 
+}  // namespace romea
 
-}
-#endif
+#endif  // ROMEA_CORE_COMMON_REGRESSION_RANSAC_RANSAC_HPP_

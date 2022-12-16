@@ -1,17 +1,15 @@
 // gtest
 #include <gtest/gtest.h>
-#
-//romea
+
+// romea
 #include "romea_core_common/diagnostic/CheckupRate.hpp"
 
 //-----------------------------------------------------------------------------
 class TestCheckupEqualToRate : public ::testing::Test
 {
-
 public:
-
   TestCheckupEqualToRate():
-     checkup("foo",10,0.1)
+     checkup("foo", 10, 0.1)
   {
   }
 
@@ -19,7 +17,7 @@ public:
   {
      double dt = 1./rate;
      romea::DiagnosticStatus status;
-     for(size_t i=0;i<=50;++i)
+     for (size_t i = 0; i <= 50; ++i)
      {
        status = checkup.evaluate(romea::durationFromSecond(i*dt));
      }
@@ -32,53 +30,57 @@ public:
 //-----------------------------------------------------------------------------
 TEST_F(TestCheckupEqualToRate, noDataReceived)
 {
-  EXPECT_STREQ(checkup.getReport().info.at("foo_rate").c_str(),"");
-  EXPECT_EQ(checkup.getReport().diagnostics.front().status,romea::DiagnosticStatus::ERROR);
-  EXPECT_STREQ(checkup.getReport().diagnostics.front().message.c_str(),"no data received from foo");
+  EXPECT_EQ(checkup.getReport().diagnostics.front().status, romea::DiagnosticStatus::ERROR);
+  EXPECT_STREQ(checkup.getReport().info.at("foo_rate").c_str(), "");
+  EXPECT_STREQ(checkup.getReport().diagnostics.front().message.c_str(),
+               "no data received from foo");
 }
 
 //-----------------------------------------------------------------------------
 TEST_F(TestCheckupEqualToRate, rateIsOK)
 {
-  EXPECT_EQ(run_checkup(10),romea::DiagnosticStatus::OK);
-  EXPECT_STREQ(checkup.getReport().info.at("foo_rate").c_str(),"10");
-  EXPECT_STREQ(checkup.getReport().diagnostics.front().message.c_str(),"foo_rate is OK.");
+  EXPECT_EQ(run_checkup(10), romea::DiagnosticStatus::OK);
+  EXPECT_STREQ(checkup.getReport().info.at("foo_rate").c_str(), "10");
+  EXPECT_STREQ(checkup.getReport().diagnostics.front().message.c_str(),
+               "foo_rate is OK.");
 }
 
 //-----------------------------------------------------------------------------
 TEST_F(TestCheckupEqualToRate, rateIsTooHigh)
 {
-  EXPECT_EQ(run_checkup(20),romea::DiagnosticStatus::ERROR);
-  EXPECT_STREQ(checkup.getReport().info.at("foo_rate").c_str(),"20");
-  EXPECT_STREQ(checkup.getReport().diagnostics.front().message.c_str(),"foo_rate is too high.");
+  EXPECT_EQ(run_checkup(20), romea::DiagnosticStatus::ERROR);
+  EXPECT_STREQ(checkup.getReport().info.at("foo_rate").c_str(), "20");
+  EXPECT_STREQ(checkup.getReport().diagnostics.front().message.c_str(),
+               "foo_rate is too high.");
 }
 
 //-----------------------------------------------------------------------------
 TEST_F(TestCheckupEqualToRate, rateIsTooLow)
 {
-  EXPECT_EQ(run_checkup(5),romea::DiagnosticStatus::ERROR);
-  EXPECT_STREQ(checkup.getReport().info.at("foo_rate").c_str(),"5");
-  EXPECT_STREQ(checkup.getReport().diagnostics.front().message.c_str(),"foo_rate is too low.");
+  EXPECT_EQ(run_checkup(5), romea::DiagnosticStatus::ERROR);
+  EXPECT_STREQ(checkup.getReport().info.at("foo_rate").c_str(), "5");
+  EXPECT_STREQ(checkup.getReport().diagnostics.front().message.c_str(),
+               "foo_rate is too low.");
 }
 
 //-----------------------------------------------------------------------------
 TEST_F(TestCheckupEqualToRate, checkHeartBeatOK)
 {
-  EXPECT_EQ(run_checkup(10),romea::DiagnosticStatus::OK);
+  EXPECT_EQ(run_checkup(10), romea::DiagnosticStatus::OK);
   EXPECT_TRUE(checkup.heartBeatCallback(romea::durationFromSecond(5)));
-  EXPECT_EQ(checkup.getReport().diagnostics.front().status,romea::DiagnosticStatus::OK);
-  EXPECT_EQ(checkup.getReport().diagnostics.front().message,"foo_rate is OK.");
-  EXPECT_EQ(checkup.getReport().info["foo_rate"],"10");
+  EXPECT_EQ(checkup.getReport().diagnostics.front().status, romea::DiagnosticStatus::OK);
+  EXPECT_EQ(checkup.getReport().diagnostics.front().message, "foo_rate is OK.");
+  EXPECT_EQ(checkup.getReport().info["foo_rate"], "10");
 }
 
 //-----------------------------------------------------------------------------
 TEST_F(TestCheckupEqualToRate, checkHeartBeatTimeout)
 {
-  EXPECT_EQ(run_checkup(10),romea::DiagnosticStatus::OK);
+  EXPECT_EQ(run_checkup(10), romea::DiagnosticStatus::OK);
   EXPECT_FALSE(checkup.heartBeatCallback(romea::durationFromSecond(10)));
-  EXPECT_EQ(checkup.getReport().diagnostics.front().status,romea::DiagnosticStatus::STALE);
-  EXPECT_EQ(checkup.getReport().diagnostics.front().message,"foo_rate timeout.");
-  EXPECT_EQ(checkup.getReport().info["foo_rate"],"");
+  EXPECT_EQ(checkup.getReport().diagnostics.front().status, romea::DiagnosticStatus::STALE);
+  EXPECT_EQ(checkup.getReport().diagnostics.front().message, "foo_rate timeout.");
+  EXPECT_EQ(checkup.getReport().info["foo_rate"], "");
 }
 
 //-----------------------------------------------------------------------------

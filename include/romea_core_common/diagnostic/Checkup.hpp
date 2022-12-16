@@ -1,13 +1,14 @@
-#ifndef _romea_Checkup_hpp_
-#define _romea_Checkup_hpp_
+#ifndef ROMEA_CORE_COMMON_DIAGNOSTIC_CHECKUP_HPP_
+#define ROMEA_CORE_COMMON_DIAGNOSTIC_CHECKUP_HPP_
 
-//std
+// std
 #include <limits>
 #include <sstream>
+#include <string>
 #include <mutex>
 
-//romea
-#include "DiagnosticReport.hpp"
+// romea
+#include "romea_core_common/diagnostic/DiagnosticReport.hpp"
 
 namespace romea {
 
@@ -15,26 +16,21 @@ namespace romea {
 template <typename T>
 class  Checkup
 {
-
 public:
-
   Checkup(const std::string &name,
           const T & value_to_compare_with_,
           const T & epsilon,
           const Diagnostic & diagnostic = Diagnostic());
 
-  virtual ~ Checkup()=default;
+  virtual ~Checkup() = default;
 
-public :
-
-  virtual DiagnosticStatus evaluate(const T & value) =0;
+  virtual DiagnosticStatus evaluate(const T & value) = 0;
 
   const DiagnosticReport & getReport() const;
 
   void timeout();
 
 protected:
-
   void setValue_(const T & value);
 
   void setDiagnostic_(const DiagnosticStatus & status,
@@ -43,7 +39,6 @@ protected:
   const DiagnosticStatus & getStatus_() const;
 
 protected:
-
   T value_to_compare_with_;
   T epsilon_;
 
@@ -63,7 +58,7 @@ Checkup<T>::Checkup(const std::string & name,
   report_()
 {
   report_.diagnostics.push_back(diagnostic);
-  report_.info[name]="";
+  report_.info[name] = "";
 }
 
 //-----------------------------------------------------------------------------
@@ -79,8 +74,8 @@ template <typename T>
 void Checkup<T>::timeout()
 {
   std::lock_guard<std::mutex> lock(mutex_);
-  setDiagnostic_(DiagnosticStatus::STALE," timeout.");
-  report_.info.begin()->second="";
+  setDiagnostic_(DiagnosticStatus::STALE, " timeout.");
+  report_.info.begin()->second = "";
 }
 
 
@@ -88,7 +83,7 @@ void Checkup<T>::timeout()
 template <typename T>
 void Checkup<T>::setValue_(const T & value)
 {
-  report_.info.begin()->second= toStringInfoValue(value);
+  report_.info.begin()->second = toStringInfoValue(value);
 }
 
 //-----------------------------------------------------------------------------
@@ -96,9 +91,9 @@ template <typename T>
 void Checkup<T>::setDiagnostic_(const DiagnosticStatus & status,
                                 const std::string & messageEnd)
 {
-  Diagnostic & diagnostic= report_.diagnostics.front();
+  Diagnostic & diagnostic = report_.diagnostics.front();
   diagnostic.message = report_.info.begin()->first + messageEnd;
-  diagnostic.status=status;
+  diagnostic.status = status;
 }
 
 //-----------------------------------------------------------------------------
@@ -109,6 +104,6 @@ const DiagnosticStatus & Checkup<T>::getStatus_() const
 }
 
 
-}
+}  // namespace romea
 
-#endif
+#endif  // ROMEA_CORE_COMMON_DIAGNOSTIC_CHECKUP_HPP_

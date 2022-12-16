@@ -1,18 +1,22 @@
-#ifndef romea_FindRigidTransformationBySVD_hpp
-#define romea_FindRigidTransformationBySVD_hpp
+#ifndef ROMEA_CORE_COMMON_TRANSFORM_ESTIMATION_FINDRIGIDTRANSFORMATIONBYSVD_HPP_
+#define ROMEA_CORE_COMMON_TRANSFORM_ESTIMATION_FINDRIGIDTRANSFORMATIONBYSVD_HPP_
 
-//romea
-#include "../../pointset/algorithms/PreconditionedPointSet.hpp"
-#include "../../pointset/algorithms/Correspondence.hpp"
+// std
+#include <vector>
 
+// romea
+#include "romea_core_common/pointset/algorithms/PreconditionedPointSet.hpp"
+#include "romea_core_common/pointset/algorithms/Correspondence.hpp"
+
+// Eigen
 #include <Eigen/Eigen>
 #include <unsupported/Eigen/MatrixFunctions>
 
 namespace romea {
 
 template <class PointType>
-class FindRigidTransformationBySVD {
-
+class FindRigidTransformationBySVD
+{
 public :
 
   using Scalar = typename PointType::Scalar ;
@@ -20,8 +24,8 @@ public :
   static constexpr size_t POINT_SIZE = PointTraits<PointType>::SIZE;
 
 
-  using PreconditionedPointSetType=PreconditionedPointSet<PointType>;
-  using TransformationMatrixType =Eigen::Matrix<Scalar,CARTESIAN_DIM +1,CARTESIAN_DIM +1>;
+  using PreconditionedPointSetType = PreconditionedPointSet<PointType>;
+  using TransformationMatrixType  = Eigen::Matrix<Scalar, CARTESIAN_DIM +1, CARTESIAN_DIM +1>;
 
 public :
 
@@ -49,10 +53,9 @@ private :
 
   TransformationMatrixType estimate_(const PointSet<PointType> &sourcePoints,
                                      const PointSet<PointType> &targetPoints);
-
 };
 
-}
+}  // namespace romea
 
-#endif
+#endif  // ROMEA_CORE_COMMON_TRANSFORM_ESTIMATION_FINDRIGIDTRANSFORMATIONBYSVD_HPP_
 

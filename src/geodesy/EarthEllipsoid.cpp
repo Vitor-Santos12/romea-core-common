@@ -12,10 +12,10 @@ EarthEllipsoid EarthEllipsoid::GRS80(6378137.0, 6356752.314);
 
 //--------------------------------------------------------------------------
 EarthEllipsoid::EarthEllipsoid(double A, double B):
-  a (A),
-  b (B),
-  e2 ((a*a - b*b) / (a*a)),
-  e (std::sqrt(e2))
+  a(A),
+  b(B),
+  e2((a*a - b*b) / (a*a)),
+  e(std::sqrt(e2))
 {
 
 }
@@ -24,16 +24,14 @@ EarthEllipsoid::EarthEllipsoid(double A, double B):
 //-----------------------------------------------------------------------------
 double EarthEllipsoid::meridionalRadius(const double &latitude) const
 {
-  return a*(1-e2)/(std::pow(1-std::pow(e*std::sin(latitude),2),1.5));
+  return a*(1-e2)/(std::pow(1-std::pow(e*std::sin(latitude), 2), 1.5));
 }
 
 
 //-----------------------------------------------------------------------------
 double EarthEllipsoid::transversalRadius(const double &latitude) const
 {
-  return a*std::cos(latitude)/std::sqrt(1-std::pow(e*std::sin(latitude),2));
+  return a*std::cos(latitude)/std::sqrt(1-std::pow(e*std::sin(latitude), 2));
 }
 
-
-
-}
+}  // namespace romea

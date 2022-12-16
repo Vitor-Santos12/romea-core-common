@@ -1,11 +1,11 @@
-#ifndef romea_ENUConverter_hpp
-#define romea_ENUConverter_hpp
+#ifndef ROMEA_CORE_COMMON_GEODESY_ENUCONVERTER_HPP_
+#define ROMEA_CORE_COMMON_GEODESY_ENUCONVERTER_HPP_
 
-//romea
-#include "GeodeticCoordinates.hpp"
-#include "ECEFConverter.hpp"
+// romea
+#include "romea_core_common/geodesy/GeodeticCoordinates.hpp"
+#include "romea_core_common/geodesy/ECEFConverter.hpp"
 
-//Eigen
+// Eigen
 #include <Eigen/Core>
 #include <Eigen/Geometry>
 
@@ -14,10 +14,9 @@ namespace romea {
 class ENUConverter
 {
 public:
-
   ENUConverter();
 
-  ENUConverter(const GeodeticCoordinates & anchor);
+  explicit ENUConverter(const GeodeticCoordinates & anchor);
 
   void setAnchor(const GeodeticCoordinates & anchor);
 
@@ -54,7 +53,6 @@ private :
   bool isAnchored_;
 };
 
+}  // namespace romea
 
-}
-
-#endif
+#endif  // ROMEA_CORE_COMMON_GEODESY_ENUCONVERTER_HPP_

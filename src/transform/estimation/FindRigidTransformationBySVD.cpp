@@ -1,4 +1,4 @@
-//romea
+// romea
 #include "romea_core_common/transform/estimation/FindRigidTransformationBySVD.hpp"
 #include "romea_core_common/containers/Eigen/EigenContainers.hpp"
 
@@ -8,7 +8,6 @@ namespace romea {
 template <class PointType>
 FindRigidTransformationBySVD<PointType>::FindRigidTransformationBySVD()
 {
-
 }
 
 //-----------------------------------------------------------------------------
@@ -19,9 +18,8 @@ FindRigidTransformationBySVD<PointType>::find(
     const PreconditionedPointSetType &targetPoints,
     const std::vector<Correspondence> &correspondences)
 {
-
-  TransformationMatrixType H =  estimate_(sourcePoints.get(),targetPoints.get(),correspondences);
-  H.block(0,CARTESIAN_DIM,CARTESIAN_DIM,1) /= targetPoints.getPreconditioningMatrix()(0,0);
+  TransformationMatrixType H =  estimate_(sourcePoints.get(), targetPoints.get(), correspondences);
+  H.block(0, CARTESIAN_DIM, CARTESIAN_DIM, 1) /= targetPoints.getPreconditioningMatrix()(0, 0);
   return H;
 }
 
@@ -33,7 +31,7 @@ FindRigidTransformationBySVD<PointType>::find(
     const PointSet<PointType> &targetPoints,
     const std::vector<Correspondence> &correspondences)
 {
-  return estimate_(sourcePoints,targetPoints,correspondences);
+  return estimate_(sourcePoints, targetPoints, correspondences);
 }
 
 //-----------------------------------------------------------------------------
@@ -44,8 +42,8 @@ FindRigidTransformationBySVD<PointType>::find(
     const PreconditionedPointSetType &targetPoints)
 {
 
-  TransformationMatrixType H =  estimate_(sourcePoints.get(),targetPoints.get());
-  H.block(0,CARTESIAN_DIM,CARTESIAN_DIM,1) /= targetPoints.getPreconditioningMatrix()(0,0);
+  TransformationMatrixType H =  estimate_(sourcePoints.get(), targetPoints.get());
+  H.block(0, CARTESIAN_DIM, CARTESIAN_DIM, 1) /= targetPoints.getPreconditioningMatrix()(0, 0);
   return H;
 }
 
@@ -56,7 +54,7 @@ FindRigidTransformationBySVD<PointType>::find(
     const PointSet<PointType> &sourcePoints,
     const PointSet<PointType> &targetPoints)
 {
-  return estimate_(sourcePoints,targetPoints);
+  return estimate_(sourcePoints, targetPoints);
 }
 
 
@@ -68,35 +66,35 @@ FindRigidTransformationBySVD<PointType>::estimate_(
     const PointSet<PointType> &targetPoints,
     const std::vector<Correspondence> &correspondences)
 {
-
-  //TODO  changer un calcul single pass
-  //Compute mean
+  // TODO(jean)  changer un calcul single pass
+  // Compute mean
   PointType sourceMean = PointType::Zero();
   PointType targetMean = PointType::Zero();
-  for(size_t n =0, N = correspondences.size(); n<N ;++n){
-    const size_t &sourceIndex =correspondences[n].sourcePointIndex;
-    const size_t &targetIndex =correspondences[n].targetPointIndex;
+  for (size_t n = 0, N = correspondences.size(); n < N ; ++n){
+    const size_t &sourceIndex = correspondences[n].sourcePointIndex;
+    const size_t &targetIndex = correspondences[n].targetPointIndex;
     sourceMean += sourcePoints[sourceIndex];
     targetMean += targetPoints[targetIndex];
   }
   sourceMean/=Scalar(correspondences.size());
   targetMean/=Scalar(correspondences.size());
 
-  //Compute covariance
-  Eigen::Matrix<Scalar,POINT_SIZE,POINT_SIZE> cov =
-      Eigen::Matrix<Scalar,POINT_SIZE,POINT_SIZE>::Zero();
+  // Compute covariance
+  Eigen::Matrix<Scalar, POINT_SIZE, POINT_SIZE> cov =
+      Eigen::Matrix<Scalar, POINT_SIZE, POINT_SIZE>::Zero();
 
-  for(size_t n =0; n< correspondences.size();++n){
-    const size_t &sourceIndex =correspondences[n].sourcePointIndex;
-    const size_t &targetIndex =correspondences[n].targetPointIndex;
+  for (size_t n = 0; n < correspondences.size(); ++n){
+    const size_t &sourceIndex  = correspondences[n].sourcePointIndex;
+    const size_t &targetIndex  = correspondences[n].targetPointIndex;
     cov+= (sourcePoints[sourceIndex]-sourceMean)
         *(targetPoints[targetIndex]-targetMean).transpose();
   }
 
-  Eigen::JacobiSVD<Eigen::Matrix<Scalar,-1,-1> > svd(cov.block(0,0,CARTESIAN_DIM,CARTESIAN_DIM),
-                                                     Eigen::ComputeThinU | Eigen::ComputeThinV);
-  Eigen::Matrix<Scalar,-1,-1> u = svd.matrixU ();
-  Eigen::Matrix<Scalar,-1,-1> v = svd.matrixV ();
+  Eigen::JacobiSVD<Eigen::Matrix<Scalar, -1, -1> >
+    svd(cov.block(0, 0, CARTESIAN_DIM, CARTESIAN_DIM), Eigen::ComputeThinU | Eigen::ComputeThinV);
+
+  Eigen::Matrix<Scalar, -1, -1> u = svd.matrixU();
+  Eigen::Matrix<Scalar, -1, -1> v = svd.matrixV();
 
   //      if (u.determinant () * v.determinant () < 0)
   //      {
@@ -104,10 +102,11 @@ FindRigidTransformationBySVD<PointType>::estimate_(
   //          v (x, d) *= -1;
   //      }
 
-  //Compute translation
+  // Compute translation
   TransformationMatrixType H = TransformationMatrixType::Identity();
-  H.block(0,0,CARTESIAN_DIM,CARTESIAN_DIM) = v*u.transpose();
-  H.block(0,CARTESIAN_DIM,POINT_SIZE,1) += targetMean - H.block(0,0,POINT_SIZE,POINT_SIZE)*sourceMean;
+  H.block(0, 0, CARTESIAN_DIM, CARTESIAN_DIM) = v*u.transpose();
+  H.block(0, CARTESIAN_DIM, POINT_SIZE, 1) += targetMean -
+    H.block(0, 0, POINT_SIZE, POINT_SIZE)*sourceMean;
   return H;
 }
 
@@ -118,27 +117,28 @@ FindRigidTransformationBySVD<PointType>::estimate_(
     const PointSet<PointType> &sourcePoints,
     const PointSet<PointType> &targetPoints)
 {
-
   assert(sourcePoints.size()==targetPoints.size());
 
-  //TODO  changer un calcul single pass
-  //Compute mean
+  // TODO(jean)  changer un calcul single pass
+  
+  // Compute mean
   PointType sourceMean = mean(sourcePoints);
   PointType targetMean = mean(targetPoints);
 
-  //Compute covariance
-  Eigen::Matrix<Scalar,POINT_SIZE,POINT_SIZE> cov =
-      Eigen::Matrix<Scalar,POINT_SIZE,POINT_SIZE>::Zero();
+  // Compute covariance
+  Eigen::Matrix<Scalar, POINT_SIZE, POINT_SIZE> cov =
+      Eigen::Matrix<Scalar, POINT_SIZE, POINT_SIZE>::Zero();
 
-  for(size_t n =0; n<sourcePoints.size();++n){
+  for (size_t n =0; n< sourcePoints.size();++n){
     cov+= (sourcePoints[n]-sourceMean)
         *(targetPoints[n]-targetMean).transpose();
   }
 
-  Eigen::JacobiSVD<Eigen::Matrix<Scalar,-1,-1> > svd(cov.block(0,0,CARTESIAN_DIM,CARTESIAN_DIM),
-                                                     Eigen::ComputeThinU | Eigen::ComputeThinV);
-  Eigen::Matrix<Scalar,-1,-1> u = svd.matrixU ();
-  Eigen::Matrix<Scalar,-1,-1> v = svd.matrixV ();
+  Eigen::JacobiSVD<Eigen::Matrix<Scalar, -1, -1> >
+    svd(cov.block(0, 0, CARTESIAN_DIM, CARTESIAN_DIM), Eigen::ComputeThinU | Eigen::ComputeThinV);
+
+  Eigen::Matrix<Scalar, -1, -1> u = svd.matrixU();
+  Eigen::Matrix<Scalar, -1, -1> v = svd.matrixV();
 
   //      if (u.determinant () * v.determinant () < 0)
   //      {
@@ -146,10 +146,11 @@ FindRigidTransformationBySVD<PointType>::estimate_(
   //          v (x, d) *= -1;
   //      }
 
-  //Compute translation
+  // Compute translation
   TransformationMatrixType H = TransformationMatrixType::Identity();
-  H.block(0,0,CARTESIAN_DIM,CARTESIAN_DIM) = v*u.transpose();
-  H.block(0,CARTESIAN_DIM,POINT_SIZE,1) += targetMean - H.block(0,0,POINT_SIZE,POINT_SIZE)*sourceMean;
+  H.block(0, 0, CARTESIAN_DIM, CARTESIAN_DIM) = v*u.transpose();
+  H.block(0, CARTESIAN_DIM, POINT_SIZE, 1) += targetMean -
+    H.block(0, 0, POINT_SIZE, POINT_SIZE)*sourceMean;
   return H;
 }
 
@@ -163,5 +164,4 @@ template class FindRigidTransformationBySVD<HomogeneousCoordinates2d>;
 template class FindRigidTransformationBySVD<HomogeneousCoordinates3f>;
 template class FindRigidTransformationBySVD<HomogeneousCoordinates3d>;
 
-
-}
+}   // namespace romea

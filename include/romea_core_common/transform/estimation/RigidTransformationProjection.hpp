@@ -1,5 +1,5 @@
-#ifndef romea_RigidTransformationProjection_hpp
-#define romea_RigidTransformationProjection_hpp
+#ifndef ROMEA_CORE_COMMON_TRANSFORM_ESTIMATION_RIGIDTRANSFORMATIONPROJECTION_HPP_
+#define ROMEA_CORE_COMMON_TRANSFORM_ESTIMATION_RIGIDTRANSFORMATIONPROJECTION_HPP_
 
 //romea
 #include <romea_core_common/coordinates/CartesianCoordinates.hpp>
@@ -9,27 +9,27 @@ namespace romea {
 
 //-----------------------------------------------------------------------------
 template <typename Scalar>
-void projection(const Eigen::Matrix<Scalar,3,3> & tranformationMatrix,
+void projection(const Eigen::Matrix<Scalar, 3, 3> & tranformationMatrix,
                 const CartesianCoordinates2<Scalar> & sourcePoint,
                 CartesianCoordinates2<Scalar> & targetPoint)
 {
-  targetPoint = tranformationMatrix.template block<2,2>(0,0)*sourcePoint +
-      tranformationMatrix.template block<2,1>(0,2);
+  targetPoint = tranformationMatrix.template block<2, 2>(0, 0)*sourcePoint +
+      tranformationMatrix.template block<2, 1>(0, 2);
 }
 
 //-----------------------------------------------------------------------------
 template <typename Scalar>
-void projection(const Eigen::Matrix<Scalar,4,4> & tranformationMatrix,
+void projection(const Eigen::Matrix<Scalar, 4, 4> & tranformationMatrix,
                 const CartesianCoordinates3<Scalar> & sourcePoint,
                 CartesianCoordinates3<Scalar> & targetPoint)
 {
-  targetPoint = tranformationMatrix.template block<3,3>(0,0)*sourcePoint +
-      tranformationMatrix.template block<3,1>(0,3);
+  targetPoint = tranformationMatrix.template block<3, 3>(0, 0)*sourcePoint +
+      tranformationMatrix.template block<3, 1>(0, 3);
 }
 
 //-----------------------------------------------------------------------------
 template <typename Scalar>
-void projection(const Eigen::Matrix<Scalar,3,3> & tranformationMatrix,
+void projection(const Eigen::Matrix<Scalar, 3, 3> & tranformationMatrix,
                 const HomogeneousCoordinates2<Scalar> & sourcePoint,
                 HomogeneousCoordinates2<Scalar> & targetPoint)
 {
@@ -38,14 +38,13 @@ void projection(const Eigen::Matrix<Scalar,3,3> & tranformationMatrix,
 
 //-----------------------------------------------------------------------------
 template <typename Scalar>
-void projection(const Eigen::Matrix<Scalar,4,4> & tranformationMatrix,
+void projection(const Eigen::Matrix<Scalar, 4, 4> & tranformationMatrix,
                 const HomogeneousCoordinates3<Scalar> & sourcePoint,
                 HomogeneousCoordinates3<Scalar> & targetPoint)
 {
   targetPoint = tranformationMatrix*sourcePoint;
 }
 
+}  // namespace romea
 
-}
-
-#endif
+#endif  // ROMEA_CORE_COMMON_TRANSFORM_ESTIMATION_RIGIDTRANSFORMATIONPROJECTION_HPP_

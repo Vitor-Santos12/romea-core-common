@@ -12,7 +12,6 @@ namespace romea {
 ECEFConverter::ECEFConverter(const EarthEllipsoid & earthEllipsoid):
   ellipsoid_(earthEllipsoid)
 {
-
 }
 
 //--------------------------------------------------------------------------
@@ -34,39 +33,37 @@ Eigen::Vector3d ECEFConverter::toECEF(const GeodeticCoordinates & geodeticCoordi
 //--------------------------------------------------------------------------
 GeodeticCoordinates  ECEFConverter::toWGS84(const Eigen::Vector3d & ecefPosition) const
 {
-  const double X= ecefPosition[0];
-  const double Y= ecefPosition[1];
-  const double Z= ecefPosition[2];
+  const double X = ecefPosition[0];
+  const double Y = ecefPosition[1];
+  const double Z = ecefPosition[2];
 
-  //Compute longitude
+  // Compute longitude
   const double norm = sqrt(X*X + Y*Y);
   double longitude = 2.0 * atan(Y / (X + norm));
 
-  //Compute latitude
+  // Compute latitude
   double latitude = atan(Z / (norm * (1.0 - (ellipsoid_.a*ellipsoid_.e2 / sqrt(X*X+Y*Y+Z*Z)))));
 
   double delta = 1.0;
-  while(delta > EPSILON)
+  while (delta > EPSILON)
   {
     double s2 = sin(latitude)*sin(latitude);
     const double eLatitude =
         atan(
           (Z / norm) /
-          (1.0 - (ellipsoid_.a * ellipsoid_.e2 * cos(latitude) / (norm * sqrt(1.0 - ellipsoid_.e2 * s2))))
-          );
+          (1.0 - (ellipsoid_.a * ellipsoid_.e2 * cos(latitude) / (norm * sqrt(1.0 - ellipsoid_.e2 * s2)))));
 
     delta = fabs(eLatitude - latitude);
     latitude = eLatitude;
   }
 
-  //Compute altitude
+  // Compute altitude
   double s2 = sin(latitude)*sin(latitude);
   double altitude = norm / cos(latitude) - ellipsoid_.a / sqrt(1.0 - ellipsoid_.e2 * s2);
 
-  return  makeGeodeticCoordinates(latitude,longitude,altitude);
+  return  makeGeodeticCoordinates(latitude, longitude, altitude);
 }
 
-
-}
+}  //namespace romea
 
 

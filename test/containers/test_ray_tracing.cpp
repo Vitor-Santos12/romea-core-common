@@ -1,3 +1,7 @@
+// std
+#include <iostream>
+#include <chrono>
+
 // gtest
 #include <gtest/gtest.h>
 
@@ -6,60 +10,58 @@
 #include "romea_core_common/containers/grid/WrappableGrid.hpp"
 #include "romea_core_common/containers/grid/RayTracing.hpp"
 
-#include <iostream>
-#include <chrono>
 
 //-----------------------------------------------------------------------------
-TEST(TestContainers,testRayCasting2d)
+TEST(TestContainers, testRayCasting2d)
 {
-
   typedef typename romea::GridIndexMapping2d::PointType PointType;
   typedef typename romea::GridIndexMapping2d::CellIndexes CellIndexes;
 
-  romea::GridIndexMapping2d gridIndexMapping(10.,0.1);
+  romea::GridIndexMapping2d gridIndexMapping(10., 0.1);
   romea::RayCasting2d rayCasting(&gridIndexMapping);
 
-  EXPECT_EQ(gridIndexMapping.getNumberOfCellsAlongAxes().x(),201);
-  EXPECT_EQ(gridIndexMapping.getNumberOfCellsAlongAxes().y(),201);
-
+  EXPECT_EQ(gridIndexMapping.getNumberOfCellsAlongAxes().x(), 201);
+  EXPECT_EQ(gridIndexMapping.getNumberOfCellsAlongAxes().y(), 201);
 
   {
-    rayCasting.setOriginPoint(PointType(0,0));
-    rayCasting.setEndPoint(PointType(5,0));
+    rayCasting.setOriginPoint(PointType(0, 0));
+    rayCasting.setEndPoint(PointType(5, 0));
 
     CellIndexes originPointIndexes = rayCasting.getOriginPointIndexes();
     CellIndexes endPointIndexes = rayCasting.getEndPointIndexes();
 
-    EXPECT_EQ(originPointIndexes.x(),100);
-    EXPECT_EQ(originPointIndexes.y(),100);
-    EXPECT_EQ(endPointIndexes.x(),150);
-    EXPECT_EQ(endPointIndexes.y(),100);
+    EXPECT_EQ(originPointIndexes.x(), 100);
+    EXPECT_EQ(originPointIndexes.y(), 100);
+    EXPECT_EQ(endPointIndexes.x(), 150);
+    EXPECT_EQ(endPointIndexes.y(), 100);
 
     {
       romea::VectorOfEigenVector<CellIndexes> ray = rayCasting.cast();
 
-      EXPECT_EQ(originPointIndexes.x(),ray.front().x());
-      EXPECT_EQ(originPointIndexes.y(),ray.front().y());
-      EXPECT_EQ(endPointIndexes.x(),ray.back().x());
-      EXPECT_EQ(endPointIndexes.y(),ray.back().y());
+      EXPECT_EQ(originPointIndexes.x(), ray.front().x());
+      EXPECT_EQ(originPointIndexes.y(), ray.front().y());
+      EXPECT_EQ(endPointIndexes.x(), ray.back().x());
+      EXPECT_EQ(endPointIndexes.y(), ray.back().y());
     }
 
     {
-      romea::VectorOfEigenVector<CellIndexes> ray = rayCasting.cast(PointType(0,5));
+      romea::VectorOfEigenVector<CellIndexes> ray =
+        rayCasting.cast(PointType(0, 5));
 
-      EXPECT_EQ(ray.front().x(),100);
-      EXPECT_EQ(ray.front().y(),100);
-      EXPECT_EQ(ray.back().x(),100);
-      EXPECT_EQ(ray.back().y(),150);
+      EXPECT_EQ(ray.front().x(), 100);
+      EXPECT_EQ(ray.front().y(), 100);
+      EXPECT_EQ(ray.back().x(), 100);
+      EXPECT_EQ(ray.back().y(), 150);
     }
 
     {
-      romea::VectorOfEigenVector<CellIndexes> ray = rayCasting.cast(PointType(-6.3,7),PointType(5.1,8.2));
+      romea::VectorOfEigenVector<CellIndexes> ray =
+        rayCasting.cast(PointType(-6.3, 7), PointType(5.1, 8.2));
 
-      EXPECT_EQ(ray.front().x(),37);
-      EXPECT_EQ(ray.front().y(),170);
-      EXPECT_EQ(ray.back().x(),151);
-      EXPECT_EQ(ray.back().y(),182);
+      EXPECT_EQ(ray.front().x(), 37);
+      EXPECT_EQ(ray.front().y(), 170);
+      EXPECT_EQ(ray.back().x(), 151);
+      EXPECT_EQ(ray.back().y(), 182);
     }
   }
 }
@@ -71,11 +73,11 @@ TEST(TestContainers,testRayIterativeCasting2d)
   typedef typename romea::GridIndexMapping2d::PointType PointType;
   typedef typename romea::GridIndexMapping2d::CellIndexes CellIndexes;
 
-  romea::GridIndexMapping2d gridIndexMapping(10.,0.1);
+  romea::GridIndexMapping2d gridIndexMapping(10., 0.1);
   romea::RayCasting2d rayCasting(&gridIndexMapping);
 
-  rayCasting.setOriginPoint(PointType(4.08,-3.33));
-  rayCasting.setEndPoint(PointType(-7.0123,5.59));
+  rayCasting.setOriginPoint(PointType(4.08, -3.33));
+  rayCasting.setEndPoint(PointType(-7.0123, 5.59));
 
   CellIndexes originPointIndexes = rayCasting.getOriginPointIndexes();
   CellIndexes endPointIndexes = rayCasting.getEndPointIndexes();
@@ -84,51 +86,49 @@ TEST(TestContainers,testRayIterativeCasting2d)
   romea::VectorOfEigenVector<CellIndexes> ray(rayNumberOfCells);
   CellIndexes cellIndexes = originPointIndexes;
 
-  ray[0]=originPointIndexes;
-  for(size_t n=1;n<rayNumberOfCells;n++)
+  ray[0] = originPointIndexes;
+  for (size_t n = 1; n < rayNumberOfCells; n++)
   {
     rayCasting.next(cellIndexes);
-    ray[n]=cellIndexes;
+    ray[n] = cellIndexes;
   }
 
-  EXPECT_EQ(gridIndexMapping.getNumberOfCellsAlongAxes().x(),201);
-  EXPECT_EQ(gridIndexMapping.getNumberOfCellsAlongAxes().y(),201);
-  EXPECT_EQ(originPointIndexes.x(),ray.front().x());
-  EXPECT_EQ(originPointIndexes.y(),ray.front().y());
-  EXPECT_EQ(endPointIndexes.x(),ray.back().x());
-  EXPECT_EQ(endPointIndexes.y(),ray.back().y());
+  EXPECT_EQ(gridIndexMapping.getNumberOfCellsAlongAxes().x(), 201);
+  EXPECT_EQ(gridIndexMapping.getNumberOfCellsAlongAxes().y(), 201);
+  EXPECT_EQ(originPointIndexes.x(), ray.front().x());
+  EXPECT_EQ(originPointIndexes.y(), ray.front().y());
+  EXPECT_EQ(endPointIndexes.x(), ray.back().x());
+  EXPECT_EQ(endPointIndexes.y(), ray.back().y());
 }
 
 //-----------------------------------------------------------------------------
-TEST(TestContainers,testRayCasting3d)
+TEST(TestContainers, testRayCasting3d)
 {
-
   typedef typename romea::GridIndexMapping3d::PointType PointType;
   typedef typename romea::GridIndexMapping3d::CellIndexes CellIndexes;
 
-  romea::GridIndexMapping3d gridIndexMapping(10.,0.1);
+  romea::GridIndexMapping3d gridIndexMapping(10., 0.1);
   romea::RayCasting3d rayCasting(&gridIndexMapping);
 
-
-  rayCasting.setOriginPoint(PointType(4.08,-3.33,2.34));
-  rayCasting.setEndPoint(PointType(-7.0123,5.59,8.98));
+  rayCasting.setOriginPoint(PointType(4.08, -3.33, 2.34));
+  rayCasting.setEndPoint(PointType(-7.0123, 5.59, 8.98));
 
   CellIndexes originPointIndexes = rayCasting.getOriginPointIndexes();
   CellIndexes endPointIndexes = rayCasting.getEndPointIndexes();
 
   romea::VectorOfEigenVector<CellIndexes> ray = rayCasting.cast();
 
-  EXPECT_EQ(originPointIndexes.x(),ray.front().x());
-  EXPECT_EQ(originPointIndexes.y(),ray.front().y());
-  EXPECT_EQ(originPointIndexes.z(),ray.front().z());
-  EXPECT_EQ(endPointIndexes.x(),ray.back().x());
-  EXPECT_EQ(endPointIndexes.y(),ray.back().y());
-  EXPECT_EQ(endPointIndexes.z(),ray.back().z());
+  EXPECT_EQ(originPointIndexes.x(), ray.front().x());
+  EXPECT_EQ(originPointIndexes.y(), ray.front().y());
+  EXPECT_EQ(originPointIndexes.z(), ray.front().z());
+  EXPECT_EQ(endPointIndexes.x(), ray.back().x());
+  EXPECT_EQ(endPointIndexes.y(), ray.back().y());
+  EXPECT_EQ(endPointIndexes.z(), ray.back().z());
 }
 
 
 ////-----------------------------------------------------------------------------
-//TEST(TestContainers,testRayCasting2dOutRange)
+// TEST(TestContainers,testRayCasting2dOutRange)
 //{
 
 //  typedef typename romea::GridIndexMapping2d::PointType PointType;
@@ -155,7 +155,7 @@ TEST(TestContainers,testRayCasting3d)
 
 
 ////-----------------------------------------------------------------------------
-//TEST(TestContainers,testRadarCast)
+// TEST(TestContainers,testRadarCast)
 //{
 //  const size_t numberOfRay =401;
 //  const size_t numberOfDataByRay =512;

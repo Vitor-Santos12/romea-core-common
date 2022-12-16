@@ -1,42 +1,41 @@
-#ifndef romea_RansacRigidTransformationModel_hpp
-#define romea_RansacRigidTransformationModel_hpp
+#ifndef ROMEA_CORE_COMMON_TRANSFORM_ESTIMATION_RANSACRIGIDTRANSFORMATIONMODEL_HPP_
+#define ROMEA_CORE_COMMON_TRANSFORM_ESTIMATION_RANSACRIGIDTRANSFORMATIONMODEL_HPP_
 
-//romea
-#include "RigidTransformationProjection.hpp"
+// std
+#include <vector>
 
-#include "FindRigidTransformationByLeastSquares.hpp"
-#include "FindRigidTransformationBySVD.hpp"
+// romea
+#include "romea_core_common/transform/estimation/RigidTransformationProjection.hpp"
+#include "romea_core_common/transform/estimation/FindRigidTransformationByLeastSquares.hpp"
+#include "romea_core_common/transform/estimation/FindRigidTransformationBySVD.hpp"
 
-#include "../../regression/ransac/Ransac.hpp"
-#include "../../regression/ransac/RansacRandomCorrespondences.hpp"
+#include "romea_core_common/regression/ransac/Ransac.hpp"
+#include "romea_core_common/regression/ransac/RansacRandomCorrespondences.hpp"
 
 namespace romea {
 
 template <class PointType>
 class RansacRigidTransformationModel : public RansacModel
-
 {
-
 public :
 
   using Scalar = typename PointType::Scalar ;
   static constexpr size_t CARTESIAN_DIM = PointTraits<PointType>::DIM;
   static constexpr size_t POINT_SIZE = PointTraits<PointType>::SIZE;
 
-
-  using PreconditionedPointSetType=PreconditionedPointSet<PointType> ;
-  using PointSetPreconditionerType=PointSetPreconditioner<PointType> ;
-  using TransformationMatrixType=Eigen::Matrix<Scalar,CARTESIAN_DIM +1,CARTESIAN_DIM +1> ;
+  using PreconditionedPointSetType = PreconditionedPointSet<PointType> ;
+  using PointSetPreconditionerType = PointSetPreconditioner<PointType> ;
+  using TransformationMatrixType = Eigen::Matrix<Scalar, CARTESIAN_DIM +1, CARTESIAN_DIM +1> ;
 
 public :
 
   RansacRigidTransformationModel();
 
-  virtual ~RansacRigidTransformationModel()=default;
+  virtual ~RansacRigidTransformationModel() = default;
 
-  RansacRigidTransformationModel(const RansacRigidTransformationModel<PointType> & )=delete;
+  explicit RansacRigidTransformationModel(const RansacRigidTransformationModel<PointType> & ) = delete;
 
-  RansacRigidTransformationModel<PointType> & operator=(const RansacRigidTransformationModel<PointType> & )=delete;
+  RansacRigidTransformationModel<PointType> & operator=(const RansacRigidTransformationModel<PointType> & ) = delete;
 
 
 public :
@@ -112,8 +111,8 @@ protected :
   TransformationMatrixType transformation_;
   FindRigidTransformationBySVD<PointType> findRigidTransformationBySVD_;
   FindRigidTransformationByLeastSquares<PointType>findRigidTransformationByLeastSquares_;
-
 };
 
-}
-#endif
+}  // namespace romea
+
+#endif  // ROMEA_CORE_COMMON_TRANSFORM_ESTIMATION_RANSACRIGIDTRANSFORMATIONMODEL_HPP_

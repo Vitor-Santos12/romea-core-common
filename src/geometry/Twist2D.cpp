@@ -1,7 +1,6 @@
 #include "romea_core_common/geometry/Twist2D.hpp"
 
 namespace romea
-
 {
 
 //--------------------------------------------------------------------------
@@ -10,13 +9,12 @@ Twist2D::Twist2D():
   linearSpeeds(Eigen::Vector2d::Zero()),
   covariance(Eigen::Matrix3d::Zero())
 {
-
 }
 
 //--------------------------------------------------------------------------
-std::ostream & operator <<(std::ostream & os,const Twist2D & twist2D)
+std::ostream & operator <<(std::ostream & os, const Twist2D & twist2D)
 {
-  os << " Twist 2D :"<<std::endl;
+  os << " Twist 2D :" << std::endl;
   os << " linear.x =" << twist2D.linearSpeeds.x() << std::endl;
   os << " linear.y =" << twist2D.linearSpeeds.y() << std::endl;
   os << " angular.z =" << twist2D.angularSpeed << std::endl;
@@ -25,5 +23,5 @@ std::ostream & operator <<(std::ostream & os,const Twist2D & twist2D)
   return os;
 }
 
-}
+}   // namespace romea
 

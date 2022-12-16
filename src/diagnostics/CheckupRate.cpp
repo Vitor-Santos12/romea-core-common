@@ -1,4 +1,7 @@
+// romea
 #include "romea_core_common/diagnostic/CheckupRate.hpp"
+
+// std
 #include <sstream>
 #include <iostream>
 
@@ -13,7 +16,7 @@ CheckupRate<CheckupType>::CheckupRate(const std::string &name,
   checkup_(name+"_rate",
            rate,
            espilon,
-           Diagnostic(DiagnosticStatus::ERROR,"no data received from "+name))
+           Diagnostic(DiagnosticStatus::ERROR, "no data received from "+name))
 {
 }
 
@@ -22,7 +25,7 @@ CheckupRate<CheckupType>::CheckupRate(const std::string &name,
 template <typename CheckupType>
 DiagnosticStatus CheckupRate<CheckupType>::evaluate(const Duration & stamp)
 {
-  double rate=rateMonitoring_.update(stamp);
+  double rate = rateMonitoring_.update(stamp);
   return checkup_.evaluate(rate);
 }
 
@@ -37,7 +40,7 @@ DiagnosticReport CheckupRate<CheckupType>::getReport() const
 template <typename CheckupType>
 bool CheckupRate<CheckupType>::heartBeatCallback(const Duration & stamp)
 {
-  if(rateMonitoring_.timeout(stamp))
+  if (rateMonitoring_.timeout(stamp))
   {
     checkup_.timeout();
     return false;
@@ -48,7 +51,7 @@ bool CheckupRate<CheckupType>::heartBeatCallback(const Duration & stamp)
 template class CheckupRate<CheckupGreaterThan<double>>;
 template class CheckupRate<CheckupEqualTo<double>>;
 
-}// namespace
+}  // namespace romea
 
 
 

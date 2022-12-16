@@ -1,28 +1,26 @@
-#ifndef __OnlineAverage_H__
-#define __OnlineAverage_H__
+#ifndef ROMEA_CORE_COMMON_MONITORING_ONLINEAVERAGE_HPP_
+#define ROMEA_CORE_COMMON_MONITORING_ONLINEAVERAGE_HPP_
 
-//std
+// std
 #include <queue>
 #include <atomic>
 #include <cstdlib>
 #include <mutex>
+#include <vector>
 
 namespace romea {
 
 
 class OnlineAverage
 {
-
 public :
+  explicit OnlineAverage(const double & averagePrecision);
 
-
-  OnlineAverage(const double & averagePrecision,size_t windowSize);
-
-  OnlineAverage(const double & averagePrecision);
+  OnlineAverage(const double & averagePrecision, size_t windowSize);
 
   OnlineAverage(const OnlineAverage & onlineAverage);
 
-  virtual ~OnlineAverage()=default;
+  virtual ~OnlineAverage() = default;
 
 public :
 
@@ -49,9 +47,8 @@ protected :
   std::vector<long long int> data_;
   long long int sumOfData_;
   double average_;
-
 };
 
-}
+}  // namespace romea
 
-#endif
+#endif  // ROMEA_CORE_COMMON_MONITORING_ONLINEAVERAGE_HPP_

@@ -1,6 +1,7 @@
 #include "romea_core_common/containers/grid/GridIndexMapping.hpp"
 
-namespace romea {
+namespace romea 
+{
 
 //-----------------------------------------------------------------------------
 template <typename Scalar , size_t DIM>
@@ -22,21 +23,21 @@ GridIndexMapping<Scalar, DIM>::GridIndexMapping(const IntervalType &extrimities,
   flooredMinimalPositionAlongAxes_(),
   cellCentersPositionAlongAxes_(DIM)
 {
-  flooredMinimalPositionAlongAxes_.array()=cellResolution_*(
+  flooredMinimalPositionAlongAxes_.array() = cellResolution_*(
         floor((extrimities.lower().array()/cellResolution_))-0.5);
 
-  numberOfCellsAlongAxes_.array()=(ceil(extrimities.upper().array()/cellResolution_) -
-                                   floor(extrimities.lower().array()/cellResolution_) +1).template cast<size_t>();
+  numberOfCellsAlongAxes_.array() = (ceil(extrimities.upper().array()/cellResolution_) -
+    floor(extrimities.lower().array()/cellResolution_) +1).template cast<size_t>();
 
 
-  for(size_t dim=0;dim<DIM;dim++)
+  for (size_t dim = 0; dim < DIM; dim++)
   {
     const size_t & numberOfCellsAlongAxis = numberOfCellsAlongAxes_[dim];
     const Scalar &  flooredMinimalPositionAlongAxis = flooredMinimalPositionAlongAxes_[dim];
     std::vector<Scalar> & cellCentersPositionAlongAxis = cellCentersPositionAlongAxes_[dim];
 
     cellCentersPositionAlongAxis.resize(numberOfCellsAlongAxis);
-    for(size_t n = 0; n < numberOfCellsAlongAxis ; ++n)
+    for (size_t n = 0; n < numberOfCellsAlongAxis ; ++n)
     {
       cellCentersPositionAlongAxis[n]=
           flooredMinimalPositionAlongAxis + (n+Scalar(0.5))*cellResolution_;
@@ -49,7 +50,7 @@ template <typename Scalar , size_t DIM>
 GridIndexMapping<Scalar, DIM>::GridIndexMapping(const Scalar & maximalRange,
                                                 const Scalar & cellResolution):
   GridIndexMapping(IntervalType(PointType::Constant(-maximalRange),
-                                PointType::Constant(maximalRange)),cellResolution)
+                                PointType::Constant(maximalRange)), cellResolution)
 {
 }
 
@@ -82,9 +83,9 @@ typename GridIndexMapping<Scalar, DIM>::PointType
 GridIndexMapping<Scalar, DIM>::computeCellCenterPosition(const CellIndexes & cellIndexes) const
 {
   PointType point;
-  for(size_t dim=0;dim<DIM;dim++)
+  for (size_t dim = 0;dim < DIM; dim++)
   {
-    point(dim)=cellCentersPositionAlongAxes_[dim][cellIndexes(dim)];
+    point(dim) = cellCentersPositionAlongAxes_[dim][cellIndexes(dim)];
   }
 
   return point;
@@ -97,10 +98,9 @@ GridIndexMapping<Scalar, DIM>::getCellCentersPositionAlong(const size_t & axisDI
   return cellCentersPositionAlongAxes_[axisDIM];
 }
 
-template class GridIndexMapping<float,2>;
-template class GridIndexMapping<float,3>;
-template class GridIndexMapping<double,2>;
-template class GridIndexMapping<double,3>;
+template class GridIndexMapping<float, 2>;
+template class GridIndexMapping<float, 3>;
+template class GridIndexMapping<double, 2>;
+template class GridIndexMapping<double, 3>;
 
-
-}
+}  // namespace romea

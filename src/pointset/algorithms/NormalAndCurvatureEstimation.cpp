@@ -1,7 +1,7 @@
-//romea
+// romea
 #include "romea_core_common/pointset/algorithms/NormalAndCurvatureEstimation.hpp"
 
-//stl
+// stl
 #include <cassert>
 
 namespace {
@@ -61,21 +61,21 @@ planeEstimation_(const PointSetType & points ,
   //    covariance /= float(numberOfNeighborPoints_);
 
 
-  //Two passes covariance computation
+  // Two passes covariance computation
   PointType mean = PointType::Zero();
-  for(size_t i=0;i<numberOfNeighborPoints_;++i)
+  for (size_t i = 0; i < numberOfNeighborPoints_; ++i)
     mean+=points[neighborIndexes_[i]];
   mean/= Scalar(numberOfNeighborPoints_);
 
   CovarianceMatrixType covariance = CovarianceMatrixType::Zero();
-  for(size_t i=0;i<numberOfNeighborPoints_;++i)
+  for (size_t i = 0; i < numberOfNeighborPoints_; ++i)
     covariance +=(points[neighborIndexes_[i]]-mean)*
         (points[neighborIndexes_[i]]-mean).transpose();
   covariance /= Scalar(numberOfNeighborPoints_);
 
-  eigenSolver_.compute(covariance.block(0,0,CARTESIAN_DIM,CARTESIAN_DIM));
-  eigenValues_=eigenSolver_.eigenvalues();
-  eigenVectors_=eigenSolver_.eigenvectors();
+  eigenSolver_.compute(covariance.block(0, 0, CARTESIAN_DIM, CARTESIAN_DIM));
+  eigenValues_ = eigenSolver_.eigenvalues();
+  eigenVectors_ = eigenSolver_.eigenvectors();
 
 }
 
@@ -84,9 +84,8 @@ template <class PointType> void
 NormalAndCurvatureEstimation<PointType>::compute(const PointSetType & points,
                                                  NormalSetType &normals)
 {
-
   KdTree<PointType> pointsKdTree(points);
-  compute(points,pointsKdTree,normals);
+  compute(points, pointsKdTree, normals);
 }
 
 //-----------------------------------------------------------------------------
@@ -95,17 +94,13 @@ NormalAndCurvatureEstimation<PointType>::compute(const PointSetType & points,
                                                  const KdTreeType & pointsKdTree,
                                                  NormalSetType & normals)
 {
-
   assert(points.size() == normals.size());
   assert(numberOfNeighborPoints_ < points.size());
 
-  for(size_t n=0, N=points.size(); n < N ;++n){
-
-    planeEstimation_(points,pointsKdTree,n);
-    std::copy(eigenVectors_.data(),eigenVectors_.data()+CARTESIAN_DIM,normals[n].data());
-    flipNormalTowardOriginCoordinate(points[n],normals[n]);
-
-
+  for (size_t n=0, N=points.size(); n < N ;++n){
+    planeEstimation_(points, pointsKdTree, n);
+    std::copy(eigenVectors_.data(), eigenVectors_.data() + CARTESIAN_DIM, normals[n].data());
+    flipNormalTowardOriginCoordinate(points[n], normals[n]);
   }
 }
 
@@ -115,9 +110,8 @@ NormalAndCurvatureEstimation<PointType>::compute(const PointSetType & points,
                                                  NormalSetType &normals,
                                                  VectorType & curvatures)
 {
-
   KdTreeType pointsKdTree(points);
-  compute(points,pointsKdTree,normals,curvatures);
+  compute(points, pointsKdTree, normals, curvatures);
 }
 
 
@@ -128,17 +122,14 @@ NormalAndCurvatureEstimation<PointType>::compute(const PointSetType & points,
                                                  NormalSetType & normals,
                                                  VectorType & curvatures)
 {
-
   assert(points.size() == normals.size());
   assert(numberOfNeighborPoints_ < points.size());
 
-
-  for(size_t n=0, N=points.size(); n < N ;++n){
-
-    planeEstimation_(points,pointsKdTree,n);
+  for (size_t n=0, N=points.size(); n < N ;++n){
+    planeEstimation_(points, pointsKdTree, n);
     curvatures[n] = eigenValues_(0)/ eigenValues_.array().sum();
-    std::copy(eigenVectors_.data(),eigenVectors_.data()+CARTESIAN_DIM,normals[n].data());
-    flipNormalTowardOriginCoordinate(points[n],normals[n]);
+    std::copy(eigenVectors_.data(), eigenVectors_.data()+CARTESIAN_DIM, normals[n].data());
+    flipNormalTowardOriginCoordinate(points[n], normals[n]);
   }
 }
 
@@ -151,7 +142,7 @@ NormalAndCurvatureEstimation<PointType>::compute(const PointSetType & points,
 {
 
   KdTreeType pointsKdTree(points);
-  compute(points,pointsKdTree,normals,curvatures,normalsReliability);
+  compute(points, pointsKdTree, normals,curvatures, normalsReliability);
 }
 
 //TODO a factoriser en utilisant if constexpr en fonction de PointType::DIM
@@ -173,14 +164,14 @@ double NormalAndCurvatureEstimation<Eigen::Vector2d>::computeNormalReliability()
 template <>
 float NormalAndCurvatureEstimation<Eigen::Vector3f>::computeNormalReliability()
 {
-  return std::abs(std::min(eigenValues_(1),eigenValues_(2))/eigenValues_(0));
+  return std::abs(std::min(eigenValues_(1), eigenValues_(2))/eigenValues_(0));
 }
 
 //-----------------------------------------------------------------------------
 template <>
 double NormalAndCurvatureEstimation<Eigen::Vector3d>::computeNormalReliability()
 {
-  return std::abs(std::min(eigenValues_(1),eigenValues_(2))/eigenValues_(0));
+  return std::abs(std::min(eigenValues_(1), eigenValues_(2))/eigenValues_(0));
 }
 
 //-----------------------------------------------------------------------------
@@ -202,7 +193,7 @@ float NormalAndCurvatureEstimation<HomogeneousCoordinates2f>::computeNormalRelia
 template <>
 float NormalAndCurvatureEstimation<HomogeneousCoordinates3f>::computeNormalReliability()
 {
-  return std::abs(std::min(eigenValues_(1),eigenValues_(2))/eigenValues_(0));
+  return std::abs(std::min(eigenValues_(1), eigenValues_(2))/eigenValues_(0));
 }
 
 
@@ -210,7 +201,7 @@ float NormalAndCurvatureEstimation<HomogeneousCoordinates3f>::computeNormalRelia
 template <>
 double NormalAndCurvatureEstimation<HomogeneousCoordinates3d>::computeNormalReliability()
 {
-  return std::abs(std::min(eigenValues_(1),eigenValues_(2))/eigenValues_(0));
+  return std::abs(std::min(eigenValues_(1), eigenValues_(2))/eigenValues_(0));
 }
 
 
@@ -222,20 +213,17 @@ NormalAndCurvatureEstimation<PointType>::compute(const PointSetType & points,
                                                  VectorType & curvatures,
                                                  VectorType & normalsReliability)
 {
-
   assert(points.size() == normals.size());
   assert(numberOfNeighborPoints_ < points.size());
 
-  for(size_t n=0, N=points.size(); n < N ;++n){
-
-    planeEstimation_(points,pointsKdTree,n);
+  for (size_t n=0, N=points.size(); n < N ;++n)
+  {
+    planeEstimation_(points, pointsKdTree, n);
     curvatures[n] = eigenValues_(0)/ eigenValues_.array().sum();
-    std::copy(eigenVectors_.data(),eigenVectors_.data()+CARTESIAN_DIM,normals[n].data());
-    flipNormalTowardOriginCoordinate(points[n],normals[n]);
-    normalsReliability[n] =computeNormalReliability();
-
+    std::copy(eigenVectors_.data(), eigenVectors_.data()+CARTESIAN_DIM, normals[n].data());
+    flipNormalTowardOriginCoordinate(points[n], normals[n]);
+    normalsReliability[n] = computeNormalReliability();
   }
-
 }
 
 template class NormalAndCurvatureEstimation<Eigen::Vector2f>;
@@ -248,7 +236,7 @@ template class NormalAndCurvatureEstimation<HomogeneousCoordinates2d>;
 template class NormalAndCurvatureEstimation<HomogeneousCoordinates3f>;
 template class NormalAndCurvatureEstimation<HomogeneousCoordinates3d>;
 
-}
+}   // namespace romea
 
 
 

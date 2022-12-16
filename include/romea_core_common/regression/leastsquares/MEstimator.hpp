@@ -1,7 +1,10 @@
-#ifndef romea_MEstimator_hpp
-#define romea_MEstimator_hpp
+#ifndef ROMEA_CORE_COMMON_REGRESSION_LEASTSQUARES_MESTIMATOR_HPP_
+#define ROMEA_CORE_COMMON_REGRESSION_LEASTSQUARES_MESTIMATOR_HPP_
 
-//Eigen
+// std
+#include <limits>
+
+// Eigen
 #include <Eigen/Eigen>
 
 namespace romea{
@@ -12,13 +15,10 @@ const double MESTIMATOR_DISCARDED_VALUE_DOUBLE = std::numeric_limits<double>::ma
 template<class RealType>
 class MEstimator
 {
-
-
 public:
+  using Vector = Eigen::Matrix<RealType, Eigen::Dynamic, 1>;
 
-  using Vector =Eigen::Matrix<RealType,Eigen::Dynamic,1>;
-
-  MEstimator(RealType dataNoiseStd);
+  explicit MEstimator(RealType dataNoiseStd);
 
   RealType computeWeights(const Vector & residuals);
 
@@ -39,9 +39,8 @@ private :
   Vector normalizedResiduals_;
   Vector weights_;
   Vector ones_;
-
 };
 
-}//romea
+}  // namespace romea
 
-#endif
+#endif  // ROMEA_CORE_COMMON_REGRESSION_LEASTSQUARES_MESTIMATOR_HPP_

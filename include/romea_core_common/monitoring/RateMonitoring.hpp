@@ -1,24 +1,22 @@
-#ifndef _romea_RateMonitoring_hpp_
-#define _romea_RateMonitoring_hpp_
+#ifndef ROMEA_CORE_COMMON_MONITORING_RATEMONITORING_HPP_
+#define ROMEA_CORE_COMMON_MONITORING_RATEMONITORING_HPP_
 
-//romea
-#include "../time/Time.hpp"
-#include "../concurrency/SharedVariable.hpp"
-
-//std
+// std
 #include <queue>
 #include <atomic>
 
-namespace romea {
+// romea
+#include "romea_core_common/time/Time.hpp"
+#include "romea_core_common/concurrency/SharedVariable.hpp"
 
+namespace romea {
 
 class RateMonitoring
 {
  public:
-
   RateMonitoring();
 
-  RateMonitoring(const double & expectedRate);
+  explicit RateMonitoring(const double & expectedRate);
 
   RateMonitoring(const RateMonitoring & RateMonitoring);
 
@@ -31,7 +29,6 @@ class RateMonitoring
   bool timeout(const Duration & duration);
 
  private :
-
   size_t windowSize_;
 
   Duration lastPeriod_;
@@ -39,10 +36,9 @@ class RateMonitoring
   std::queue<long long int> periods_;
   long long int periodsSum_;
   std::atomic<double> rate_;
-
 };
 
 
-}
+}  // namespace romea
 
-#endif
+#endif  // ROMEA_CORE_COMMON_MONITORING_RATEMONITORING_HPP_

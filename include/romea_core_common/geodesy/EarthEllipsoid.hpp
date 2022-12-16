@@ -1,12 +1,11 @@
-#ifndef _romea_EarthEllipsoid_hpp_
-#define _romea_EarthEllipsoid_hpp_
+#ifndef ROMEA_CORE_COMMON_GEODESY_EARTHELLIPSOID_HPP_
+#define ROMEA_CORE_COMMON_GEODESY_EARTHELLIPSOID_HPP_
 
 namespace romea {
 
 class EarthEllipsoid
 {
 public:
-
   static EarthEllipsoid GRS80;
 
   EarthEllipsoid(double a, double b);
@@ -15,21 +14,19 @@ public:
 
   double transversalRadius(const double &latitude) const;
 
-  //half long axis
+  // half long axis
   double a;
 
-  //half short axis
+  // half short axis
   double b;
 
-  //squared excentricity
+  // squared excentricity
   double e2;
 
-  //excentricity
+  // excentricity
   double e;
-
-
 };
 
-}
+}  // namespace romea
 
-#endif
+#endif  // ROMEA_CORE_COMMON_GEODESY_EARTHELLIPSOID_HPP_

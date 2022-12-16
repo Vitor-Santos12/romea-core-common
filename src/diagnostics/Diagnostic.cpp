@@ -1,5 +1,7 @@
+// romea
 #include "romea_core_common/diagnostic/Diagnostic.hpp"
 
+// std
 #include <cassert>
 
 namespace romea {
@@ -18,7 +20,6 @@ Diagnostic::Diagnostic(const DiagnosticStatus & status,
   message(message)
 
 {
-
 }
 
 //-----------------------------------------------------------------------------
@@ -27,11 +28,11 @@ DiagnosticStatus worseStatus(const std::list<Diagnostic> & diagnostics)
   assert(!diagnostics.empty());
 
   auto it = std::cbegin(diagnostics);
-  DiagnosticStatus status= it->status;
+  DiagnosticStatus status = it->status;
 
-  while(++it!=std::cend(diagnostics))
+  while (++it != std::cend(diagnostics))
   {
-    status=worse(status,it->status);
+    status = worse(status, it->status);
   }
 
   return status;
@@ -40,7 +41,7 @@ DiagnosticStatus worseStatus(const std::list<Diagnostic> & diagnostics)
 //-----------------------------------------------------------------------------
 bool allOK(const std::list<Diagnostic> & diagnostics)
 {
-  return worseStatus(diagnostics)==DiagnosticStatus::OK;
+  return worseStatus(diagnostics) == DiagnosticStatus::OK;
 }
 
 //-----------------------------------------------------------------------------
@@ -51,7 +52,7 @@ std::ostream & operator <<(std::ostream & os, const Diagnostic & diagnostic)
 }
 
 
-}// namespace
+}  // namespace romea
 
 
 

@@ -1,4 +1,4 @@
-//romea
+// romea
 #include "romea_core_common/pointset/KdTree.hpp"
 
 namespace romea{
@@ -16,7 +16,7 @@ template <class PointType>
 void KdTree<PointType>::findNearestNeighbor(const PointType & point,
                                             size_t & neighboorIndex,
                                             Scalar & neighboorSquareDistance)const
-{  
+{
   singleNNResult_.init(&neighboorIndex, &neighboorSquareDistance);
   kdtree_.index->findNeighbors(singleNNResult_, &point[0], nanoflann::SearchParams(10));
 }
@@ -29,7 +29,7 @@ void KdTree<PointType>::findNearestNeighbors(const PointType & point,
                                              std::vector<Scalar> & neighboorSquareDistances)const
 {
   nanoflann::KNNResultSet<Scalar> resultSet(numberOfNeighbors);
-  resultSet.init(&neighboorIndexes[0], &neighboorSquareDistances[0] );
+  resultSet.init(&neighboorIndexes[0], &neighboorSquareDistances[0]);
   kdtree_.index->findNeighbors(resultSet, &point[0], nanoflann::SearchParams(10));
 }
 
@@ -40,16 +40,17 @@ void KdTree<PointType>::radiusResearch(const PointType & point,
                                        std::vector<size_t> & neighboorIndexes,
                                        std::vector<Scalar> & neighboorSquareDistances)
 {
-  std::vector<std::pair<size_t,Scalar> > results;
-  size_t numberOfNeighBoors = kdtree_.index->radiusSearch(&point[0],distance,results,nanoflann::SearchParams(10));
+  std::vector<std::pair<size_t, Scalar> > results;
+  size_t numberOfNeighBoors = kdtree_.index->radiusSearch(
+    &point[0], distance, results, nanoflann::SearchParams(10));
 
   neighboorIndexes.resize(numberOfNeighBoors);
   neighboorSquareDistances.resize(numberOfNeighBoors);
 
-  for(size_t n=0; n<numberOfNeighBoors; ++n )
+  for (size_t n=0; n < numberOfNeighBoors; ++n )
   {
-    neighboorIndexes[n]=results[n].first;
-    neighboorSquareDistances[n]=results[n].second;
+    neighboorIndexes[n] = results[n].first;
+    neighboorSquareDistances[n] = results[n].second;
   }
 }
 
@@ -63,4 +64,4 @@ template class KdTree<HomogeneousCoordinates2d>;
 template class KdTree<HomogeneousCoordinates3f>;
 template class KdTree<HomogeneousCoordinates3d>;
 
-}
+}   // namespace romea

@@ -1,27 +1,26 @@
-#ifndef romea_GridIndexMapping_hpp
-#define romea_GridIndexMapping_hpp
+#ifndef ROMEA_CORE_COMMON_CONTAINERS_GRID_GRIDINDEXMAPPING_HPP_
+#define ROMEA_CORE_COMMON_CONTAINERS_GRID_GRIDINDEXMAPPING_HPP_
 
-//std
+// std
 #include <cstddef>
 #include <vector>
 
-//Eigen
+// Eigen
 #include <Eigen/Core>
 
-//Romea
-#include "../../math/Interval.hpp"
+// Romea
+#include "romea_core_common/math/Interval.hpp"
 
 namespace romea {
 
 template <typename Scalar , size_t DIM>
 class GridIndexMapping
 {
-
 public :
 
-  using IntervalType= Interval<Scalar,DIM>;
-  using PointType=Eigen::Matrix<Scalar,DIM,1>;
-  using CellIndexes=Eigen::Matrix<size_t,DIM,1>;
+  using IntervalType = Interval<Scalar, DIM>;
+  using PointType = Eigen::Matrix<Scalar, DIM, 1>;
+  using CellIndexes = Eigen::Matrix<size_t, DIM, 1>;
 
 public :
 
@@ -55,15 +54,14 @@ private :
   std::vector< std::vector <Scalar> > cellCentersPositionAlongAxes_;
 
 public :
-  EIGEN_MAKE_ALIGNED_OPERATOR_NEW_IF_VECTORIZABLE_FIXED_SIZE(Scalar,DIM)
-
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW_IF_VECTORIZABLE_FIXED_SIZE(Scalar, DIM)
 };
 
-using GridIndexMapping2f=GridIndexMapping<float,2>;
-using GridIndexMapping3f=GridIndexMapping<float,3>;
-using GridIndexMapping2d=GridIndexMapping<double,2> ;
-using GridIndexMapping3d=GridIndexMapping<double,3>;
+using GridIndexMapping2f = GridIndexMapping<float, 2>;
+using GridIndexMapping3f = GridIndexMapping<float, 3>;
+using GridIndexMapping2d = GridIndexMapping<double, 2> ;
+using GridIndexMapping3d = GridIndexMapping<double, 3>;
 
-}
+}  // namespace romea
 
-#endif
+#endif  // ROMEA_CORE_COMMON_CONTAINERS_GRID_GRIDINDEXMAPPING_HPP_

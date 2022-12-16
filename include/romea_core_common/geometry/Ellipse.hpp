@@ -1,26 +1,23 @@
-#ifndef romea_Ellipse_hpp
-#define romea_Ellipse_hpp
+#ifndef ROMEA_CORE_COMMON_GEOMETRY_ELLIPSE_HPP_
+#define ROMEA_CORE_COMMON_GEOMETRY_ELLIPSE_HPP_
 
-//Eigen
-#include "Eigen/Core"
-
+// Eigen
+#include <Eigen/Core>
 
 namespace romea {
 
 class Ellipse{
 public :
-
   Ellipse(const double & xCenter,
           const double & yCenter,
           const double & orientation,
           const double & majorRadius,
           const double & minorRadius);
-  
+
   Ellipse(const Eigen::Vector2d & centerPosition,
           const double & orientation,
           const double & majorRadius,
           const double & minorRadius);
-
 
   Ellipse(const Eigen::Vector2d &centerPosition,
           const Eigen::Matrix2d &covarianceMatrix,
@@ -45,11 +42,10 @@ protected :
 
 public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-
 };
 
 
-}//romea
+}  // namespace romea
 
 
-#endif
+#endif  // ROMEA_CORE_COMMON_GEOMETRY_ELLIPSE_HPP_

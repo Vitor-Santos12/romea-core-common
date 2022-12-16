@@ -1,6 +1,7 @@
 #include "romea_core_common/geometry/Twist3D.hpp"
 
-namespace romea {
+namespace romea
+{
 
 //--------------------------------------------------------------------------
 Twist3D::Twist3D():
@@ -8,24 +9,23 @@ Twist3D::Twist3D():
   angularSpeeds(Eigen::Vector3d::Zero()),
   covariance(Eigen::Matrix6d::Zero())
 {
-
 }
 
 //--------------------------------------------------------------------------
 Twist2D toTwist2D(const Twist3D & twist3d)
 {
   Twist2D twist2d;
-  toTwist2D(twist3d,twist2d);
+  toTwist2D(twist3d, twist2d);
   return twist2d;
 }
 
 //--------------------------------------------------------------------------
 void toTwist2D(const Twist3D & twist3d, Twist2D & twist2d)
 {
-  twist2d.linearSpeeds.x()=twist3d.linearSpeeds.x();
-  twist2d.linearSpeeds.y()=twist3d.linearSpeeds.y();
-  twist2d.angularSpeed=twist3d.angularSpeeds.z();
-  twist2d.covariance=toSe2Covariance(twist3d.covariance);
+  twist2d.linearSpeeds.x() = twist3d.linearSpeeds.x();
+  twist2d.linearSpeeds.y() = twist3d.linearSpeeds.y();
+  twist2d.angularSpeed = twist3d.angularSpeeds.z();
+  twist2d.covariance = toSe2Covariance(twist3d.covariance);
 }
 
 //--------------------------------------------------------------------------
@@ -44,5 +44,4 @@ std::ostream & operator <<(std::ostream & os, const Twist3D & twist3D)
   return os;
 }
 
-
-}
+}   // namespace romea

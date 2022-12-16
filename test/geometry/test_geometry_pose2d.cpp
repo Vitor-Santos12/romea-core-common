@@ -1,7 +1,7 @@
 // gtest
 #include <gtest/gtest.h>
 
-//romea
+// romea
 #include "romea_core_common/geometry/Pose2D.hpp"
 
 
@@ -9,7 +9,6 @@
 TEST(TestPose2D, checkComputeEllipse)
 {
   romea::Pose2D pose2d;
-
 }
 
 

@@ -1,7 +1,7 @@
-#ifndef romea_Circle_hpp
-#define romea_Circle_hpp
+#ifndef ROMEA_CORE_COMMON_GEOMETRY_CIRCLE_HPP_ 
+#define ROMEA_CORE_COMMON_GEOMETRY_CIRCLE_HPP_ 
 
-//Eigen
+// Eigen
 #include <Eigen/Core>
 
 namespace romea {
@@ -32,6 +32,6 @@ public:
 };
 
 
-}//romea
+}  // namespace romea
 
-#endif
+#endif  // ROMEA_CORE_COMMON_GEOMETRY_CIRCLE_HPP_ 

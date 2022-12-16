@@ -1,11 +1,12 @@
-#ifndef _romea_Diagnostic_hpp_
-#define _romea_Diagnostic_hpp_
+#ifndef ROMEA_CORE_COMMON_DIAGNOSTIC_DIAGNOSTIC_HPP_
+#define ROMEA_CORE_COMMON_DIAGNOSTIC_DIAGNOSTIC_HPP_
 
-//std
+// std
 #include <list>
+#include <string>
 
-//romea
-#include "DiagnosticStatus.hpp"
+// romea
+#include "romea_core_common/diagnostic/DiagnosticStatus.hpp"
 
 namespace romea
 {
@@ -27,6 +28,6 @@ DiagnosticStatus worseStatus(const std::list<Diagnostic> & diagnostics);
 
 bool allOK(const std::list<Diagnostic> & diagnostics);
 
-}
+}  // namespace romea
 
-#endif
+#endif  // ROMEA_CORE_COMMON_DIAGNOSTIC_DIAGNOSTIC_HPP_

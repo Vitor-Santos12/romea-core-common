@@ -1,9 +1,14 @@
-#ifndef romea_EigenContainers_hpp
-#define romea_EigenContainers_hpp
+#ifndef ROMEA_CORE_COMMON_CONTAINERS_EIGEN_EIGENCONTAINERS_HPP_
+#define ROMEA_CORE_COMMON_CONTAINERS_EIGEN_EIGENCONTAINERS_HPP_
 
-#include "DequeOfEigenVector.hpp"
-#include "ListOfEigenVector.hpp"
-#include "VectorOfEigenVector.hpp"
+// std
+#include <limits>
+#include <algorithm>
+
+// romea
+#include "romea_core_common/containers/Eigen/DequeOfEigenVector.hpp"
+#include "romea_core_common/containers/Eigen/ListOfEigenVector.hpp"
+#include "romea_core_common/containers/Eigen/VectorOfEigenVector.hpp"
 
 namespace romea {
 
@@ -12,11 +17,12 @@ template< class EigenContainerType>
 typename EigenContainerType::value_type
 min(const EigenContainerType & points)
 {
+  using PointType = typename EigenContainerType::value_type;
 
-  using PointType=typename EigenContainerType::value_type;
+  PointType minimalCoordinates =
+    PointType::Constant(std::numeric_limits<typename PointType::Scalar>::max());
 
-  PointType minimalCoordinates = PointType::Constant(std::numeric_limits<typename PointType::Scalar>::max());
-  for(auto point : points)
+  for (auto point : points)
   {
     minimalCoordinates = minimalCoordinates.min(point);
   }
@@ -29,10 +35,12 @@ template< class EigenContainerType>
 typename EigenContainerType::value_type
 max(const EigenContainerType & points)
 {
-  using PointType= typename EigenContainerType::value_type;
+  using PointType = typename EigenContainerType::value_type;
 
-  PointType maximalCoordinates = PointType::Constant(-std::numeric_limits<typename PointType::Scalar>::max());
-  for(auto point : points)
+  PointType maximalCoordinates =
+    PointType::Constant(-std::numeric_limits<typename PointType::Scalar>::max());
+
+  for (auto point : points)
   {
     maximalCoordinates = maximalCoordinates.max(point);
   }
@@ -45,10 +53,10 @@ template< class EigenContainerType>
 typename EigenContainerType::value_type
 mean(const EigenContainerType & points)
 {
-  using PointType= typename EigenContainerType::value_type;
+  using PointType = typename EigenContainerType::value_type;
 
   PointType meanCoordinates = PointType::Zero();
-  for(auto point : points)
+  for (auto point : points)
   {
     meanCoordinates+=point;
   }
@@ -64,20 +72,19 @@ void transform(const EigenContainerType & sourcePoints,
                Eigen::internal::traits<typename EigenContainerType::value_type>::RowsAtCompileTime,
                Eigen::internal::traits<typename EigenContainerType::value_type>::RowsAtCompileTime>& rotation,
                const Eigen::Matrix<typename EigenContainerType::value_type::Scalar,
-               Eigen::internal::traits<typename EigenContainerType::value_type>::RowsAtCompileTime,1>& translation)
+               Eigen::internal::traits<typename EigenContainerType::value_type>::RowsAtCompileTime, 1>& translation)
 {
-
   targetPoints.resize(sourcePoints.size());
   auto itSource = std::cbegin(sourcePoints);
   auto itTarget = std::begin(targetPoints);
 
-  for(;itSource!=sourcePoints.end();++itSource,++itTarget)
+  for (;itSource != sourcePoints.end(); ++itSource, ++itTarget)
   {
-    (*itTarget)=rotation*(*itSource)+translation;
+    (*itTarget) = rotation*(*itSource) + translation;
   }
 }
 
 
-}
+}  // namespace romea
 
-#endif
+#endif  // ROMEA_CORE_COMMON_CONTAINERS_EIGEN_EIGENCONTAINERS_HPP_ 

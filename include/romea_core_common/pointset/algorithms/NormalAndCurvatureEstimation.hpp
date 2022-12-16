@@ -1,33 +1,31 @@
 #ifndef _romea_NormalAndCurvatureEstimation_HPP_
 #define _romea_NormalAndCurvatureEstimation_HPP_
 
-//romea
-#include "../PointSet.hpp"
-#include "../NormalSet.hpp"
-#include "../KdTree.hpp"
+// romea
+#include "romea_core_common/pointset/PointSet.hpp"
+#include "romea_core_common/pointset/NormalSet.hpp"
+#include "romea_core_common/pointset/KdTree.hpp"
 
-//Eigen
+// Eigen
 #include <Eigen/Eigenvalues>
 
 namespace romea{
 
 template <class PointType>
 class NormalAndCurvatureEstimation {
-
 public :
 
-  using Scalar =typename PointType::Scalar ;
+  using Scalar = typename PointType::Scalar ;
   static constexpr size_t CARTESIAN_DIM = PointTraits<PointType>::DIM;
   static constexpr size_t POINT_SIZE = PointTraits<PointType>::SIZE;
 
+  using KdTreeType = KdTree<PointType>;
+  using VectorType  = std::vector<Scalar> ;
+  using PointSetType = PointSet<PointType>;
+  using NormalSetType = NormalSet<PointType>;
 
-  using KdTreeType=KdTree<PointType>;
-  using VectorType =std::vector<Scalar> ;
-  using PointSetType=PointSet<PointType>;
-  using NormalSetType=NormalSet<PointType>;
-
-  using EigenValuesType = Eigen::Matrix<Scalar,CARTESIAN_DIM,1> ;
-  using EigenVectorsType = Eigen::Matrix<Scalar,CARTESIAN_DIM,CARTESIAN_DIM> ;
+  using EigenValuesType = Eigen::Matrix<Scalar, CARTESIAN_DIM, 1> ;
+  using EigenVectorsType = Eigen::Matrix<Scalar, CARTESIAN_DIM, CARTESIAN_DIM> ;
 
   enum class EstimationMethod
   {

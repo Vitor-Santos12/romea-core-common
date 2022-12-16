@@ -1,16 +1,18 @@
-#ifndef _romea_CheckupReliability_hpp_
-#define _romea_CheckupReliability_hpp_
+#ifndef ROMEA_CORE_COMMON_DIAGNOSTIC_CHECKUPRELIABILITY_HPP_
+#define ROMEA_CORE_COMMON_DIAGNOSTIC_CHECKUPRELIABILITY_HPP_
 
-#include "DiagnosticReport.hpp"
+// std
+#include <string>
 #include <mutex>
+
+// romea
+#include "romea_core_common/diagnostic/DiagnosticReport.hpp"
 
 namespace romea {
 
 class  CheckupReliability
 {
-
 public:
-
   CheckupReliability(const std::string &name,
                      const double & low_reliability_threshold,
                      const double & high_reliability_threshold);
@@ -27,7 +29,6 @@ private :
                       const std::string & messageEnd);
 
 private:
-
   double low_reliability_theshold_;
   double high_reliability_theshold_;
 
@@ -35,8 +36,6 @@ private:
   DiagnosticReport report_;
 };
 
+}  // namespace romea
 
-}// namespace
-
-
-#endif
+#endif  // ROMEA_CORE_COMMON_DIAGNOSTIC_CHECKUPRELIABILITY_HPP_

@@ -1,5 +1,5 @@
-#ifndef romea_Noise_hpp
-#define romea_Noise_hpp
+#ifndef ROMEA_CORE_COMMON_SIGNAL_NOISE_HPP_
+#define ROMEA_CORE_COMMON_SIGNAL_NOISE_HPP_
 
 namespace romea
 {
@@ -7,6 +7,6 @@ namespace romea
 double convertNoiseDensityToNoiseStd(const double & noiseDensity,
                                      const double & frequency);
 
-}
+}  // namespace romea
 
-#endif
+#endif  // ROMEA_CORE_COMMON_SIGNAL_NOISE_HPP_

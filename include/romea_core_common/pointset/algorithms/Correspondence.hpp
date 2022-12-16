@@ -1,7 +1,7 @@
-#ifndef romea_Correspondence_hpp
-#define romea_Correspondence_hpp
+#ifndef ROMEA_CORE_COMMON_POINTSET_ALGORITHMS_CORRESPONDENCE_HPP_
+#define ROMEA_CORE_COMMON_POINTSET_ALGORITHMS_CORRESPONDENCE_HPP_
 
-//std
+// std
 #include <cstddef>
 
 namespace romea{
@@ -33,7 +33,8 @@ struct Correspondence{
 
 
 //-----------------------------------------------------------------------------
-inline bool sortByTargetIndexAndDistancePredicate(const Correspondence & c1,const Correspondence & c2)
+inline bool sortByTargetIndexAndDistancePredicate(const Correspondence & c1,
+                                                  const Correspondence & c2)
 {
   if (c1.targetPointIndex < c2.targetPointIndex)
     return (true);
@@ -44,7 +45,8 @@ inline bool sortByTargetIndexAndDistancePredicate(const Correspondence & c1,cons
 }
 
 //-----------------------------------------------------------------------------
-inline bool sortBySourceIndexAndDistancePredicate(const Correspondence & c1,const Correspondence & c2)
+inline bool sortBySourceIndexAndDistancePredicate(const Correspondence & c1,
+                                                  const Correspondence & c2)
 {
   if (c1.sourcePointIndex < c2.sourcePointIndex)
     return (true);
@@ -55,16 +57,19 @@ inline bool sortBySourceIndexAndDistancePredicate(const Correspondence & c1,cons
 }
 
 //-----------------------------------------------------------------------------
-inline bool equalTargetIndexesPredicate(const Correspondence & c1,const Correspondence & c2)
+inline bool equalTargetIndexesPredicate(const Correspondence & c1,
+                                        const Correspondence & c2)
 {
   return c1.targetPointIndex == c2.targetPointIndex;
 }
 
 //-----------------------------------------------------------------------------
-inline bool equalSourceIndexesPredicate(const Correspondence & c1,const Correspondence & c2)
+inline bool equalSourceIndexesPredicate(const Correspondence & c1,
+                                        const Correspondence & c2)
 {
   return c1.sourcePointIndex == c2.sourcePointIndex;
 }
 
-}
-#endif
+}  // namespace romea
+
+#endif  // ROMEA_CORE_COMMON_POINTSET_ALGORITHMS_CORRESPONDENCE_HPP_

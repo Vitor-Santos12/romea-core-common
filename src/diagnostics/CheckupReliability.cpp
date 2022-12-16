@@ -19,17 +19,13 @@ CheckupReliability::CheckupReliability(const std::string &name,
 DiagnosticStatus CheckupReliability::evaluate(const double & reliability)
 {
   std::lock_guard<std::mutex> lock(mutex_);
-  if(reliability < low_reliability_theshold_ )
+  if (reliability < low_reliability_theshold_ )
   {
-    setDiagnostic_(DiagnosticStatus::ERROR," is too low.");
-  }
-  else if(reliability < high_reliability_theshold_)
-  {
-    setDiagnostic_(DiagnosticStatus::WARN," is uncertain.");
-  }
-  else
-  {
-    setDiagnostic_(DiagnosticStatus::OK," is high.");
+    setDiagnostic_(DiagnosticStatus::ERROR, " is too low.");
+  } else if (reliability < high_reliability_theshold_) {
+    setDiagnostic_(DiagnosticStatus::WARN, " is uncertain.");
+  } else {
+    setDiagnostic_(DiagnosticStatus::OK, " is high.");
   }
 
   setRelabilityValue_(reliability);
@@ -46,7 +42,7 @@ DiagnosticReport CheckupReliability::getReport()const
 //-----------------------------------------------------------------------------
 void CheckupReliability::setRelabilityValue_(const double & reliability)
 {
-  report_.info.begin()->second=toStringInfoValue(reliability);
+  report_.info.begin()->second = toStringInfoValue(reliability);
 }
 
 //-----------------------------------------------------------------------------
@@ -58,7 +54,7 @@ void CheckupReliability::setDiagnostic_(const DiagnosticStatus & status,
   message.status = status;
 }
 
-}// namespace
+}  // namespace romea
 
 
 

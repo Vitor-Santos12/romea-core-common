@@ -1,10 +1,10 @@
-#ifndef romea_PoseAndTwist3D_hpp
-#define romea_PoseAndTwist3D_hpp
+#ifndef ROMEA_CORE_COMMON_GEOMETRY_POSEANDTWIST3D_HPP_
+#define ROMEA_CORE_COMMON_GEOMETRY_POSEANDTWIST3D_HPP_
 
-//romea
-#include "Pose3D.hpp"
-#include "Twist3D.hpp"
-#include "PoseAndTwist2D.hpp"
+// romea
+#include "romea_core_common/geometry/Pose3D.hpp"
+#include "romea_core_common/geometry/Twist3D.hpp"
+#include "romea_core_common/geometry/PoseAndTwist2D.hpp"
 
 namespace romea {
 
@@ -18,9 +18,10 @@ struct PoseAndTwist3D
 
 PoseAndTwist2D toPoseAndTwist2D(const PoseAndTwist3D & poseAndTwist3D);
 
-void toPoseAndTwist2D(const PoseAndTwist3D & poseAndTwist3D, PoseAndTwist2D & poseAndTwist2D );
+void toPoseAndTwist2D(const PoseAndTwist3D & poseAndTwist3D, PoseAndTwist2D & poseAndTwist2D);
 
-std::ostream & operator <<(std::ostream & os,const PoseAndTwist3D & poseAndTwist3D);
+std::ostream & operator <<(std::ostream & os, const PoseAndTwist3D & poseAndTwist3D);
 
-}
-#endif
+}  // namespace romea
+
+#endif  // ROMEA_CORE_COMMON_GEOMETRY_POSEANDTWIST3D_HPP_

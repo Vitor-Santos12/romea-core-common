@@ -1,30 +1,28 @@
-#ifndef romea_ECEFConverter_hpp
-#define romea_ECEFConverter_hpp
+#ifndef ROMEA_CORE_COMMON_GEODESY_ECEFCONVERTER_HPP_
+#define ROMEA_CORE_COMMON_GEODESY_ECEFCONVERTER_HPP_
 
-//romea
+// Eigen
 #include <Eigen/Core>
-#include "GeodeticCoordinates.hpp"
-#include "EarthEllipsoid.hpp"
 
+// romea
+#include "romea_core_common/geodesy/GeodeticCoordinates.hpp"
+#include "romea_core_common/geodesy/EarthEllipsoid.hpp"
 
 namespace romea {
 
 class ECEFConverter
 {
 public:
-
-  ECEFConverter(const EarthEllipsoid & earthEllipsoid=EarthEllipsoid::GRS80);
+  explicit ECEFConverter(const EarthEllipsoid & earthEllipsoid = EarthEllipsoid::GRS80);
 
   Eigen::Vector3d toECEF(const GeodeticCoordinates & geodeticCoordinates)const;
 
   GeodeticCoordinates  toWGS84(const Eigen::Vector3d & ecefPosition)const;
 
 protected:
-
   EarthEllipsoid ellipsoid_;
-
 };
 
-}
+}  // namespace romea
 
-#endif
+#endif  // ROMEA_CORE_COMMON_GEODESY_ECEFCONVERTER_HPP_

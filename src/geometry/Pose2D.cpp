@@ -1,4 +1,4 @@
-//romea
+// romea
 #include "romea_core_common/geometry/Pose2D.hpp"
 #include "romea_core_common/geometry/Position2D.hpp"
 #include "romea_core_common/math/EulerAngles.hpp"
@@ -11,7 +11,6 @@ Pose2D::Pose2D():
   position(Eigen::Vector2d::Zero()),
   covariance(Eigen::Matrix3d::Zero())
 {
-
 }
 
 //--------------------------------------------------------------------------
@@ -19,12 +18,12 @@ Ellipse uncertaintyEllipse(const Pose2D & pose2d,
                            const double &sigmaScale)
 {
   return Ellipse(pose2d.position,
-                 pose2d.covariance.block<2,2>(0,0),
+                 pose2d.covariance.block<2, 2>(0, 0),
                  sigmaScale);
 }
 
 //--------------------------------------------------------------------------
-std::ostream & operator <<(std::ostream & os,const Pose2D & pose2D)
+std::ostream & operator <<(std::ostream & os, const Pose2D & pose2D)
 {
   os << " Pose 2D :"<< std::endl;
   os << " x =" << pose2D.position.x() << std::endl;
@@ -36,6 +35,5 @@ std::ostream & operator <<(std::ostream & os,const Pose2D & pose2D)
   return os;
 }
 
-
-}
+}  // namespace romea
 

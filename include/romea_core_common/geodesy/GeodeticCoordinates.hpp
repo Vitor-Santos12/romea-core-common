@@ -1,8 +1,8 @@
-#ifndef romea_GeodeticCoordinates_hpp
-#define romea_GeodeticCoordinates_hpp
+#ifndef ROMEA_CORE_COMMON_GEODESY_GEODETICCOORDINATES_HPP_
+#define ROMEA_CORE_COMMON_GEODESY_GEODETICCOORDINATES_HPP_
 
 //romea
-#include "WGS84Coordinates.hpp"
+#include "romea_core_common/geodesy/WGS84Coordinates.hpp"
 
 namespace romea {
 
@@ -20,6 +20,6 @@ GeodeticCoordinates makeGeodeticCoordinates(const double & latitude,
 
 std::ostream & operator<<(std::ostream & os, const GeodeticCoordinates & geodeticCoordinates);
 
-}
+}  // namespace romea
 
-#endif
+#endif  // ROMEA_CORE_COMMON_GEODESY_GEODETICCOORDINATES_HPP_

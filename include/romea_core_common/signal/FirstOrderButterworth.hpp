@@ -1,12 +1,12 @@
-#ifndef _romea_FirstOrderButterworth_hpp_
-#define _romea_FirstOrderButterworth_hpp_
+#ifndef ROMEA_CORE_COMMON_SIGNAL_FIRSTORDERBUTTERWORTH_HPP_
+#define ROMEA_CORE_COMMON_SIGNAL_FIRSTORDERBUTTERWORTH_HPP_
 
-namespace romea{
+namespace romea
+{
 
-class FirstOrderButterworth{
-
+class FirstOrderButterworth
+{
 public:
-
   /**
    * Constructor
    * @param[in] weighting ; weight of the current computed value
@@ -14,7 +14,7 @@ public:
    *                      = 0 : output will be a mean between the 2 last value
    * @param[in] starting_value for the filter
    */
-  FirstOrderButterworth(const double& weighting);
+  explicit FirstOrderButterworth(const double& weighting);
 
 
   double update(const double & measuredVatue);
@@ -22,7 +22,6 @@ public:
   void reset();
 
 private:
-
   double weighting_;
   double complementaryWeighting_;
 
@@ -32,5 +31,6 @@ private:
   bool isInitialized_;
 };
 
-}
-#endif
+}  // namespace romea
+
+#endif  // ROMEA_CORE_COMMON_SIGNAL_FIRSTORDERBUTTERWORTH_HPP_

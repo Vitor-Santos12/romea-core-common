@@ -1,16 +1,17 @@
-#ifndef romea_KdTree_hpp
-#define romea_KdTree_hpp
+#ifndef ROMEA_CORE_COMMON_POINTSET_KDTREE_HPP_
+#define ROMEA_CORE_COMMON_POINTSET_KDTREE_HPP_
 
+// std
+#include <vector>
 
-//romea
-#include "kdtree/NanoFlannAdaptor.hpp"
-#include "PointTraits.hpp"
+// romea
+#include "romea_core_common/pointset/kdtree/NanoFlannAdaptor.hpp"
+#include "romea_core_common/pointset/PointTraits.hpp"
 
 namespace romea{
 
 template <class PointType >
 class KdTree{
-
 public :
 
   using Scalar = typename PointType::Scalar;
@@ -19,7 +20,7 @@ public :
 
 public :
 
-  KdTree(const PointSet<PointType> &points);
+  explicit KdTree(const PointSet<PointType> &points);
 
   void findNearestNeighbor(const PointType &point,
                            size_t & neighboorIndex,
@@ -37,12 +38,13 @@ public :
 public :
 
 
-  NanoFlannAdaptor<PointType,nanoflann::metric_L2 >  kdtree_;
+  NanoFlannAdaptor<PointType, nanoflann::metric_L2 >  kdtree_;
 
   mutable nanoflann::KNNResultSet<Scalar> singleNNResult_;
 };
 
-}
-#endif
+}  // namespace romea
+
+#endif  // ROMEA_CORE_COMMON_POINTSET_KDTREE_HPP_
 
 

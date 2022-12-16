@@ -1,7 +1,7 @@
-//romea
+// romea
 #include "romea_core_common/geometry/Ellipse.hpp"
 
-//eigen
+// eigen
 #include <Eigen/SVD>
 
 namespace romea {
@@ -42,15 +42,13 @@ Ellipse::Ellipse(const Eigen::Vector2d &centerPosition,
   majorRadius_(0),
   minorRadius_(0)
 {
-
   Eigen::JacobiSVD<Eigen::MatrixXd> svd(covarianceMatrix, Eigen::ComputeThinU);
   Eigen::Vector2d singularValues = svd.singularValues();
   Eigen::Matrix2d singularVectors = svd.matrixU();
 
-  orientation_ = std::atan2(singularVectors(1,0),singularVectors(0,0));
-  majorRadius_=std::sqrt(singularValues(0))*sigmaScale;
-  minorRadius_=std::sqrt(singularValues(1))*sigmaScale;
-
+  orientation_ = std::atan2(singularVectors(1, 0), singularVectors(0, 0));
+  majorRadius_ = std::sqrt(singularValues(0))*sigmaScale;
+  minorRadius_ = std::sqrt(singularValues(1))*sigmaScale;
 }
 
 //-----------------------------------------------------------------------------
@@ -72,7 +70,6 @@ const double & Ellipse::getMajorRadius()const
 const double & Ellipse::getMinorRadius()const
 {
   return minorRadius_;
-
 }
 
-}
+}   // namespace romea

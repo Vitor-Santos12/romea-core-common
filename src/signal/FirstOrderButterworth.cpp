@@ -1,10 +1,11 @@
-//romea
+// romea
 #include "romea_core_common/signal/FirstOrderButterworth.hpp"
 
-//std
+// std
 #include <cassert>
 
-namespace romea{
+namespace romea
+{
 
 //-----------------------------------------------------------------------------
 FirstOrderButterworth::FirstOrderButterworth(const double & weighting):
@@ -14,24 +15,22 @@ FirstOrderButterworth::FirstOrderButterworth(const double & weighting):
   previousMeasuredValue_(),
   isInitialized_(false)
 {
-  assert(weighting>=0 && weighting<=1);
+  assert(weighting >= 0 && weighting <= 1);
 }
 
 
 //-----------------------------------------------------------------------------
 double FirstOrderButterworth::update(const double& measuredValue)
 {
-  if(isInitialized_)
+  if (isInitialized_)
   {
     filteredValue_ = weighting_*filteredValue_ +
                      complementaryWeighting_*measuredValue +
                      complementaryWeighting_*previousMeasuredValue_;
-  }
-  else
-  {
-    filteredValue_=measuredValue;
+  } else {
+    filteredValue_ = measuredValue;
     previousMeasuredValue_ = measuredValue;
-    isInitialized_=true;
+    isInitialized_ = true;
   }
 
   previousMeasuredValue_ = measuredValue;
@@ -42,9 +41,9 @@ double FirstOrderButterworth::update(const double& measuredValue)
 //-----------------------------------------------------------------------------
 void FirstOrderButterworth::reset()
 {
-  filteredValue_=0;
-  previousMeasuredValue_=0;
-  isInitialized_=false;
+  filteredValue_ = 0;
+  previousMeasuredValue_ = 0;
+  isInitialized_ = false;
 }
 
-}
+}  // namespace romea

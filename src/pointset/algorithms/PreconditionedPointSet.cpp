@@ -1,4 +1,4 @@
-//romea
+// romea
 #include "romea_core_common/pointset/algorithms/PreconditionedPointSet.hpp"
 
 namespace romea{
@@ -18,7 +18,7 @@ PreconditionedPointSet<PointType>::PreconditionedPointSet(const PointSet<PointTy
                                                           const PointSetPreconditionerType & preconditioner):
   PreconditionedPointSet<PointType>::PreconditionedPointSet()
 {
-  compute(points,preconditioner);
+  compute(points, preconditioner);
 }
 
 //-----------------------------------------------------------------------------
@@ -27,7 +27,7 @@ PreconditionedPointSet<PointType>::PreconditionedPointSet(const PointSet<PointTy
                                                           const Scalar & preconditioningScale):
   PreconditionedPointSet<PointType>::PreconditionedPointSet()
 {
-  compute(points,preconditioningScale);
+  compute(points, preconditioningScale);
 }
 
 //-----------------------------------------------------------------------------
@@ -37,7 +37,7 @@ PreconditionedPointSet<PointType>::PreconditionedPointSet(const PointSet<PointTy
                                                           const TranslationVector & preconditioningTranslation):
   PreconditionedPointSet<PointType>::PreconditionedPointSet()
 {
-  compute(points,preconditioningScale,preconditioningTranslation);
+  compute(points, preconditioningScale, preconditioningTranslation);
 }
 
 
@@ -47,7 +47,7 @@ template <class PointType> void
 PreconditionedPointSet<PointType>::compute(const PointSet<PointType> & points,
                                            const PointSetPreconditionerType & preconditioner)
 {
-  compute(points,preconditioner.getScale(),preconditioner.getTranslation());
+  compute(points, preconditioner.getScale(), preconditioner.getTranslation());
 }
 
 //-----------------------------------------------------------------------------
@@ -55,20 +55,20 @@ template <class PointType> void
 PreconditionedPointSet<PointType>::compute(const PointSet<PointType> & points,
                                            const Scalar & preconditioningScale)
 {
-  //Reallocate point set
+  // Reallocate point set
   size_t numberOfPoints = points.size();
   allocate_(points.size());
 
-  //point preconditioning
-  Eigen::Array <Scalar,POINT_SIZE,1> scale = Eigen::Array <Scalar,POINT_SIZE,1>::Ones();
+  // point preconditioning
+  Eigen::Array <Scalar, POINT_SIZE, 1> scale = Eigen::Array <Scalar, POINT_SIZE, 1>::Ones();
   scale.head(CARTESIAN_DIM)*=preconditioningScale;
 
-  for(size_t n  = 0 ; n< numberOfPoints;++n)
-    points_[n].array()=points[n].array()*preconditioningScale;
+  for (size_t n  = 0 ; n< numberOfPoints;++n)
+    points_[n].array() = points[n].array()*preconditioningScale;
 
-  //Backup preconditiond parameters
+  // Backup preconditiond parameters
   preconditioningMatrix_ = TransformationMatrix::Identity();
-  preconditioningMatrix_.block(0,0,CARTESIAN_DIM,CARTESIAN_DIM) *=preconditioningScale;
+  preconditioningMatrix_.block(0, 0, CARTESIAN_DIM, CARTESIAN_DIM) *=preconditioningScale;
 
 }
 
@@ -78,31 +78,30 @@ PreconditionedPointSet<PointType>::compute(const PointSet<PointType> & points,
                                            const Scalar & preconditioningScale,
                                            const TranslationVector & preconditioningTranslation)
 {
-  //Reallocate point set
+  // Reallocate point set
   size_t numberOfPoints = points.size();
   allocate_(points.size());
 
-  //point preconditioning
-  Eigen::Array <Scalar,POINT_SIZE,1> scale = Eigen::Array <Scalar,POINT_SIZE,1>::Ones();
-  Eigen::Array <Scalar,POINT_SIZE,1> translation = Eigen::Array <Scalar,POINT_SIZE,1>::Zero();
+  // point preconditioning
+  Eigen::Array <Scalar, POINT_SIZE, 1> scale = Eigen::Array <Scalar, POINT_SIZE, 1>::Ones();
+  Eigen::Array <Scalar, POINT_SIZE, 1> translation = Eigen::Array <Scalar, POINT_SIZE, 1>::Zero();
   scale.head(CARTESIAN_DIM) *=preconditioningScale;
-  translation.head(CARTESIAN_DIM)=preconditioningTranslation;
+  translation.head(CARTESIAN_DIM) = preconditioningTranslation;
 
-  for(size_t n  = 0 ; n< numberOfPoints;++n)
-    points_[n].array()=scale*points[n].array()+translation;
+  for (size_t n  = 0 ; n< numberOfPoints;++n)
+    points_[n].array() = scale*points[n].array()+translation;
 
-  //Compute preconditioning matrix
+  // Compute preconditioning matrix
   preconditioningMatrix_ = TransformationMatrix::Identity();
-  preconditioningMatrix_.block(0,0,CARTESIAN_DIM,CARTESIAN_DIM) *= preconditioningScale;
-  preconditioningMatrix_.block(0,CARTESIAN_DIM,CARTESIAN_DIM,1) = preconditioningTranslation;
-
+  preconditioningMatrix_.block(0, 0, CARTESIAN_DIM, CARTESIAN_DIM) *= preconditioningScale;
+  preconditioningMatrix_.block(0, CARTESIAN_DIM, CARTESIAN_DIM, 1) = preconditioningTranslation;
 }
 
 //-----------------------------------------------------------------------------
 template <class PointType> void
 PreconditionedPointSet<PointType>::allocate_(const size_t &numberOfPoints)
 {
-  if(points_.capacity()< numberOfPoints)
+  if (points_.capacity() < numberOfPoints)
     points_.reserve(numberOfPoints);
 
   points_.resize(numberOfPoints);
@@ -132,4 +131,5 @@ template class PreconditionedPointSet<HomogeneousCoordinates2f>;
 template class PreconditionedPointSet<HomogeneousCoordinates2d>;
 template class PreconditionedPointSet<HomogeneousCoordinates3f>;
 template class PreconditionedPointSet<HomogeneousCoordinates3d>;
-}
+
+}   // namespace romea

@@ -1,5 +1,5 @@
-#ifndef _romea_SharedOptionalVariable_hpp_
-#define _romea_SharedOptionalVariable_hpp_
+#ifndef ROMEA_CORE_COMMON_CONCURRENCY_SHAREDOPTIONALVARIABLE_HPP_
+#define ROMEA_CORE_COMMON_CONCURRENCY_SHAREDOPTIONALVARIABLE_HPP_
 
 #include <mutex>
 #include <optional>
@@ -11,11 +11,11 @@ class SharedOptionalVariable
 {
 public:
   SharedOptionalVariable();
-  SharedOptionalVariable(const T & value);
+  explicit SharedOptionalVariable(const T & value);
 
   SharedOptionalVariable & operator=(const T & value) = delete;
-  SharedOptionalVariable(const SharedOptionalVariable &)=delete;
-  SharedOptionalVariable & operator=(const SharedOptionalVariable &)=delete;
+  SharedOptionalVariable(const SharedOptionalVariable &) = delete;
+  SharedOptionalVariable & operator=(const SharedOptionalVariable &) = delete;
 
 public :
 
@@ -23,7 +23,6 @@ public :
   std::optional<T> consume();
 
 private:
-
   std::optional<T> value_;
   mutable std::mutex mutex_;
 };
@@ -42,7 +41,6 @@ SharedOptionalVariable<T>::SharedOptionalVariable(const T & value) :
   value_(value),
   mutex_()
 {
-
 }
 
 ////-----------------------------------------------------------------------------
@@ -71,6 +69,6 @@ std::optional<T> SharedOptionalVariable<T>::consume()
   return value;
 }
 
-}
+}  // namespace romea
 
-#endif
+#endif  // ROMEA_CORE_COMMON_CONCURRENCY_SHAREDOPTIONALVARIABLE_HPP_

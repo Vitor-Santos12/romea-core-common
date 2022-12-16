@@ -1,10 +1,10 @@
-//romea
+// romea
 #include "romea_core_common/monitoring/OnlineAverage.hpp"
 
 namespace romea {
 
 //-----------------------------------------------------------------------------
-OnlineAverage::OnlineAverage(const double & averagePrecision,size_t windowSize):
+OnlineAverage::OnlineAverage(const double & averagePrecision, size_t windowSize):
   index_(0),
   windowSize_(windowSize),
   multiplier_(static_cast<int>(1/averagePrecision)),
@@ -16,7 +16,7 @@ OnlineAverage::OnlineAverage(const double & averagePrecision,size_t windowSize):
 
 //-----------------------------------------------------------------------------
 OnlineAverage::OnlineAverage(const double & averagePrecision):
-  OnlineAverage::OnlineAverage(averagePrecision,0)
+  OnlineAverage::OnlineAverage(averagePrecision, 0)
 {
 
 }
@@ -35,7 +35,7 @@ OnlineAverage::OnlineAverage(const OnlineAverage & onlineAverage):
 //-----------------------------------------------------------------------------
 void OnlineAverage::setWindowSize(const size_t & windowSize)
 {
-  windowSize_=windowSize;
+  windowSize_ = windowSize;
   data_.reserve(windowSize_);
 }
 
@@ -63,16 +63,14 @@ void OnlineAverage::update(const double & value)
   long long int integerValue = static_cast<long long int>(value*multiplier_);
 
   sumOfData_+=integerValue;
-  if(data_.size()!=windowSize_)
+  if (data_.size() != windowSize_)
   {
     data_.push_back(integerValue);
-  }
-  else
-  {
-    sumOfData_-=data_[index_];
+  } else {
+    sumOfData_ -= data_[index_];
     data_[index_]= integerValue;
   }
-  average_ = sumOfData_/(double(multiplier_)*data_.size());
+  average_  = sumOfData_/(double(multiplier_)*data_.size());
   index_ = (index_+1)%windowSize_;
 }
 
@@ -88,8 +86,8 @@ void OnlineAverage::reset()
 {
   std::lock_guard<std::mutex> lock(mutex_);
   data_.clear();
-  sumOfData_=0;
-  average_=std::numeric_limits<double>::quiet_NaN();
+  sumOfData_ = 0;
+  average_ = std::numeric_limits<double>::quiet_NaN();
 }
 
 }

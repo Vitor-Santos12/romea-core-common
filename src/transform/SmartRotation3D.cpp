@@ -1,7 +1,8 @@
-//romea
+// romea
 #include "romea_core_common/transform/SmartRotation3D.hpp"
 
-namespace romea {
+namespace romea
+{
 
 //-----------------------------------------------------------------------------
 SmartRotation3D::SmartRotation3D():
@@ -25,14 +26,13 @@ SmartRotation3D::SmartRotation3D(const double & angleAroundXAxis,
                                  const double & angleAroundZAxis):
   SmartRotation3D()
 {
-  init(angleAroundXAxis,angleAroundYAxis,angleAroundZAxis);
+  init(angleAroundXAxis, angleAroundYAxis, angleAroundZAxis);
 }
 
 //-----------------------------------------------------------------------------
 SmartRotation3D::SmartRotation3D(const Eigen::Vector3d &angles):
-  SmartRotation3D(angles[0],angles[1],angles[2])
+  SmartRotation3D(angles[0], angles[1], angles[2])
 {
-
 }
 
 //-----------------------------------------------------------------------------
@@ -49,55 +49,55 @@ void SmartRotation3D::init(const double & angleAroundXAxis,
   double cosz = std::cos(angleAroundZAxis);
   double sinz = std::sin(angleAroundZAxis);
 
-  //Compute Rx
-  Rx_(1,1)= cosx;
-  Rx_(1,2)=-sinx;
-  Rx_(2,1)= sinx;
-  Rx_(2,2)= cosx;
+  // Compute Rx
+  Rx_(1, 1) = cosx;
+  Rx_(1, 2) = -sinx;
+  Rx_(2, 1) = sinx;
+  Rx_(2, 2) = cosx;
 
-  //Compute Ry
-  Ry_(0,0)= cosy;
-  Ry_(0,2)= siny;
-  Ry_(2,0)=-siny;
-  Ry_(2,2)= cosy;
+  // Compute Ry
+  Ry_(0, 0) = cosy;
+  Ry_(0, 2) = siny;
+  Ry_(2, 0) = -siny;
+  Ry_(2, 2) = cosy;
 
-  //Compute Rz
-  Rz_(0,0)= cosz;
-  Rz_(0,1)=-sinz;
-  Rz_(1,0)= sinz;
-  Rz_(1,1)= cosz;
+  // Compute Rz
+  Rz_(0, 0) = cosz;
+  Rz_(0, 1) = -sinz;
+  Rz_(1, 0) = sinz;
+  Rz_(1, 1) = cosz;
 
-  //Compute R
-  R_=Rz_*Ry_*Rx_;
+  // Compute R
+  R_ = Rz_*Ry_*Rx_;
 
   // compute derivative of Rx with respect x axis angle
-  dRxdAngleX_(1,1)=-sinx;
-  dRxdAngleX_(1,2)=-cosx;
-  dRxdAngleX_(2,1)= cosx;
-  dRxdAngleX_(2,2)=-sinx;
+  dRxdAngleX_(1, 1) = -sinx;
+  dRxdAngleX_(1, 2) = -cosx;
+  dRxdAngleX_(2, 1) = cosx;
+  dRxdAngleX_(2, 2) = -sinx;
 
   // compute derivative of Ry with respect y axis angle
-  dRydAngleY_(0,0)=-siny;
-  dRydAngleY_(0,2)= cosy;
-  dRydAngleY_(2,0)=-cosy;
-  dRydAngleY_(2,2)=-siny;
+  dRydAngleY_(0, 0) = -siny;
+  dRydAngleY_(0, 2) = cosy;
+  dRydAngleY_(2, 0) = -cosy;
+  dRydAngleY_(2, 2) = -siny;
 
   // compute derivative of Rz with respect z axis angle
-  dRzdAngleZ_(0,0)=-sinz;
-  dRzdAngleZ_(0,1)=-cosz;
-  dRzdAngleZ_(1,0)= cosz;
-  dRzdAngleZ_(1,1)=-sinz;
+  dRzdAngleZ_(0, 0) = -sinz;
+  dRzdAngleZ_(0, 1) = -cosz;
+  dRzdAngleZ_(1, 0) = cosz;
+  dRzdAngleZ_(1, 1) = -sinz;
 
   // compute derivative of R with respect x y z axis angles
-  dRdAngleX_= Rz_*Ry_*dRxdAngleX_;
-  dRdAngleY_= Rz_*dRydAngleY_*Rx_;
-  dRdAngleZ_= dRzdAngleZ_*Ry_*Rx_;
+  dRdAngleX_ = Rz_*Ry_*dRxdAngleX_;
+  dRdAngleY_ = Rz_*dRydAngleY_*Rx_;
+  dRdAngleZ_ = dRzdAngleZ_*Ry_*Rx_;
 }
 
 //-----------------------------------------------------------------------------
 void SmartRotation3D::init(const Eigen::Vector3d &angles)
 {
-  init(angles[0],angles[1],angles[2]);
+  init(angles[0], angles[1], angles[2]);
 }
 
 //-----------------------------------------------------------------------------
@@ -138,9 +138,6 @@ const Eigen::Matrix3d & SmartRotation3D::dRdAngleAroundYAxis()const
 const Eigen::Matrix3d & SmartRotation3D::dRdAngleAroundZAxis()const
 {
   return dRdAngleZ_;
-
 }
 
-
-
-}
+}   // namespace romea

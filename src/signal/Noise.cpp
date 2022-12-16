@@ -1,10 +1,11 @@
-//local
+// local
 #include "romea_core_common/signal/Noise.hpp"
 
-//std
+// std
 #include <cmath>
 
-namespace romea{
+namespace romea
+{
 
 double convertNoiseDensityToNoiseStd(const double & noiseDensity,
                                      const double & frequency)

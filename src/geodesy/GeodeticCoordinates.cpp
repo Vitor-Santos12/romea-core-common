@@ -1,7 +1,7 @@
-//romea
+// romea
 #include "romea_core_common/geodesy/GeodeticCoordinates.hpp"
 
-//std
+// std
 #include <cmath>
 #include <cassert>
 
@@ -16,9 +16,9 @@ GeodeticCoordinates makeGeodeticCoordinates(const double & latitude,
   assert(longitude >= - M_PI && longitude <= M_PI);
 
   GeodeticCoordinates geodetic_coordinates;
-  geodetic_coordinates.latitude=latitude;
-  geodetic_coordinates.longitude=longitude;
-  geodetic_coordinates.altitude=altitude;
+  geodetic_coordinates.latitude = latitude;
+  geodetic_coordinates.longitude = longitude;
+  geodetic_coordinates.altitude = altitude;
   return geodetic_coordinates;
 }
 
@@ -27,9 +27,9 @@ GeodeticCoordinates makeGeodeticCoordinates(const WGS84Coordinates & wgs84Coordi
                                             const double &altitude)
 {
   GeodeticCoordinates geodetic_coordinates;
-  geodetic_coordinates.latitude=wgs84Coordinates.latitude;
-  geodetic_coordinates.longitude=wgs84Coordinates.longitude;
-  geodetic_coordinates.altitude=altitude;
+  geodetic_coordinates.latitude = wgs84Coordinates.latitude;
+  geodetic_coordinates.longitude = wgs84Coordinates.longitude;
+  geodetic_coordinates.altitude = altitude;
   return geodetic_coordinates;
 
 }
@@ -43,5 +43,5 @@ std::ostream & operator<<(std::ostream & os, const GeodeticCoordinates & geodeti
   return os;
 }
 
-}
+}  // namespace romea
 

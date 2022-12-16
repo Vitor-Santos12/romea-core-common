@@ -41,4 +41,4 @@ double RansacIterations::get() const
   return numberOfIterations_;
 }
 
-}
+}  // namespace romea

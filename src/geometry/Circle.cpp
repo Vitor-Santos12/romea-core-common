@@ -11,7 +11,6 @@ Circle::Circle(const double & xCenter,
   centerPosition_(Eigen::Vector2d(xCenter, yCenter)),
   radius_(radius)
 {
-
 }
 
 //-----------------------------------------------------------------------------
@@ -20,7 +19,6 @@ Circle::Circle(const Eigen::Vector2d & centerPosition,
   centerPosition_(centerPosition),
   radius_(radius)
 {
-
 }
 
 
@@ -37,4 +35,4 @@ const double & Circle::getRadius()const
   return radius_;
 }
 
-}
+}  // namespace romea

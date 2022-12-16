@@ -1,8 +1,8 @@
-#ifndef romea_Twist3D_hpp
-#define romea_Twist3D_hpp
+#ifndef ROMEA_CORE_COMMON_GEOMETRY_TWIST3D_HPP_
+#define ROMEA_CORE_COMMON_GEOMETRY_TWIST3D_HPP_
 
-//romea
-#include "Twist2D.hpp"
+// romea
+#include "romea_core_common/geometry/Twist2D.hpp"
 #include "romea_core_common/math/Matrix.hpp"
 
 namespace romea
@@ -21,7 +21,8 @@ Twist2D toTwist2D(const Twist3D & twist3d);
 
 void toTwist2D(const Twist3D & twist3d, Twist2D &twist2d);
 
-std::ostream & operator <<(std::ostream & os,const Twist3D & twist3D);
-}
+std::ostream & operator <<(std::ostream & os, const Twist3D & twist3D);
 
-#endif
+}  // namespace romea
+
+#endif  // ROMEA_CORE_COMMON_GEOMETRY_TWIST3D_HPP_

@@ -1,7 +1,7 @@
-//romea
+// romea
 #include "romea_core_common/geodesy/WGS84Coordinates.hpp"
 
-//std
+// std
 #include <cassert>
 #include <cmath>
 #include <iomanip>
@@ -14,7 +14,7 @@ WGS84Coordinates makeWGS84Coordinates(const double & latitude,
 {
   assert(latitude >= - M_PI_2 && latitude <= M_PI_2);
   assert(longitude >= - M_PI && longitude <= M_PI);
-  return {latitude,longitude};
+  return {latitude, longitude};
 }
 
 //--------------------------------------------------------------------------
@@ -27,5 +27,5 @@ std::ostream & operator<<(std::ostream & os, const WGS84Coordinates & wgs84Coord
   return os;
 }
 
-}
+}  //namespace romea
 

@@ -1,9 +1,9 @@
-#ifndef romea_PoseAndTwist2D_hpp
-#define romea_PoseAndTwist2D_hpp
+#ifndef ROMEA_CORE_COMMON_GEOMETRY_POSEANDTWIST2D_HPP_
+#define ROMEA_CORE_COMMON_GEOMETRY_POSEANDTWIST2D_HPP_
 
-//romea
-#include "Pose2D.hpp"
-#include "Twist2D.hpp"
+// romea
+#include "romea_core_common/geometry/Pose2D.hpp"
+#include "romea_core_common/geometry/Twist2D.hpp"
 
 namespace romea {
 
@@ -15,9 +15,9 @@ struct PoseAndTwist2D
   Twist2D twist;
 };
 
-std::ostream & operator <<(std::ostream & os,const PoseAndTwist2D & poseAndBodyTwist2D);
+std::ostream & operator <<(std::ostream & os, const PoseAndTwist2D & poseAndBodyTwist2D);
 
-}
+}  // namespace romea
 
-#endif
+#endif  // ROMEA_CORE_COMMON_GEOMETRY_POSEANDTWIST2D_HPP_
 

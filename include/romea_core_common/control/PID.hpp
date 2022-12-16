@@ -1,5 +1,5 @@
-#ifndef _romea_PID_hpp_
-#define _romea_PID_hpp_
+#ifndef ROMEA_CORE_COMMON_CONTROL_PID_HPP_
+#define ROMEA_CORE_COMMON_CONTROL_PID_HPP_
 
 #include "romea_core_common/time/Time.hpp"
 
@@ -8,7 +8,6 @@ namespace romea
 
 class PID
 {
-
 public :
 
   PID(const double & kp,
@@ -48,10 +47,8 @@ private :
 
   double previous_error_;
   Duration previous_error_stamp_;
-
-
 };
 
-}
+}  // namespace romea
 
-#endif
+#endif  // ROMEA_CORE_COMMON_CONTROL_PID_HPP_

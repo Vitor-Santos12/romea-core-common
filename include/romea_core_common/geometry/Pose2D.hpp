@@ -1,13 +1,12 @@
-#ifndef romea_Pose_hpp
-#define romea_Pose_hpp
+#ifndef ROMEA_CORE_COMMON_GEOMETRY_POSE2D_HPP_
+#define ROMEA_CORE_COMMON_GEOMETRY_POSE2D_HPP_
 
-//romea
-#include "Ellipse.hpp"
+// romea
+#include "romea_core_common/geometry/Ellipse.hpp"
 
 namespace romea {
 
 struct Pose2D {
-
   Pose2D();
 
   double yaw;
@@ -15,15 +14,14 @@ struct Pose2D {
   Eigen::Matrix3d covariance;
 
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-
 };
 
 Ellipse uncertaintyEllipse(const Pose2D & pose2d,
                            const double &sigmaScale);
 
-std::ostream & operator <<(std::ostream & os,const Pose2D & pose2D);
+std::ostream & operator <<(std::ostream & os, const Pose2D & pose2D);
 
-}
+}  // namespace romea
 
 
-#endif
+#endif  // ROMEA_CORE_COMMON_GEOMETRY_POSE2D_HPP_

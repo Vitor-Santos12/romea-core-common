@@ -1,8 +1,8 @@
 #include "romea_core_common/monitoring/RateMonitoring.hpp"
 
 namespace {
-const size_t MINIMAL_WINDOW_SIZE =4;
-const size_t MAXIMAL_WINDOW_SIZE =64;
+const size_t MINIMAL_WINDOW_SIZE = 4;
+const size_t MAXIMAL_WINDOW_SIZE = 64;
 }
 
 namespace romea {
@@ -16,7 +16,6 @@ RateMonitoring::RateMonitoring():
   periodsSum_(0),
   rate_(0)
 {
-
 }
 
 //-----------------------------------------------------------------------------
@@ -35,7 +34,6 @@ RateMonitoring::RateMonitoring(const RateMonitoring & rateMonitoring):
   periodsSum_(rateMonitoring.periodsSum_),
   rate_(rateMonitoring.rate_.load())
 {
-
 }
 
 
@@ -43,15 +41,14 @@ RateMonitoring::RateMonitoring(const RateMonitoring & rateMonitoring):
 void RateMonitoring::initialize(const double & expectedRate)
 {
   windowSize_ = static_cast<size_t>(2*expectedRate);
-  windowSize_ = std::max(windowSize_,MINIMAL_WINDOW_SIZE);
-  windowSize_=  std::min(windowSize_,MAXIMAL_WINDOW_SIZE);
+  windowSize_ = std::max(windowSize_, MINIMAL_WINDOW_SIZE);
+  windowSize_ =  std::min(windowSize_, MAXIMAL_WINDOW_SIZE);
 }
 
 //-----------------------------------------------------------------------------
 double RateMonitoring::update(const Duration & duration)
 {
-
-  assert(windowSize_!=0);
+  assert(windowSize_ != 0);
 
   lastPeriod_ = duration-lastDuration_.load();
   long long int lastPeriodInNanoSecond = durationToNanoSecond(lastPeriod_);
@@ -59,7 +56,7 @@ double RateMonitoring::update(const Duration & duration)
   periods_.push(lastPeriodInNanoSecond);
   periodsSum_+=lastPeriodInNanoSecond;
 
-  if(periods_.size()==windowSize_+1)
+  if (periods_.size() == windowSize_+1)
   {
     periodsSum_ -= periods_.front();
     periods_.pop();
@@ -80,8 +77,8 @@ double RateMonitoring::getRate()const
 //-----------------------------------------------------------------------------
 bool RateMonitoring::timeout(const Duration & duration)
 {
-  if(!periods_.empty() &&
-     durationToSecond(duration-lastDuration_.load())>0.5)
+  if (!periods_.empty() &&
+      durationToSecond(duration-lastDuration_.load()) > 0.5)
   {
      rate_.store(0.);
      return true;
@@ -89,5 +86,5 @@ bool RateMonitoring::timeout(const Duration & duration)
   return false;
 }
 
-}
+}   // namespace romea
 

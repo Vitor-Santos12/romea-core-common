@@ -1,7 +1,7 @@
 // gtest
 #include <gtest/gtest.h>
 
-//romea
+// romea
 #include "romea_core_common/math/Transformation.hpp"
 
 

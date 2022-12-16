@@ -1,22 +1,22 @@
-#ifndef romea_interval_hpp
-#define romea_interval_hpp
+#ifndef ROMEA_CORE_COMMON_MATH_INTERVAL_HPP_ 
+#define ROMEA_CORE_COMMON_MATH_INTERVAL_HPP_ 
 
-//std
+// std
 #include <utility>
 #include <limits>
 #include <cassert>
 
-//Eigen
+// Eigen
 #include <Eigen/Core>
 
 namespace romea {
 
 
-template < typename Scalar, size_t DIM =1>
+template < typename Scalar, size_t DIM  = 1>
 class Interval
 {
-
-  using T = Eigen::Matrix<Scalar,DIM,1>;
+public :
+  using T = Eigen::Matrix<Scalar, DIM, 1>;
 
 public :
 
@@ -24,13 +24,13 @@ public :
     Interval(T::Constant(-std::numeric_limits<Scalar>::max()),
              T::Constant(std::numeric_limits<Scalar>::max()))
   {
-
   }
 
   Interval(const T & lower, const T &upper):
-    lower_(lower),upper_(upper)
+    lower_(lower),
+    upper_(upper)
   {
-    assert((lower_.array()<=upper_.array()).all());
+    assert((lower_.array() <= upper_.array()).all());
   }
 
 public :
@@ -55,10 +55,10 @@ public :
     return (upper_+lower_)/2.;
   }
 
-  void include(const Interval<Scalar,DIM> & interval )
+  void include(const Interval<Scalar, DIM> & interval )
   {
-    lower_.array()=lower_.array().min(interval.lower().array());
-    upper_.array()=upper_.array().max(interval.upper().array());
+    lower_.array() = lower_.array().min(interval.lower().array());
+    upper_.array() = upper_.array().max(interval.upper().array());
   }
 
   bool inside(const T & val)const
@@ -68,27 +68,24 @@ public :
 
 
 private :
-
   T lower_;
   T upper_;
-
 };
 
-template < typename Scalar, size_t DIM =1>
+template < typename Scalar, size_t DIM  = 1>
 class IntervalComplement
 {
-
-  using T = Eigen::Matrix<Scalar,DIM,1>;
+  using T = Eigen::Matrix<Scalar, DIM, 1>;
 
 public :
 
   IntervalComplement():
-    IntervalComplement(Interval<Scalar,DIM>(),Interval<Scalar,DIM>())
+    IntervalComplement(Interval<Scalar, DIM>(), Interval<Scalar, DIM>())
   {
   }
 
-  IntervalComplement( const Interval<Scalar,DIM> & interval,
-                      const Interval<Scalar,DIM> & limits):
+  IntervalComplement(const Interval<Scalar, DIM> & interval,
+                     const Interval<Scalar, DIM> & limits):
     interval_(interval),
     limits_(limits)
   {
@@ -96,8 +93,8 @@ public :
            (interval_.upper().array() <= limits_.upper().array()).all());
   }
 
-  IntervalComplement( const Interval<Scalar,DIM> & interval):
-    IntervalComplement(interval,Interval<Scalar,DIM>())
+  IntervalComplement(const Interval<Scalar, DIM> & interval):
+    IntervalComplement(interval, Interval<Scalar, DIM>())
   {
   }
 
@@ -106,30 +103,29 @@ public :
     return !interval_.inside(val) && limits_.inside(val);
   }
 
-  const Interval<Scalar,DIM> & interval()const
+  const Interval<Scalar, DIM> & interval()const
   {
     return interval_;
   }
 
-  const Interval<Scalar,DIM> & limits()const
+  const Interval<Scalar, DIM> & limits()const
   {
     return limits_;
   }
 
 private :
 
-  Interval<Scalar,DIM> interval_;
-  Interval<Scalar,DIM> limits_;
+  Interval<Scalar, DIM> interval_;
+  Interval<Scalar, DIM> limits_;
 };
 
 
 template < typename Scalar >
-class Interval<Scalar,1>{
-
+class Interval<Scalar, 1>{
+private:  
   using T = Scalar;
 
 public :
-
 
   Interval():
     Interval(-std::numeric_limits<T>::max(),
@@ -138,7 +134,8 @@ public :
   }
 
   Interval(const T & lower, const T &upper):
-    lower_(lower),upper_(upper)
+    lower_(lower),
+    upper_(upper)
   {
     assert(lower_<=upper_);
   }

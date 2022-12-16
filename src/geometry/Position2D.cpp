@@ -1,8 +1,7 @@
-//romea
+// romea
 #include "romea_core_common/geometry/Position2D.hpp"
 
 namespace romea {
-
 
 //--------------------------------------------------------------------------
 Position2D::Position2D():
@@ -13,9 +12,9 @@ Position2D::Position2D():
 }
 
 //--------------------------------------------------------------------------
-std::ostream & operator <<(std::ostream & os,const Position2D & position2d)
+std::ostream & operator <<(std::ostream & os, const Position2D & position2d)
 {
-  os << " Position 2D :"<<std::endl;
+  os << " Position 2D :" << std::endl;
   os << " position.x =" << position2d.position.x() << std::endl;
   os << " position.y =" << position2d.position.y() << std::endl;
   os << " covariance " <<std::endl;
@@ -24,7 +23,7 @@ std::ostream & operator <<(std::ostream & os,const Position2D & position2d)
 }
 
 //--------------------------------------------------------------------------
-//Position2D Position2D::toBody(const Pose2D &referenceFramePose)const
+// Position2D Position2D::toBody(const Pose2D &referenceFramePose)const
 //{
 
 
@@ -50,5 +49,5 @@ Ellipse uncertaintyEllipse(const Position2D & position2d,
                  sigmaScale);
 }
 
-}
+}   // namespace romea
 

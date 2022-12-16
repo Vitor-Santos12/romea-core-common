@@ -1,16 +1,16 @@
-#ifndef romea_RansacRandomCorrespondences_hpp
-#define romea_RansacRandomCorrespondences_hpp
+#ifndef ROMEA_CORE_COMMON_REGRESSION_RANSAC_RANSACRANDOMCORRESPONDENCES_HPP_
+#define ROMEA_CORE_COMMON_REGRESSION_RANSAC_RANSACRANDOMCORRESPONDENCES_HPP_
 
-//romea
-#include "../../pointset/PointSet.hpp"
-#include "../../pointset/PointTraits.hpp"
-#include "../../pointset/algorithms/Correspondence.hpp"
-
-//stl
+// stl
 #include <vector>
 #include <random>
 
-//Eigen
+// romea
+#include "romea_core_common/pointset/PointSet.hpp"
+#include "romea_core_common/pointset/PointTraits.hpp"
+#include "romea_core_common/pointset/algorithms/Correspondence.hpp"
+
+// Eigen
 #include <Eigen/Eigen>
 #include <unsupported/Eigen/MatrixFunctions>
 
@@ -58,8 +58,8 @@ public :
 
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW_IF_VECTORIZABLE_FIXED_SIZE(
       typename PointType::Scalar, PointTraits<PointType>::SIZE)
-
 };
 
-}
-#endif
+}  // namespace romea
+
+#endif  // ROMEA_CORE_COMMON_REGRESSION_RANSAC_RANSACRANDOMCORRESPONDENCES_HPP_

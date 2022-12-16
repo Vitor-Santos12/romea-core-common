@@ -1,14 +1,15 @@
-#ifndef _romea_DiagnosticReport_hpp_
-#define _romea_DiagnosticReport_hpp_
+#ifndef ROMEA_CORE_COMMON_DIAGNOSTIC_DIAGNOSTICREPORT_HPP_
+#define ROMEA_CORE_COMMON_DIAGNOSTIC_DIAGNOSTICREPORT_HPP_
 
-//std
+// std
 #include <optional>
 #include <sstream>
+#include <string>
 #include <list>
 #include <map>
 
-//romea
-#include "Diagnostic.hpp"
+// romea
+#include "romea_core_common/diagnostic/Diagnostic.hpp"
 
 namespace romea
 {
@@ -17,8 +18,7 @@ struct DiagnosticReport
 {
   DiagnosticReport();
   std::list<Diagnostic> diagnostics;
-  std::map<std::string,std::string> info;
-
+  std::map<std::string, std::string> info;
 };
 
 std::ostream & operator <<(std::ostream & os, const DiagnosticReport & report);
@@ -40,7 +40,7 @@ void setReportInfo(DiagnosticReport & report,
                    const std::string & infoName,
                    const T & infoValue)
 {
-  report.info[infoName]=toStringInfoValue(infoValue);
+  report.info[infoName] = toStringInfoValue(infoValue);
 }
 
 //-----------------------------------------------------------------------------
@@ -49,17 +49,14 @@ void setReportInfo(DiagnosticReport & report,
                    const std::string & infoName,
                    const std::optional<T> & infoValue)
 {
-  if(infoValue.has_value())
+  if (infoValue.has_value())
   {
-    setReportInfo(report,infoName,*infoValue);
-  }
-  else
-  {
-    report.info[infoName]="";
+    setReportInfo(report, infoName, *infoValue);
+  } else {
+    report.info[infoName] = "";
   }
 }
 
+}  // namespace romea
 
-}
-
-#endif
+#endif  // ROMEA_CORE_COMMON_DIAGNOSTIC_DIAGNOSTICREPORT_HPP_
