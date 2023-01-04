@@ -113,7 +113,6 @@ set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE")
 option(BUILD_TESTING "BUILD WITH TESTS" ON)
 
 if(BUILD_TESTING)
-  message("testing")
   enable_testing()
   add_subdirectory(test)
 endif(BUILD_TESTING)

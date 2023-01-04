@@ -1,32 +1,42 @@
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+// std
+#include <vector>
+#include <utility>
+
 // romea
 #include "romea_core_common/pointset/KdTree.hpp"
 
-namespace romea{
+namespace romea
+{
 
 //-----------------------------------------------------------------------------
-template <class PointType>
-KdTree<PointType>::KdTree(const PointSet<PointType> &points):
-  kdtree_(points),
+template<class PointType>
+KdTree<PointType>::KdTree(const PointSet<PointType> & points)
+: kdtree_(points),
   singleNNResult_(1)
 {
 }
 
 //-----------------------------------------------------------------------------
-template <class PointType>
-void KdTree<PointType>::findNearestNeighbor(const PointType & point,
-                                            size_t & neighboorIndex,
-                                            Scalar & neighboorSquareDistance)const
+template<class PointType>
+void KdTree<PointType>::findNearestNeighbor(
+  const PointType & point,
+  size_t & neighboorIndex,
+  Scalar & neighboorSquareDistance)const
 {
   singleNNResult_.init(&neighboorIndex, &neighboorSquareDistance);
   kdtree_.index->findNeighbors(singleNNResult_, &point[0], nanoflann::SearchParams(10));
 }
 
 //-----------------------------------------------------------------------------
-template <class PointType>
-void KdTree<PointType>::findNearestNeighbors(const PointType & point,
-                                             const size_t &  numberOfNeighbors,
-                                             std::vector<size_t> & neighboorIndexes,
-                                             std::vector<Scalar> & neighboorSquareDistances)const
+template<class PointType>
+void KdTree<PointType>::findNearestNeighbors(
+  const PointType & point,
+  const size_t & numberOfNeighbors,
+  std::vector<size_t> & neighboorIndexes,
+  std::vector<Scalar> & neighboorSquareDistances)const
 {
   nanoflann::KNNResultSet<Scalar> resultSet(numberOfNeighbors);
   resultSet.init(&neighboorIndexes[0], &neighboorSquareDistances[0]);
@@ -34,21 +44,21 @@ void KdTree<PointType>::findNearestNeighbors(const PointType & point,
 }
 
 //-----------------------------------------------------------------------------
-template <class PointType>
-void KdTree<PointType>::radiusResearch(const PointType & point,
-                                       const Scalar & distance,
-                                       std::vector<size_t> & neighboorIndexes,
-                                       std::vector<Scalar> & neighboorSquareDistances)
+template<class PointType>
+void KdTree<PointType>::radiusResearch(
+  const PointType & point,
+  const Scalar & distance,
+  std::vector<size_t> & neighboorIndexes,
+  std::vector<Scalar> & neighboorSquareDistances)
 {
-  std::vector<std::pair<size_t, Scalar> > results;
+  std::vector<std::pair<size_t, Scalar>> results;
   size_t numberOfNeighBoors = kdtree_.index->radiusSearch(
     &point[0], distance, results, nanoflann::SearchParams(10));
 
   neighboorIndexes.resize(numberOfNeighBoors);
   neighboorSquareDistances.resize(numberOfNeighBoors);
 
-  for (size_t n=0; n < numberOfNeighBoors; ++n )
-  {
+  for (size_t n = 0; n < numberOfNeighBoors; ++n) {
     neighboorIndexes[n] = results[n].first;
     neighboorSquareDistances[n] = results[n].second;
   }

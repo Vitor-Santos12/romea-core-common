@@ -1,3 +1,6 @@
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
 // gtest
 #include <gtest/gtest.h>
 
@@ -37,23 +40,28 @@ TEST(TestTime, durationToString)
 //-----------------------------------------------------------------------------
 TEST(TestTime, DISABLED_makeTimePoint)
 {
-  EXPECT_EQ(romea::makeTimePoint(1977, 7, 17, 4, 30, 7.7).time_since_epoch().count(),
-            237954607000000000);
-  EXPECT_EQ(romea::makeTimePoint(2016, 3, 12, 8, 20, 50.7).time_since_epoch().count(),
-            1457767250000000000);
+  EXPECT_EQ(
+    romea::makeTimePoint(1977, 7, 17, 4, 30, 7.7).time_since_epoch().count(),
+    237954607000000000);
+  EXPECT_EQ(
+    romea::makeTimePoint(2016, 3, 12, 8, 20, 50.7).time_since_epoch().count(),
+    1457767250000000000);
 }
 
 //-----------------------------------------------------------------------------
 TEST(TestTime, timePointToString)
 {
-  EXPECT_STREQ(romea::asString(romea::makeTimePoint(1977, 7, 17, 4, 30, 7.7)).c_str(),
-               "Sun Jul 17 04:30:07 1977");
-  EXPECT_STREQ(romea::asString(romea::makeTimePoint(2016, 3, 12, 8, 20, 50.7)).c_str(),
-               "Sat Mar 12 08:20:50 2016");
+  EXPECT_STREQ(
+    romea::asString(romea::makeTimePoint(1977, 7, 17, 4, 30, 7.7)).c_str(),
+    "Sun Jul 17 04:30:07 1977");
+  EXPECT_STREQ(
+    romea::asString(romea::makeTimePoint(2016, 3, 12, 8, 20, 50.7)).c_str(),
+    "Sat Mar 12 08:20:50 2016");
 }
 
 //-----------------------------------------------------------------------------
-int main(int argc, char **argv){
+int main(int argc, char ** argv)
+{
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }

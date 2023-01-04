@@ -1,13 +1,20 @@
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+// std
+#include <limits>
+
 // romea
 #include "romea_core_common/monitoring/OnlineAverage.hpp"
 
-namespace romea {
+namespace romea
+{
 
 //-----------------------------------------------------------------------------
-OnlineAverage::OnlineAverage(const double & averagePrecision, size_t windowSize):
-  index_(0),
+OnlineAverage::OnlineAverage(const double & averagePrecision, size_t windowSize)
+: index_(0),
   windowSize_(windowSize),
-  multiplier_(static_cast<int>(1/averagePrecision)),
+  multiplier_(static_cast<int>(1 / averagePrecision)),
   data_(),
   sumOfData_(0.0),
   average_(std::numeric_limits<double>::quiet_NaN())
@@ -15,15 +22,14 @@ OnlineAverage::OnlineAverage(const double & averagePrecision, size_t windowSize)
 }
 
 //-----------------------------------------------------------------------------
-OnlineAverage::OnlineAverage(const double & averagePrecision):
-  OnlineAverage::OnlineAverage(averagePrecision, 0)
+OnlineAverage::OnlineAverage(const double & averagePrecision)
+: OnlineAverage::OnlineAverage(averagePrecision, 0)
 {
-
 }
 
 //-----------------------------------------------------------------------------
-OnlineAverage::OnlineAverage(const OnlineAverage & onlineAverage):
-  index_(onlineAverage.index_),
+OnlineAverage::OnlineAverage(const OnlineAverage & onlineAverage)
+: index_(onlineAverage.index_),
   windowSize_(onlineAverage.windowSize_),
   multiplier_(onlineAverage.multiplier_),
   data_(onlineAverage.data_),
@@ -58,20 +64,18 @@ double OnlineAverage::getAverage()const
 //-----------------------------------------------------------------------------
 void OnlineAverage::update(const double & value)
 {
-
   std::lock_guard<std::mutex> lock(mutex_);
-  long long int integerValue = static_cast<long long int>(value*multiplier_);
+  long long int integerValue = static_cast<long long int>(value * multiplier_);
 
-  sumOfData_+=integerValue;
-  if (data_.size() != windowSize_)
-  {
+  sumOfData_ += integerValue;
+  if (data_.size() != windowSize_) {
     data_.push_back(integerValue);
   } else {
     sumOfData_ -= data_[index_];
-    data_[index_]= integerValue;
+    data_[index_] = integerValue;
   }
-  average_  = sumOfData_/(double(multiplier_)*data_.size());
-  index_ = (index_+1)%windowSize_;
+  average_ = sumOfData_ / (double(multiplier_) * data_.size());
+  index_ = (index_ + 1) % windowSize_;
 }
 
 
@@ -90,4 +94,4 @@ void OnlineAverage::reset()
   average_ = std::numeric_limits<double>::quiet_NaN();
 }
 
-}
+}  // namespace romea

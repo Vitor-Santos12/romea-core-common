@@ -1,19 +1,21 @@
-#ifndef ROMEA_CORE_COMMON_COORDINATES_SPHERICALCOORDINATES_HPP_
-#define ROMEA_CORE_COMMON_COORDINATES_SPHERICALCOORDINATES_HPP_
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
 
-//romea
+#ifndef ROMEA_CORE_COMMON__COORDINATES__SPHERICALCOORDINATES_HPP_
+#define ROMEA_CORE_COMMON__COORDINATES__SPHERICALCOORDINATES_HPP_
+
 #include "romea_core_common/coordinates/CartesianCoordinates.hpp"
 #include "romea_core_common/coordinates/PolarCoordinates.hpp"
 
-namespace romea {
+namespace romea
+{
 
-template <typename Scalar>
+template<typename Scalar>
 class SphericalCoordinates : public PolarCoordinates<Scalar>
 {
-public :
-
-  SphericalCoordinates(Scalar range, Scalar azimut, Scalar elevation):
-    PolarCoordinates<Scalar>(range, azimut),
+public:
+  SphericalCoordinates(Scalar range, Scalar azimut, Scalar elevation)
+  : PolarCoordinates<Scalar>(range, azimut),
     elevation_(elevation)
   {
   }
@@ -26,26 +28,26 @@ public :
     return elevation_;
   }
 
-private :
+private:
   Scalar elevation_;
 };
 
 
 struct SphericalTransform
 {
-  template <typename Scalar>
-  static Scalar range(const Scalar x, const Scalar &y, const Scalar &z)
+  template<typename Scalar>
+  static Scalar range(const Scalar x, const Scalar & y, const Scalar & z)
   {
-    return std::sqrt(x*x+y*y+z*z);
+    return std::sqrt(x * x + y * y + z * z);
   }
 
-  template <typename Scalar>
+  template<typename Scalar>
   static Scalar range(const CartesianCoordinates3<Scalar> & point)
   {
     return point.norm();
   }
 
-  template <typename Scalar>
+  template<typename Scalar>
   static Scalar range(const HomogeneousCoordinates3<Scalar> & point)
   {
     return point.template segment<3>(0).norm();
@@ -73,7 +75,7 @@ struct SphericalTransform
   template<typename Scalar>
   static Scalar elevation(const Scalar z, const Scalar & range)
   {
-    return std::acos(z/range);
+    return std::acos(z / range);
   }
 
   template<typename Scalar>
@@ -95,39 +97,39 @@ struct SphericalTransform
   }
 
   template<typename Scalar>
-  static Scalar x(const Scalar & range, const Scalar & azimut, const Scalar & elevation )
+  static Scalar x(const Scalar & range, const Scalar & azimut, const Scalar & elevation)
   {
-    return range*std::cos(azimut)*std::sin(elevation);
+    return range * std::cos(azimut) * std::sin(elevation);
   }
 
   template<typename Scalar>
-  static Scalar x(const SphericalCoordinates<Scalar> &  point )
+  static Scalar x(const SphericalCoordinates<Scalar> & point)
   {
-    return  x(point.getRange(), point.getAzimut(), point.getElevation());
+    return x(point.getRange(), point.getAzimut(), point.getElevation());
   }
 
   template<typename Scalar>
-  static Scalar y(const Scalar & range, const Scalar & azimut, const Scalar & elevation )
+  static Scalar y(const Scalar & range, const Scalar & azimut, const Scalar & elevation)
   {
-    return range*std::sin(azimut)*std::sin(elevation);
+    return range * std::sin(azimut) * std::sin(elevation);
   }
 
   template<typename Scalar>
-  static Scalar y(const SphericalCoordinates<Scalar> &  point )
+  static Scalar y(const SphericalCoordinates<Scalar> & point)
   {
-    return  y(point.getRange(), point.getAzimut(), point.getElevation());
+    return y(point.getRange(), point.getAzimut(), point.getElevation());
   }
 
   template<typename Scalar>
-  static Scalar z(const Scalar & range, const Scalar & elevation )
+  static Scalar z(const Scalar & range, const Scalar & elevation)
   {
-    return range*std::cos(elevation);
+    return range * std::cos(elevation);
   }
 
   template<typename Scalar>
-  static Scalar z(const SphericalCoordinates<Scalar> &  point )
+  static Scalar z(const SphericalCoordinates<Scalar> & point)
   {
-    return  z(point.getRange(), point.getElevation());
+    return z(point.getRange(), point.getElevation());
   }
 };
 
@@ -137,9 +139,10 @@ SphericalCoordinates<Scalar> toSpherical(const CartesianCoordinates3<Scalar> & p
 {
   double range = SphericalTransform::range(point);
 
-  return SphericalCoordinates<Scalar>(range,
-                                      SphericalTransform::azimut(point),
-                                      SphericalTransform::elevation(point.z(), range));
+  return SphericalCoordinates<Scalar>(
+    range,
+    SphericalTransform::azimut(point),
+    SphericalTransform::elevation(point.z(), range));
 }
 
 //-----------------------------------------------------------------------------
@@ -148,31 +151,33 @@ SphericalCoordinates<Scalar> toSpherical(const HomogeneousCoordinates3<Scalar> &
 {
   double range = SphericalTransform::range(point);
 
-  return SphericalCoordinates<Scalar>(range,
-                                      SphericalTransform::azimut(point),
-                                      SphericalTransform::elevation(point.z(), range));
+  return SphericalCoordinates<Scalar>(
+    range,
+    SphericalTransform::azimut(point),
+    SphericalTransform::elevation(point.z(), range));
 }
-
 
 
 //-----------------------------------------------------------------------------
 template<typename Scalar>
 CartesianCoordinates3<Scalar> toCartesian(const SphericalCoordinates<Scalar> & point)
 {
-  return CartesianCoordinates3<Scalar>(SphericalTransform::x(point),
-                                       SphericalTransform::y(point),
-                                       SphericalTransform::z(point));
+  return CartesianCoordinates3<Scalar>(
+    SphericalTransform::x(point),
+    SphericalTransform::y(point),
+    SphericalTransform::z(point));
 }
 
 //-----------------------------------------------------------------------------
 template<typename Scalar>
 HomogeneousCoordinates3<Scalar> toHomogeneous(const SphericalCoordinates<Scalar> & point)
 {
-  return HomogeneousCoordinates3<Scalar>(SphericalTransform::x(point),
-                                         SphericalTransform::y(point),
-                                         SphericalTransform::z(point));
+  return HomogeneousCoordinates3<Scalar>(
+    SphericalTransform::x(point),
+    SphericalTransform::y(point),
+    SphericalTransform::z(point));
 }
 
 }  // namespace romea
 
-#endif  // ROMEA_CORE_COMMON_COORDINATES_SPHERICALCOORDINATES_HPP_
+#endif  // ROMEA_CORE_COMMON__COORDINATES__SPHERICALCOORDINATES_HPP_

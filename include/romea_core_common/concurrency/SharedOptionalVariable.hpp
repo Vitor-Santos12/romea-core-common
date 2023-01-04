@@ -1,12 +1,16 @@
-#ifndef ROMEA_CORE_COMMON_CONCURRENCY_SHAREDOPTIONALVARIABLE_HPP_
-#define ROMEA_CORE_COMMON_CONCURRENCY_SHAREDOPTIONALVARIABLE_HPP_
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+#ifndef ROMEA_CORE_COMMON__CONCURRENCY__SHAREDOPTIONALVARIABLE_HPP_
+#define ROMEA_CORE_COMMON__CONCURRENCY__SHAREDOPTIONALVARIABLE_HPP_
 
 #include <mutex>
 #include <optional>
 
-namespace romea {
+namespace romea
+{
 
-template <typename T>
+template<typename T>
 class SharedOptionalVariable
 {
 public:
@@ -17,8 +21,7 @@ public:
   SharedOptionalVariable(const SharedOptionalVariable &) = delete;
   SharedOptionalVariable & operator=(const SharedOptionalVariable &) = delete;
 
-public :
-
+public:
   void store(const T & value);
   std::optional<T> consume();
 
@@ -28,31 +31,31 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-template <typename T>
-SharedOptionalVariable<T>::SharedOptionalVariable() :
-  value_(),
+template<typename T>
+SharedOptionalVariable<T>::SharedOptionalVariable()
+: value_(),
   mutex_()
 {
 }
 
 //-----------------------------------------------------------------------------
-template <typename T>
-SharedOptionalVariable<T>::SharedOptionalVariable(const T & value) :
-  value_(value),
+template<typename T>
+SharedOptionalVariable<T>::SharedOptionalVariable(const T & value)
+: value_(value),
   mutex_()
 {
 }
 
 ////-----------------------------------------------------------------------------
-//template <typename T>
-//ProducerConsumerVariable<T> & ProducerConsumerVariable<T>::operator=(const T & value)
+// template <typename T>
+// ProducerConsumerVariable<T> & ProducerConsumerVariable<T>::operator=(const T & value)
 //{
 //  store(value);
 //  return *this;
 //}
 
 //-----------------------------------------------------------------------------
-template <typename T>
+template<typename T>
 void SharedOptionalVariable<T>::store(const T & value)
 {
   std::lock_guard<std::mutex> lock(mutex_);
@@ -60,7 +63,7 @@ void SharedOptionalVariable<T>::store(const T & value)
 }
 
 //-----------------------------------------------------------------------------
-template <typename T>
+template<typename T>
 std::optional<T> SharedOptionalVariable<T>::consume()
 {
   std::lock_guard<std::mutex> lock(mutex_);
@@ -71,4 +74,4 @@ std::optional<T> SharedOptionalVariable<T>::consume()
 
 }  // namespace romea
 
-#endif  // ROMEA_CORE_COMMON_CONCURRENCY_SHAREDOPTIONALVARIABLE_HPP_
+#endif  // ROMEA_CORE_COMMON__CONCURRENCY__SHAREDOPTIONALVARIABLE_HPP_

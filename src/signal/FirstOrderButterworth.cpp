@@ -1,3 +1,6 @@
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
 // romea
 #include "romea_core_common/signal/FirstOrderButterworth.hpp"
 
@@ -8,9 +11,9 @@ namespace romea
 {
 
 //-----------------------------------------------------------------------------
-FirstOrderButterworth::FirstOrderButterworth(const double & weighting):
-  weighting_(weighting),
-  complementaryWeighting_((1 - weighting)/2),
+FirstOrderButterworth::FirstOrderButterworth(const double & weighting)
+: weighting_(weighting),
+  complementaryWeighting_((1 - weighting) / 2),
   filteredValue_(0),
   previousMeasuredValue_(),
   isInitialized_(false)
@@ -20,13 +23,12 @@ FirstOrderButterworth::FirstOrderButterworth(const double & weighting):
 
 
 //-----------------------------------------------------------------------------
-double FirstOrderButterworth::update(const double& measuredValue)
+double FirstOrderButterworth::update(const double & measuredValue)
 {
-  if (isInitialized_)
-  {
-    filteredValue_ = weighting_*filteredValue_ +
-                     complementaryWeighting_*measuredValue +
-                     complementaryWeighting_*previousMeasuredValue_;
+  if (isInitialized_) {
+    filteredValue_ = weighting_ * filteredValue_ +
+      complementaryWeighting_ * measuredValue +
+      complementaryWeighting_ * previousMeasuredValue_;
   } else {
     filteredValue_ = measuredValue;
     previousMeasuredValue_ = measuredValue;

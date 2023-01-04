@@ -1,52 +1,64 @@
-#ifndef ROMEA_CORE_COMMON_LEXICAL_LEXICALCAST_HPP_
-#define ROMEA_CORE_COMMON_LEXICAL_LEXICALCAST_HPP_
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+#ifndef ROMEA_CORE_COMMON__LEXICAL__LEXICALCAST_HPP_
+#define ROMEA_CORE_COMMON__LEXICAL__LEXICALCAST_HPP_
 
 // std
 #include <string>
 #include <stdexcept>
 #include <iostream>
 
-namespace romea {
+namespace romea
+{
 
 template<typename T>
 T lexical_cast(const std::string & str, size_t & pos);
 
-template<> inline double lexical_cast<double>(const std::string & str, size_t & pos)
+template<>
+inline double lexical_cast<double>(const std::string & str, size_t & pos)
 {
   return std::stod(str, &pos);
 }
 
-template<> inline float lexical_cast<float>(const std::string & str, size_t &pos)
+template<>
+inline float lexical_cast<float>(const std::string & str, size_t & pos)
 {
   return std::stof(str, &pos);
 }
 
-template<> inline int lexical_cast<int>(const std::string & str, size_t &pos)
+template<>
+inline int lexical_cast<int>(const std::string & str, size_t & pos)
 {
   return std::stoi(str, &pos);
 }
 
-template<> inline long lexical_cast<long>(const std::string & str, size_t &pos)
+template<>
+inline long lexical_cast<long>(const std::string & str, size_t & pos)
 {
   return std::stol(str, &pos);
 }
 
-template<> inline long double lexical_cast<long double>(const std::string & str, size_t &pos)
+template<>
+inline long double lexical_cast<long double>(const std::string & str, size_t & pos)
 {
   return std::stold(str, &pos);
 }
 
-template<> inline long long lexical_cast<long long>(const std::string & str, size_t &pos)
+template<>
+inline long long lexical_cast<long long>(const std::string & str, size_t & pos)
 {
   return std::stoll(str, &pos);
 }
 
-template<> inline unsigned long lexical_cast<unsigned long>(const std::string & str, size_t &pos)
+template<>
+inline unsigned long lexical_cast<unsigned long>(const std::string & str, size_t & pos)
 {
   return std::stoul(str, &pos);
 }
 
-template<> inline unsigned long long lexical_cast<unsigned long long>(const std::string & str, size_t &pos)
+template<>
+inline unsigned long long lexical_cast<unsigned long long>(const std::string & str, size_t & pos)
 {
   return std::stoull(str, &pos);
 }
@@ -56,8 +68,7 @@ T lexical_cast(const std::string & str)
 {
   size_t pos;
   T value = lexical_cast<T>(str, pos);
-  if (pos != str.size())
-  {
+  if (pos != str.size()) {
     throw(std::invalid_argument("lexical_cast"));
   }
   return value;
@@ -65,4 +76,4 @@ T lexical_cast(const std::string & str)
 
 }  // namespace romea
 
-#endif  // ROMEA_CORE_COMMON_LEXICAL_LEXICALCAST_HPP_
+#endif  // ROMEA_CORE_COMMON__LEXICAL__LEXICALCAST_HPP_

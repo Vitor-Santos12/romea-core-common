@@ -1,3 +1,10 @@
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+// std
+#include <limits>
+
+// local
 #include "romea_core_common/containers/grid/RayTracing.hpp"
 
 namespace romea
@@ -5,16 +12,16 @@ namespace romea
 
 
 //-----------------------------------------------------------------------------
-template <typename Scalar , size_t DIM>
-RayCasting<Scalar, DIM>::RayCasting():
-  RayCasting<Scalar, DIM>(nullptr)
+template<typename Scalar, size_t DIM>
+RayCasting<Scalar, DIM>::RayCasting()
+: RayCasting<Scalar, DIM>(nullptr)
 {
 }
 
 //-----------------------------------------------------------------------------
-template <typename Scalar , size_t DIM>
-RayCasting<Scalar, DIM>::RayCasting(GridIndexMapping<Scalar, DIM> * gridIndexMapping):
-  gridIndexMapping_(gridIndexMapping),
+template<typename Scalar, size_t DIM>
+RayCasting<Scalar, DIM>::RayCasting(GridIndexMapping<Scalar, DIM> * gridIndexMapping)
+: gridIndexMapping_(gridIndexMapping),
   rayOriginPoint_(PointType::Zero()),
   rayEndPoint_(PointType::Zero()),
   rayOriginIndexes_(CellIndexes::Zero()),
@@ -27,22 +34,24 @@ RayCasting<Scalar, DIM>::RayCasting(GridIndexMapping<Scalar, DIM> * gridIndexMap
 }
 
 //-----------------------------------------------------------------------------
-template <typename Scalar , size_t DIM> void
+template<typename Scalar, size_t DIM>
+void
 RayCasting<Scalar, DIM>::setGridIndexMapping(GridIndexMapping<Scalar, DIM> * gridIndexMapping)
 {
   gridIndexMapping_ = gridIndexMapping;
 }
 
 //-----------------------------------------------------------------------------
-template <typename Scalar , size_t DIM> void
+template<typename Scalar, size_t DIM>
+void
 RayCasting<Scalar, DIM>::setOriginPoint(const PointType & originPoint)
 {
-  rayOriginPoint_ = originPoint ;
+  rayOriginPoint_ = originPoint;
   rayOriginIndexes_ = gridIndexMapping_->computeCellIndexes(rayOriginPoint_);
 }
 
 //-----------------------------------------------------------------------------
-template <typename Scalar , size_t DIM>
+template<typename Scalar, size_t DIM>
 const typename RayCasting<Scalar, DIM>::PointType &
 RayCasting<Scalar, DIM>::getOriginPoint() const
 {
@@ -51,15 +60,16 @@ RayCasting<Scalar, DIM>::getOriginPoint() const
 
 
 //-----------------------------------------------------------------------------
-template <typename Scalar , size_t DIM> size_t
+template<typename Scalar, size_t DIM>
+size_t
 RayCasting<Scalar, DIM>::computeRayNumberOfCells()const
 {
   return (rayEndIndexes_.template cast<int>() -
-          rayOriginIndexes_.template cast<int>()).array().abs().sum()+1;
+         rayOriginIndexes_.template cast<int>()).array().abs().sum() + 1;
 }
 
 //-----------------------------------------------------------------------------
-template <typename Scalar , size_t DIM>
+template<typename Scalar, size_t DIM>
 const typename RayCasting<Scalar, DIM>::PointType &
 RayCasting<Scalar, DIM>::getEndPoint() const
 {
@@ -67,8 +77,9 @@ RayCasting<Scalar, DIM>::getEndPoint() const
 }
 
 //-----------------------------------------------------------------------------
-template <typename Scalar , size_t DIM> void
-RayCasting<Scalar, DIM>::setEndPoint(const PointType &endPoint)
+template<typename Scalar, size_t DIM>
+void
+RayCasting<Scalar, DIM>::setEndPoint(const PointType & endPoint)
 {
   rayEndPoint_ = endPoint;
   rayEndIndexes_ = gridIndexMapping_->computeCellIndexes(rayEndPoint_);
@@ -78,14 +89,12 @@ RayCasting<Scalar, DIM>::setEndPoint(const PointType &endPoint)
 
   PointType direction = rayEndPoint_ - rayOriginPoint_;
   Scalar range = direction.norm();
-  rayDirection_ = direction/range;
+  rayDirection_ = direction / range;
 
-  for (int i = 0; i < static_cast<int>(DIM); ++i)
-  {
+  for (int i = 0; i < static_cast<int>(DIM); ++i) {
     // compute step direction
-    if (rayDirection_[i] > 0)
-    {
-      rayStep_[i] =  1;
+    if (rayDirection_[i] > 0) {
+      rayStep_[i] = 1;
     } else if (rayDirection_[i] < 0) {
       rayStep_[i] = -1;
     } else {
@@ -93,39 +102,38 @@ RayCasting<Scalar, DIM>::setEndPoint(const PointType &endPoint)
     }
 
     // compute rayTMax_, tDelta
-    if (rayStep_[i] != 0)
-    {
+    if (rayStep_[i] != 0) {
       // corner point of voxel (in direction of ray)
       Scalar voxelBorder = rayOriginCellCenterPosition[i];
       voxelBorder += (rayStep_[i] * gridIndexMapping_->getCellResolution() * Scalar(0.5));
-      rayTMax_[i] =  (voxelBorder - rayOriginPoint_[i]) / rayDirection_[i];
+      rayTMax_[i] = (voxelBorder - rayOriginPoint_[i]) / rayDirection_[i];
       rayTDelta_[i] = gridIndexMapping_->getCellResolution() / std::abs(rayDirection_[i]);
     } else {
-      rayTMax_[i] =  std::numeric_limits<Scalar>::max();
+      rayTMax_[i] = std::numeric_limits<Scalar>::max();
       rayTDelta_[i] = std::numeric_limits<Scalar>::max();
     }
   }
 }
 
 //-----------------------------------------------------------------------------
-template <typename Scalar , size_t DIM>
+template<typename Scalar, size_t DIM>
 const typename RayCasting<Scalar, DIM>::CellIndexes &
 RayCasting<Scalar, DIM>::getOriginPointIndexes()const
 {
-  return  rayOriginIndexes_;
+  return rayOriginIndexes_;
 }
 
 //-----------------------------------------------------------------------------
-template <typename Scalar , size_t DIM>
+template<typename Scalar, size_t DIM>
 const typename RayCasting<Scalar, DIM>::CellIndexes &
 RayCasting<Scalar, DIM>::getEndPointIndexes()const
 {
-  return  rayEndIndexes_;
+  return rayEndIndexes_;
 }
 
 
 //-----------------------------------------------------------------------------
-template <typename Scalar , size_t DIM>
+template<typename Scalar, size_t DIM>
 VectorOfEigenVector<typename RayCasting<Scalar, DIM>::CellIndexes>
 RayCasting<Scalar, DIM>::cast(const PointType & endPoint)
 {
@@ -134,20 +142,19 @@ RayCasting<Scalar, DIM>::cast(const PointType & endPoint)
 }
 
 //-----------------------------------------------------------------------------
-template <typename Scalar , size_t DIM>
+template<typename Scalar, size_t DIM>
 VectorOfEigenVector<typename RayCasting<Scalar, DIM>::CellIndexes>
 RayCasting<Scalar, DIM>::cast()
 {
   size_t rayNumberOfCells = computeRayNumberOfCells();
   VectorOfEigenVector<CellIndexes> ray(rayNumberOfCells);
-  CellIndexes rayCurrentIndexes = rayOriginIndexes_ ;
+  CellIndexes rayCurrentIndexes = rayOriginIndexes_;
 
   size_t n = 0;
   ray[n] = rayCurrentIndexes;
-  while (++n != rayNumberOfCells)
-  {
+  while (++n != rayNumberOfCells) {
     next(rayCurrentIndexes);
-    ray[n]= rayCurrentIndexes;
+    ray[n] = rayCurrentIndexes;
   }
 
   return ray;
@@ -155,7 +162,7 @@ RayCasting<Scalar, DIM>::cast()
 
 
 //-----------------------------------------------------------------------------
-template <typename Scalar , size_t DIM>
+template<typename Scalar, size_t DIM>
 VectorOfEigenVector<typename RayCasting<Scalar, DIM>::CellIndexes>
 RayCasting<Scalar, DIM>::cast(const PointType & originPoint, const PointType & endPoint)
 {
@@ -163,81 +170,77 @@ RayCasting<Scalar, DIM>::cast(const PointType & originPoint, const PointType & e
   return cast(endPoint);
 }
 
-//TODO factoriser en utilisant const expr if
+// TODO(Jean) factoriser en utilisant const expr if
 //-----------------------------------------------------------------------------
-template <>
+template<>
 void RayCasting<float, 2>::next(CellIndexes & cellIndexes)
 {
   // find minimum rayTMax_
   // increment current position
-  if (rayTMax_[0] < rayTMax_[1]){
-    cellIndexes[0]+=rayStep_[0];
+  if (rayTMax_[0] < rayTMax_[1]) {
+    cellIndexes[0] += rayStep_[0];
     rayTMax_[0] += rayTDelta_[0];
   } else {
-    cellIndexes[1]+=rayStep_[1];
+    cellIndexes[1] += rayStep_[1];
     rayTMax_[1] += rayTDelta_[1];
   }
 }
 
-template <>
+template<>
 void RayCasting<double, 2>::next(CellIndexes & cellIndexes)
 {
   // find minimum rayTMax_
   // increment current position
-  if (rayTMax_[0] < rayTMax_[1]){
-    cellIndexes[0]+=rayStep_[0];
+  if (rayTMax_[0] < rayTMax_[1]) {
+    cellIndexes[0] += rayStep_[0];
     rayTMax_[0] += rayTDelta_[0];
   } else {
-    cellIndexes[1]+=rayStep_[1];
+    cellIndexes[1] += rayStep_[1];
     rayTMax_[1] += rayTDelta_[1];
   }
 }
 
-template <>
+template<>
 void RayCasting<float, 3>::next(CellIndexes & cellIndexes)
 {
   // find minimum tMax:
-  if (rayTMax_[0] < rayTMax_[1]){
-    if (rayTMax_[0] < rayTMax_[2])
-    {
-      cellIndexes[0]+=rayStep_[0];
+  if (rayTMax_[0] < rayTMax_[1]) {
+    if (rayTMax_[0] < rayTMax_[2]) {
+      cellIndexes[0] += rayStep_[0];
       rayTMax_[0] += rayTDelta_[0];
     } else {
-      cellIndexes[2]+=rayStep_[2];
+      cellIndexes[2] += rayStep_[2];
       rayTMax_[2] += rayTDelta_[2];
     }
   } else {
-    if (rayTMax_[1] < rayTMax_[2])
-    {
-      cellIndexes[1]+=rayStep_[1];
+    if (rayTMax_[1] < rayTMax_[2]) {
+      cellIndexes[1] += rayStep_[1];
       rayTMax_[1] += rayTDelta_[1];
     } else {
-      cellIndexes[2]+=rayStep_[2];
+      cellIndexes[2] += rayStep_[2];
       rayTMax_[2] += rayTDelta_[2];
     }
   }
 }
 
-template <>
+template<>
 void RayCasting<double, 3>::next(CellIndexes & cellIndexes)
 {
   // find minimum tMax:
-  if (rayTMax_[0] < rayTMax_[1]){
-    if (rayTMax_[0] < rayTMax_[2])
-    {
-      cellIndexes[0]+=rayStep_[0];
+  if (rayTMax_[0] < rayTMax_[1]) {
+    if (rayTMax_[0] < rayTMax_[2]) {
+      cellIndexes[0] += rayStep_[0];
       rayTMax_[0] += rayTDelta_[0];
     } else {
-      cellIndexes[2]+=rayStep_[2];
+      cellIndexes[2] += rayStep_[2];
       rayTMax_[2] += rayTDelta_[2];
     }
   } else {
-    if (rayTMax_[1] < rayTMax_[2])
-    {
-      cellIndexes[1]+=rayStep_[1];
+    if (rayTMax_[1] < rayTMax_[2]) {
+      cellIndexes[1] += rayStep_[1];
       rayTMax_[1] += rayTDelta_[1];
     } else {
-      cellIndexes[2]+=rayStep_[2];
+      cellIndexes[2] += rayStep_[2];
       rayTMax_[2] += rayTDelta_[2];
     }
   }

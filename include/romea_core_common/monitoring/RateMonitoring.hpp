@@ -1,5 +1,8 @@
-#ifndef ROMEA_CORE_COMMON_MONITORING_RATEMONITORING_HPP_
-#define ROMEA_CORE_COMMON_MONITORING_RATEMONITORING_HPP_
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+#ifndef ROMEA_CORE_COMMON__MONITORING__RATEMONITORING_HPP_
+#define ROMEA_CORE_COMMON__MONITORING__RATEMONITORING_HPP_
 
 // std
 #include <queue>
@@ -9,11 +12,12 @@
 #include "romea_core_common/time/Time.hpp"
 #include "romea_core_common/concurrency/SharedVariable.hpp"
 
-namespace romea {
+namespace romea
+{
 
 class RateMonitoring
 {
- public:
+public:
   RateMonitoring();
 
   explicit RateMonitoring(const double & expectedRate);
@@ -28,7 +32,7 @@ class RateMonitoring
 
   bool timeout(const Duration & duration);
 
- private :
+private:
   size_t windowSize_;
 
   Duration lastPeriod_;
@@ -41,4 +45,4 @@ class RateMonitoring
 
 }  // namespace romea
 
-#endif  // ROMEA_CORE_COMMON_MONITORING_RATEMONITORING_HPP_
+#endif  // ROMEA_CORE_COMMON__MONITORING__RATEMONITORING_HPP_

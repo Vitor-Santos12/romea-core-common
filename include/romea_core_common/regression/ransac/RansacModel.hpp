@@ -1,22 +1,25 @@
-#ifndef ROMEA_CORE_COMMON_REGRESSION_RANSAC_RANSACMODEL_HPP_
-#define ROMEA_CORE_COMMON_REGRESSION_RANSAC_RANSACMODEL_HPP_
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+#ifndef ROMEA_CORE_COMMON__REGRESSION__RANSAC__RANSACMODEL_HPP_
+#define ROMEA_CORE_COMMON__REGRESSION__RANSAC__RANSACMODEL_HPP_
 
 // stl
 #include <cstddef>
 
-namespace romea {
+namespace romea
+{
 
 // TODO(jean) perhaps use crtp here
 
 class RansacModel
 {
-public :
-
+public:
   RansacModel();
 
   virtual ~RansacModel() = default;
 
-  virtual bool draw(const double &modelDeviationError) = 0;
+  virtual bool draw(const double & modelDeviationError) = 0;
 
   virtual size_t countInliers(const double & modelDeviationError) = 0;
 
@@ -33,4 +36,4 @@ public :
 
 }  // namespace romea
 
-#endif  // ROMEA_CORE_COMMON_REGRESSION_RANSAC_RANSACMODEL_HPP_
+#endif  // ROMEA_CORE_COMMON__REGRESSION__RANSAC__RANSACMODEL_HPP_

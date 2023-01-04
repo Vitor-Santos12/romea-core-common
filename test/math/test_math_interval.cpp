@@ -1,3 +1,6 @@
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
 // gtest
 #include <gtest/gtest.h>
 
@@ -56,8 +59,8 @@ TEST(TestInterval, testInsideInterval1Di)
   EXPECT_TRUE(interval.inside(lower));
   EXPECT_TRUE(interval.inside(upper));
   EXPECT_TRUE(interval.inside(interval.center()));
-  EXPECT_FALSE(interval.inside(lower-1));
-  EXPECT_FALSE(interval.inside(upper+1));
+  EXPECT_FALSE(interval.inside(lower - 1));
+  EXPECT_FALSE(interval.inside(upper + 1));
 }
 
 
@@ -70,8 +73,8 @@ TEST(TestInterval, testInsideInterval1Df)
   EXPECT_TRUE(interval.inside(lower));
   EXPECT_TRUE(interval.inside(upper));
   EXPECT_TRUE(interval.inside(interval.center()));
-  EXPECT_FALSE(interval.inside(lower-0.1));
-  EXPECT_FALSE(interval.inside(upper+0.1));
+  EXPECT_FALSE(interval.inside(lower - 0.1));
+  EXPECT_FALSE(interval.inside(upper + 0.1));
 }
 
 //-----------------------------------------------------------------------------
@@ -87,11 +90,10 @@ TEST(TestInterval, testInsideInterval2Di)
   EXPECT_TRUE(interval.inside(lower));
   EXPECT_TRUE(interval.inside(upper));
 //  EXPECT_TRUE(interval.inside(interval.center()));
-  EXPECT_FALSE(interval.inside(lower.array()-1));
-  EXPECT_FALSE(interval.inside(upper.array()+1));
+  EXPECT_FALSE(interval.inside(lower.array() - 1));
+  EXPECT_FALSE(interval.inside(upper.array() + 1));
   EXPECT_FALSE(interval.inside(Eigen::Vector2i{-1, 10}));
   EXPECT_FALSE(interval.inside(Eigen::Vector2i{3, 21}));
-
 }
 
 //-----------------------------------------------------------------------------
@@ -107,8 +109,8 @@ TEST(TestInterval, testInsideInterval2Df)
   EXPECT_TRUE(interval.inside(lower));
   EXPECT_TRUE(interval.inside(upper));
   EXPECT_TRUE(interval.inside(interval.center()));
-  EXPECT_FALSE(interval.inside(lower.array()-0.1));
-  EXPECT_FALSE(interval.inside(upper.array()+0.1));
+  EXPECT_FALSE(interval.inside(lower.array() - 0.1));
+  EXPECT_FALSE(interval.inside(upper.array() + 0.1));
   EXPECT_FALSE(interval.inside(Eigen::Vector2d{0.3, 10}));
   EXPECT_FALSE(interval.inside(Eigen::Vector2d{4.1, 20.6}));
 }
@@ -138,7 +140,6 @@ TEST(TestInterval, testInterval1DiInclude)
   interval.include(romea::Interval1D<int>(lower4, upper4));
   EXPECT_EQ(interval.lower(), lower3);
   EXPECT_EQ(interval.upper(), upper3);
-
 }
 
 //-----------------------------------------------------------------------------
@@ -175,7 +176,8 @@ TEST(TestInterval, testInterval2DiInclude)
 }
 
 //-----------------------------------------------------------------------------
-int main(int argc, char **argv){
+int main(int argc, char ** argv)
+{
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }

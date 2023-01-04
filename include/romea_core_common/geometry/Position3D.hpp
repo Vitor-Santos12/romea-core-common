@@ -1,5 +1,8 @@
-#ifndef ROMEA_CORE_COMMON_GEOMETRY_POSITION3D_HPP_
-#define ROMEA_CORE_COMMON_GEOMETRY_POSITION3D_HPP_
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+#ifndef ROMEA_CORE_COMMON__GEOMETRY__POSITION3D_HPP_
+#define ROMEA_CORE_COMMON__GEOMETRY__POSITION3D_HPP_
 
 // Eigen
 #include <Eigen/Core>
@@ -15,4 +18,4 @@ struct Position3D {
 
 }  // namespace romea
 
-#endif  // ROMEA_CORE_COMMON_GEOMETRY_POSITION3D_HPP_
+#endif  // ROMEA_CORE_COMMON__GEOMETRY__POSITION3D_HPP_

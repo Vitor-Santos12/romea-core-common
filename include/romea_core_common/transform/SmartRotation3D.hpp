@@ -1,26 +1,30 @@
-#ifndef ROMEA_CORE_COMMON_TRANSFORM_SMARTROTATION3D_HPP_
-#define ROMEA_CORE_COMMON_TRANSFORM_SMARTROTATION3D_HPP_
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
 
-// romea
+#ifndef ROMEA_CORE_COMMON__TRANSFORM__SMARTROTATION3D_HPP_
+#define ROMEA_CORE_COMMON__TRANSFORM__SMARTROTATION3D_HPP_
+
 #include <Eigen/Core>
 
-namespace romea {
+namespace romea
+{
 
 class SmartRotation3D
 {
-public :
-
+public:
   SmartRotation3D();
 
-  SmartRotation3D(const double & angleAroundXAxis,
-                  const double & angleAroundYAxis,
-                  const double & angleAroundZAxis);
+  SmartRotation3D(
+    const double & angleAroundXAxis,
+    const double & angleAroundYAxis,
+    const double & angleAroundZAxis);
 
   explicit SmartRotation3D(const Eigen::Vector3d & angles);
 
-  void init(const double & angleAroundXAxis,
-            const double & angleAroundYAxis,
-            const double & angleAroundZAxis);
+  void init(
+    const double & angleAroundXAxis,
+    const double & angleAroundYAxis,
+    const double & angleAroundZAxis);
 
   void init(const Eigen::Vector3d & angles);
 
@@ -37,9 +41,7 @@ public :
 
   const Eigen::Matrix3d & R() const;
 
-
-private :
-
+private:
   Eigen::Matrix3d Rx_;
   Eigen::Matrix3d Ry_;
   Eigen::Matrix3d Rz_;
@@ -54,4 +56,4 @@ private :
 
 }  // namespace romea
 
-#endif  // ROMEA_CORE_COMMON_TRANSFORM_SMARTROTATION3D_HPP_
+#endif  // ROMEA_CORE_COMMON__TRANSFORM__SMARTROTATION3D_HPP_

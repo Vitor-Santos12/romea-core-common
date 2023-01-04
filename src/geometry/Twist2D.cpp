@@ -1,27 +1,29 @@
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
 #include "romea_core_common/geometry/Twist2D.hpp"
 
 namespace romea
 {
 
 //--------------------------------------------------------------------------
-Twist2D::Twist2D():
-  angularSpeed(0),
+Twist2D::Twist2D()
+: angularSpeed(0),
   linearSpeeds(Eigen::Vector2d::Zero()),
   covariance(Eigen::Matrix3d::Zero())
 {
 }
 
 //--------------------------------------------------------------------------
-std::ostream & operator <<(std::ostream & os, const Twist2D & twist2D)
+std::ostream & operator<<(std::ostream & os, const Twist2D & twist2D)
 {
   os << " Twist 2D :" << std::endl;
   os << " linear.x =" << twist2D.linearSpeeds.x() << std::endl;
   os << " linear.y =" << twist2D.linearSpeeds.y() << std::endl;
   os << " angular.z =" << twist2D.angularSpeed << std::endl;
-  os << " covariance " <<std::endl;
+  os << " covariance " << std::endl;
   os << twist2D.covariance << std::endl;
   return os;
 }
 
 }   // namespace romea
-

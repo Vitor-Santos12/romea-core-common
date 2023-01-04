@@ -1,3 +1,6 @@
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
 // gtest
 #include <gtest/gtest.h>
 
@@ -27,7 +30,6 @@ TEST(TestPose3D, checkConvertToPose2D)
   EXPECT_DOUBLE_EQ(pose2d.covariance(2, 0), pose3d.covariance(5, 0));
   EXPECT_DOUBLE_EQ(pose2d.covariance(2, 1), pose3d.covariance(5, 1));
   EXPECT_DOUBLE_EQ(pose2d.covariance(2, 2), pose3d.covariance(5, 5));
-
 }
 
 //-----------------------------------------------------------------------------
@@ -46,7 +48,8 @@ TEST(TestPose3D, checkConvertToPosition3D)
 }
 
 //-----------------------------------------------------------------------------
-int main(int argc, char **argv){
+int main(int argc, char ** argv)
+{
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }

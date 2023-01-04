@@ -1,3 +1,6 @@
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
 // gtest
 #include <gtest/gtest.h>
 
@@ -11,7 +14,7 @@ TEST(TestMatrix, testPositiveSemiDefiniteMatrix)
   Eigen::Matrix3d se2Covariance;
   se2Covariance.row(0) << 0.1, 0.3, -0.4;
   se2Covariance.row(1) << 0.3, 0.2, 0.3;
-  se2Covariance.row(2) <<-0.4, 0.3, 0.5;
+  se2Covariance.row(2) << -0.4, 0.3, 0.5;
   EXPECT_TRUE(romea::isPositiveSemiDefiniteMatrix(se2Covariance));
 
   Eigen::Matrix3d badSe2Covariance1 = se2Covariance;
@@ -107,7 +110,8 @@ TEST(TestMatrix, testSe3ToSe2Covariance)
 }
 
 //-----------------------------------------------------------------------------
-int main(int argc, char **argv){
+int main(int argc, char ** argv)
+{
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }

@@ -1,11 +1,14 @@
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
 #include "romea_core_common/geometry/Twist3D.hpp"
 
 namespace romea
 {
 
 //--------------------------------------------------------------------------
-Twist3D::Twist3D():
-  linearSpeeds(Eigen::Vector3d::Zero()),
+Twist3D::Twist3D()
+: linearSpeeds(Eigen::Vector3d::Zero()),
   angularSpeeds(Eigen::Vector3d::Zero()),
   covariance(Eigen::Matrix6d::Zero())
 {
@@ -29,16 +32,16 @@ void toTwist2D(const Twist3D & twist3d, Twist2D & twist2d)
 }
 
 //--------------------------------------------------------------------------
-std::ostream & operator <<(std::ostream & os, const Twist3D & twist3D)
+std::ostream & operator<<(std::ostream & os, const Twist3D & twist3D)
 {
-  os << "Twist 3D :"<< std::endl;
-  os << " linear.x =" << twist3D.linearSpeeds.x() <<std::endl;
-  os << " linear.y =" << twist3D.linearSpeeds.y() <<std::endl;
-  os << " linear.z =" << twist3D.linearSpeeds.z() <<std::endl;
+  os << "Twist 3D :" << std::endl;
+  os << " linear.x =" << twist3D.linearSpeeds.x() << std::endl;
+  os << " linear.y =" << twist3D.linearSpeeds.y() << std::endl;
+  os << " linear.z =" << twist3D.linearSpeeds.z() << std::endl;
   os << " angular.x =" << twist3D.angularSpeeds.x() << std::endl;
   os << " angular.y =" << twist3D.angularSpeeds.y() << std::endl;
   os << " angular.z =" << twist3D.angularSpeeds.z() << std::endl;
-  os << " covariance " <<std::endl;
+  os << " covariance " << std::endl;
   os << twist3D.covariance << std::endl;
 
   return os;

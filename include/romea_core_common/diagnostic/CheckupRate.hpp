@@ -1,5 +1,8 @@
-#ifndef ROMEA_CORE_COMMON_DIAGNOSTIC_CHECKUPRATE_HPP_
-#define ROMEA_CORE_COMMON_DIAGNOSTIC_CHECKUPRATE_HPP_
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+#ifndef ROMEA_CORE_COMMON__DIAGNOSTIC__CHECKUPRATE_HPP_
+#define ROMEA_CORE_COMMON__DIAGNOSTIC__CHECKUPRATE_HPP_
 
 // std
 #include <string>
@@ -10,15 +13,17 @@
 #include "romea_core_common/diagnostic/CheckupGreaterThan.hpp"
 #include "romea_core_common/monitoring/RateMonitoring.hpp"
 
-namespace romea {
+namespace romea
+{
 
-template <typename CheckupType>
-class  CheckupRate
+template<typename CheckupType>
+class CheckupRate
 {
 public:
-  CheckupRate(const std::string &name,
-              const double & rate,
-              const double & espilon);
+  CheckupRate(
+    const std::string & name,
+    const double & rate,
+    const double & espilon);
 
   DiagnosticStatus evaluate(const Duration & stamp);
 
@@ -26,7 +31,7 @@ public:
 
   DiagnosticReport getReport()const;
 
-private :
+private:
   RateMonitoring rateMonitoring_;
   CheckupType checkup_;
 
@@ -40,7 +45,4 @@ using CheckupGreaterThanRate = CheckupRate<CheckupGreaterThan<double>>;
 
 }  // namespace romea
 
-#endif  // ROMEA_CORE_COMMON_DIAGNOSTIC_CHECKUPRATE_HPP_ 
-
-
-
+#endif  // ROMEA_CORE_COMMON__DIAGNOSTIC__CHECKUPRATE_HPP_

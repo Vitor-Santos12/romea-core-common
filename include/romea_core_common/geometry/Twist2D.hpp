@@ -1,5 +1,5 @@
-#ifndef ROMEA_CORE_COMMON_GEOMETRY_TWIST2D_HPP_
-#define ROMEA_CORE_COMMON_GEOMETRY_TWIST2D_HPP_
+#ifndef ROMEA_CORE_COMMON__GEOMETRY__TWIST2D_HPP_
+#define ROMEA_CORE_COMMON__GEOMETRY__TWIST2D_HPP_
 
 // Eigen
 #include <Eigen/Core>
@@ -16,8 +16,8 @@ struct Twist2D
   Eigen::Matrix3d covariance;
 };
 
-std::ostream & operator <<(std::ostream & os, const Twist2D & twist2D);
+std::ostream & operator<<(std::ostream & os, const Twist2D & twist2D);
 
 }  // namespace romea
 
-#endif  // ROMEA_CORE_COMMON_GEOMETRY_TWIST2D_HPP_
+#endif  // ROMEA_CORE_COMMON__GEOMETRY__TWIST2D_HPP_

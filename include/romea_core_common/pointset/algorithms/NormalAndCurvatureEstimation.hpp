@@ -1,95 +1,101 @@
-#ifndef _romea_NormalAndCurvatureEstimation_HPP_
-#define _romea_NormalAndCurvatureEstimation_HPP_
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+#ifndef COMMON_POINTSET__ALGORITHMS__NORMALANDCURVATUREESTIMATION_HPP_
+#define COMMON_POINTSET__ALGORITHMS__NORMALANDCURVATUREESTIMATION_HPP_
+
+// Eigen
+#include <Eigen/Eigenvalues>
 
 // romea
 #include "romea_core_common/pointset/PointSet.hpp"
 #include "romea_core_common/pointset/NormalSet.hpp"
 #include "romea_core_common/pointset/KdTree.hpp"
 
-// Eigen
-#include <Eigen/Eigenvalues>
 
-namespace romea{
+namespace romea
+{
 
-template <class PointType>
-class NormalAndCurvatureEstimation {
-public :
-
-  using Scalar = typename PointType::Scalar ;
+template<class PointType>
+class NormalAndCurvatureEstimation
+{
+public:
+  using Scalar = typename PointType::Scalar;
   static constexpr size_t CARTESIAN_DIM = PointTraits<PointType>::DIM;
   static constexpr size_t POINT_SIZE = PointTraits<PointType>::SIZE;
 
   using KdTreeType = KdTree<PointType>;
-  using VectorType  = std::vector<Scalar> ;
+  using VectorType = std::vector<Scalar>;
   using PointSetType = PointSet<PointType>;
   using NormalSetType = NormalSet<PointType>;
 
-  using EigenValuesType = Eigen::Matrix<Scalar, CARTESIAN_DIM, 1> ;
-  using EigenVectorsType = Eigen::Matrix<Scalar, CARTESIAN_DIM, CARTESIAN_DIM> ;
+  using EigenValuesType = Eigen::Matrix<Scalar, CARTESIAN_DIM, 1>;
+  using EigenVectorsType = Eigen::Matrix<Scalar, CARTESIAN_DIM, CARTESIAN_DIM>;
 
   enum class EstimationMethod
   {
-    PCA=0,
-    ROBUST_PCA, //not yed implemented
-    MCMD //not yed implemented
+    PCA = 0,
+    ROBUST_PCA,  // not yed implemented
+    MCMD  // not yed implemented
   };
 
-public :
+public:
+  explicit NormalAndCurvatureEstimation(const size_t & numberOfNeighborPoints);
 
-  NormalAndCurvatureEstimation(const size_t & numberOfNeighborPoints);
+  void compute(
+    const PointSetType & points,
+    NormalSetType & normals);
 
-  void compute(const PointSetType & points,
-               NormalSetType & normals);
+  void compute(
+    const PointSetType & points,
+    const KdTreeType & pointsKdTree,
+    NormalSetType & normals);
 
-  void compute(const PointSetType & points,
-               const KdTreeType & pointsKdTree,
-               NormalSetType & normals);
+  void compute(
+    const PointSetType & points,
+    NormalSetType & normals,
+    VectorType & curvatures);
 
-  void compute(const PointSetType & points,
-               NormalSetType & normals,
-               VectorType & curvatures);
+  void compute(
+    const PointSetType & points,
+    const KdTreeType & pointsKdTree,
+    NormalSetType & normals,
+    VectorType & curvatures);
 
-  void compute(const PointSetType & points,
-               const KdTreeType& pointsKdTree,
-               NormalSetType & normals,
-               VectorType & curvatures);
+  void compute(
+    const PointSetType & points,
+    NormalSetType & normals,
+    VectorType & curvatures,
+    VectorType & normalsReliability);
 
-  void compute(const PointSetType & points,
-               NormalSetType & normals,
-               VectorType & curvatures,
-               VectorType & normalsReliability);
+  void compute(
+    const PointSetType & points,
+    const KdTreeType & pointsKdTree,
+    NormalSetType & normals,
+    VectorType & curvatures,
+    VectorType & normalsReliability);
 
-  void compute(const PointSetType & points,
-               const KdTreeType& pointsKdTree,
-               NormalSetType & normals,
-               VectorType & curvatures,
-               VectorType & normalsReliability);
-
-
-private :
-
-  void planeEstimation_(const PointSetType & points ,
-                        const KdTreeType & pointsKdTree,
-                        const size_t & pointIndex);
+private:
+  void planeEstimation_(
+    const PointSetType & points,
+    const KdTreeType & pointsKdTree,
+    const size_t & pointIndex);
 
   Scalar computeNormalReliability();
 
-private :
-
+private:
   size_t numberOfNeighborPoints_;
-  std::vector<size_t>  neighborIndexes_;
-  std::vector<Scalar>  neighborSquareDistances_;
-  Eigen::SelfAdjointEigenSolver< EigenVectorsType > eigenSolver_;
+  std::vector<size_t> neighborIndexes_;
+  std::vector<Scalar> neighborSquareDistances_;
+  Eigen::SelfAdjointEigenSolver<EigenVectorsType> eigenSolver_;
   EigenValuesType eigenValues_;
   EigenVectorsType eigenVectors_;
 
-
-public :
-
-  EIGEN_MAKE_ALIGNED_OPERATOR_NEW_IF_VECTORIZABLE_FIXED_SIZE(Scalar,CARTESIAN_DIM)
+public:
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW_IF_VECTORIZABLE_FIXED_SIZE(Scalar, CARTESIAN_DIM)
 };
 
-}
+}  // namespace romea
 
 
-#endif
+#endif  // COMMON_POINTSET__ALGORITHMS__NORMALANDCURVATUREESTIMATION_HPP_

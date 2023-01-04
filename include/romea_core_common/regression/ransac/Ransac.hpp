@@ -1,5 +1,8 @@
-#ifndef ROMEA_CORE_COMMON_REGRESSION_RANSAC_RANSAC_HPP_
-#define ROMEA_CORE_COMMON_REGRESSION_RANSAC_RANSAC_HPP_
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+#ifndef ROMEA_CORE_COMMON__REGRESSION__RANSAC__RANSAC_HPP_
+#define ROMEA_CORE_COMMON__REGRESSION__RANSAC__RANSAC_HPP_
 
 #include "romea_core_common/regression/ransac/RansacModel.hpp"
 
@@ -24,4 +27,4 @@ private :
 
 }  // namespace romea
 
-#endif  // ROMEA_CORE_COMMON_REGRESSION_RANSAC_RANSAC_HPP_
+#endif  // ROMEA_CORE_COMMON__REGRESSION__RANSAC__RANSAC_HPP_

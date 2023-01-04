@@ -1,3 +1,6 @@
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
 // gtest
 #include <gtest/gtest.h>
 
@@ -26,7 +29,7 @@ TEST(TestEuler, testRX)
 //-----------------------------------------------------------------------------
 TEST(TestEuler, testRY)
 {
-  double pitch = M_PI_2-0.5;
+  double pitch = M_PI_2 - 0.5;
   Eigen::Vector3d eulerAngles(0, pitch, 0);
   Eigen::Matrix3d R = romea::eulerAnglesToRotation3D(eulerAngles);
   eulerAngles = romea::rotation3DToEulerAngles(R);
@@ -66,7 +69,7 @@ TEST(TestEuler, testRZ)
 TEST(TestEuler, testR)
 {
   double roll = 0.8;
-  double pitch = M_PI_2-0.5;
+  double pitch = M_PI_2 - 0.5;
   double yaw = 1.1;
 
   Eigen::Vector3d eulerAngles(roll, pitch, yaw);
@@ -84,40 +87,48 @@ TEST(TestEuler, quaternionToEulerAngles)
   double yaw = 2.1;
   Eigen::Vector3d eulerAngles(roll, pitch, yaw);
   Eigen::Quaterniond q = Eigen::Quaterniond(romea::eulerAnglesToRotation3D(eulerAngles));
-  eulerAngles  = romea::quaternionToEulerAngles(q);
+  eulerAngles = romea::quaternionToEulerAngles(q);
   EXPECT_NEAR(eulerAngles.x(), romea::between0And2Pi(roll), 0.001);
   EXPECT_NEAR(eulerAngles.y(), romea::between0And2Pi(pitch), 0.001);
   EXPECT_NEAR(eulerAngles.z(), romea::between0And2Pi(yaw), 0.001);
 }
 
 //-----------------------------------------------------------------------------
-inline void testRotationPrediction(const Eigen::Vector3d & initialEulerAngles,
-                                   const Eigen::Vector3d & angularSpeeds,
-                                   const double & dt)
+inline void testRotationPrediction(
+  const Eigen::Vector3d & initialEulerAngles,
+  const Eigen::Vector3d & angularSpeeds,
+  const double & dt)
 {
   size_t N = 1000;
   Eigen::Matrix3d rotation = romea::eulerAnglesToRotation3D(initialEulerAngles);
 
-  double dti = dt/N;
+  double dti = dt / N;
   Eigen::Matrix3d F;
   Eigen::Vector3d eulerAngles = initialEulerAngles;
 
-  for (size_t n = 0; n < N ; n++)
-  {
-    F.row(0)<< 1, std::sin(eulerAngles[0])*std::tan(eulerAngles[1]), std::cos(eulerAngles[0])*std::tan(eulerAngles[1]);
-    F.row(1)<< 0, std::cos(eulerAngles[0]), -std::sin(eulerAngles[0]);
-    F.row(2)<< 0, std::sin(eulerAngles[0])/std::cos(eulerAngles[1]), std::cos(eulerAngles[0])/std::cos(eulerAngles[1]);
-    eulerAngles += F*angularSpeeds*dti;
+  for (size_t n = 0; n < N; n++) {
+    F.row(0) << 1, std::sin(eulerAngles[0]) * std::tan(eulerAngles[1]),
+      std::cos(eulerAngles[0]) * std::tan(eulerAngles[1]);
+    F.row(1) << 0, std::cos(eulerAngles[0]), -std::sin(eulerAngles[0]);
+    F.row(2) << 0, std::sin(eulerAngles[0]) / std::cos(eulerAngles[1]),
+      std::cos(eulerAngles[0]) / std::cos(eulerAngles[1]);
+    eulerAngles += F * angularSpeeds * dti;
 
-    rotation = rotation*romea::eulerAnglesToRotation3D(Eigen::Vector3d(angularSpeeds*dti));
+    rotation = rotation * romea::eulerAnglesToRotation3D(Eigen::Vector3d(angularSpeeds * dti));
   }
 
-  EXPECT_LT(romea::betweenMinusPiAndPi(eulerAngles.x()-
-            romea::rotation3DToEulerAngles(rotation).x()), 0.01);
-  EXPECT_LT(romea::betweenMinusPiAndPi(eulerAngles.y()-
-            romea::rotation3DToEulerAngles(rotation).y()), 0.01);
-  EXPECT_LT(romea::betweenMinusPiAndPi(eulerAngles.z()-
-            romea::rotation3DToEulerAngles(rotation).z()), 0.01);
+  EXPECT_LT(
+    romea::betweenMinusPiAndPi(
+      eulerAngles.x() -
+      romea::rotation3DToEulerAngles(rotation).x()), 0.01);
+  EXPECT_LT(
+    romea::betweenMinusPiAndPi(
+      eulerAngles.y() -
+      romea::rotation3DToEulerAngles(rotation).y()), 0.01);
+  EXPECT_LT(
+    romea::betweenMinusPiAndPi(
+      eulerAngles.z() -
+      romea::rotation3DToEulerAngles(rotation).z()), 0.01);
 }
 
 //-----------------------------------------------------------------------------
@@ -139,7 +150,8 @@ TEST(TestEuler, testRotationPrediction2)
 }
 
 //-----------------------------------------------------------------------------
-int main(int argc, char **argv){
+int main(int argc, char ** argv)
+{
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }

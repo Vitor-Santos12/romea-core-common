@@ -1,18 +1,24 @@
-#ifndef ROMEA_CORE_COMMON_CONTAINERS_EIGEN_DEQUEOFEIGENVECTOR_HPP_
-#define ROMEA_CORE_COMMON_CONTAINERS_EIGEN_DEQUEOFEIGENVECTOR_HPP_
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
 
-// std
-#include <vector>
+#ifndef ROMEA_CORE_COMMON__CONTAINERS__EIGEN__DEQUEOFEIGENVECTOR_HPP_
+#define ROMEA_CORE_COMMON__CONTAINERS__EIGEN__DEQUEOFEIGENVECTOR_HPP_
 
 // eigen
 #include <Eigen/Eigen>
 #include <unsupported/Eigen/MatrixFunctions>
 #include <Eigen/StdDeque>
 
-namespace romea{
+// std
+#include <vector>
 
-template< class EigenVectorType > using DequeOfEigenVector =
-std::vector<EigenVectorType, Eigen::aligned_allocator<EigenVectorType> >;
+
+namespace romea
+{
+
+template<class EigenVectorType>
+using DequeOfEigenVector =
+  std::vector<EigenVectorType, Eigen::aligned_allocator<EigenVectorType>>;
 
 }  // namespace romea
 

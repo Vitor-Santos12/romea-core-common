@@ -1,30 +1,31 @@
-#ifndef ROMEA_CORE_COMMON_MATH_NORMALRANDOMMATRIX_HPP_
-#define ROMEA_CORE_COMMON_MATH_NORMALRANDOMMATRIX_HPP_
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+#ifndef ROMEA_CORE_COMMON__MATH__NORMALRANDOMMATRIX_HPP_
+#define ROMEA_CORE_COMMON__MATH__NORMALRANDOMMATRIX_HPP_
 
 #include "romea_core_common/math/NormalRandomMatrixGenerator.hpp"
 
 namespace romea
 {
 
-template < typename Scalar, size_t DIM, class PRNG = std::mt19937 >
+template<typename Scalar, size_t DIM, class PRNG = std::mt19937>
 class NormalRandomMatrix
 {
-public :
-
+public:
   using MeanVector = Eigen::Matrix<Scalar, DIM, 1>;
   using CovarianceMatrix = Eigen::Matrix<Scalar, DIM, DIM>;
   using Matrix = Eigen::Matrix<Scalar, DIM, Eigen::Dynamic, StorageOrder>;
 
-public :
-
-  NormalRandomMatrix():
-    generator_(),
+public:
+  NormalRandomMatrix()
+  : generator_(),
     matrix_()
   {
   }
 
-  NormalRandomMatrix(const size_t &cases ):
-    generator_(),
+  explicit NormalRandomMatrix(const size_t & cases)
+  : generator_(),
     matrix_(Matrix::Zero(cases))
   {
   }
@@ -34,7 +35,7 @@ public :
     matrix_.resize(DIM, cases);
   }
 
-  void draw(const MeanVector &mean, const CovarianceMatrix &cov)
+  void draw(const MeanVector & mean, const CovarianceMatrix & cov)
   {
     generator_.fill(mean, cov, matrix_);
   }
@@ -44,31 +45,28 @@ public :
     return matrix_;
   }
 
-private :
-
+private:
   NormalRandomMatrixGenerator<Scalar, DIM, StorageOrder, PRNG> generator_;
   Matrix matrix_;
 
 };
 
 
-template < typename Scalar, int StorageOrder = Eigen::RowMajor, class PRNG = std::mt19937 >
+template<typename Scalar, int StorageOrder = Eigen::RowMajor, class PRNG = std::mt19937>
 class NormalRandomMatrix<Scalar, 1, StorageOrder, PRNG>
 {
-public :
-
+public:
   using Matrix = Eigen::Matrix<Scalar, 1, Eigen::Dynamic, StorageOrder>;
 
-public :
-
-  NormalRandomMatrix():
-    generator_(),
+public:
+  NormalRandomMatrix()
+  : generator_(),
     matrix_()
   {
   }
 
-  NormalRandomMatrix(const size_t &cases):
-    generator_(),
+  explicit NormalRandomMatrix(const size_t & cases)
+  : generator_(),
     matrix_(Matrix::Zero(cases))
   {
   }
@@ -78,7 +76,7 @@ public :
     matrix_.resize(1, cases);
   }
 
-  void draw(const Scalar &mean, const Scalar &std)
+  void draw(const Scalar & mean, const Scalar & std)
   {
     generator_.fill(mean, std, matrix_);
   }
@@ -88,20 +86,20 @@ public :
     return matrix_;
   }
 
-private :
+private:
   NormalRandomMatrixGenerator<Scalar, 1, StorageOrder, PRNG> generator_;
   Matrix matrix_;
 };
 
-template <typename Scalar>
+template<typename Scalar>
 using NormalRandomMatrix2D = NormalRandomMatrix<Scalar, 2>;
 
-template <typename Scalar>
+template<typename Scalar>
 using NormalRandomMatrix3d = NormalRandomMatrix<Scalar, 3>;
 
-template <typename Scalar>
+template<typename Scalar>
 using NormalRandomVector = NormalRandomMatrix<Scalar, 1>;
 
 }  // namespace romea
 
-#endif  // ROMEA_CORE_COMMON_MATH_NORMALRANDOMMATRIX_HPP_
+#endif  // ROMEA_CORE_COMMON__MATH__NORMALRANDOMMATRIX_HPP_

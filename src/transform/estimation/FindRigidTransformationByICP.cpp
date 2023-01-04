@@ -1,20 +1,29 @@
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+// std
+#include <limits>
+#include <vector>
+
 // romea
 #include "romea_core_common/transform/estimation/FindRigidTransformationByICP.hpp"
 #include "romea_core_common/pointset/algorithms/NormalAndCurvatureEstimation.hpp"
 
-namespace {
-const size_t ICP_MAXIMAL_NUMBER_OF_ITERATIONS  = 10;
-const double ICP_TRANSFORMATION_EPSILON  = 0.001;
+namespace
+{
+const size_t ICP_MAXIMAL_NUMBER_OF_ITERATIONS = 10;
+const double ICP_TRANSFORMATION_EPSILON = 0.001;
 }
 
 
-namespace romea {
+namespace romea
+{
 
 //-----------------------------------------------------------------------------
-template <class PointType>
-FindRigidTransformationByICP<PointType>::
-FindRigidTransformationByICP(const Scalar &pointsPositionStd):
-  targetPointsNormals_(),
+template<class PointType>
+FindRigidTransformationByICP<PointType>::FindRigidTransformationByICP(
+  const Scalar & pointsPositionStd)
+: targetPointsNormals_(),
   projectedTargetPoints_(),
   correspondences_(),
   matchedSourcePoints_(),
@@ -30,27 +39,29 @@ FindRigidTransformationByICP(const Scalar &pointsPositionStd):
 
 
 //-----------------------------------------------------------------------------
-template <class PointType> void
-FindRigidTransformationByICP<PointType>::
-setMaximalNumberOfIterations(const size_t & numberOfIterations)
+template<class PointType>
+void
+FindRigidTransformationByICP<PointType>::setMaximalNumberOfIterations(
+  const size_t & numberOfIterations)
 {
   maximalNumberOfIterations_ = numberOfIterations;
 }
 
 
 //-----------------------------------------------------------------------------
-template <class PointType> void
+template<class PointType>
+void
 FindRigidTransformationByICP<PointType>::setTransformationEspilon(const Scalar & epsilon)
 {
-  transformationEpsilon_  = epsilon;
+  transformationEpsilon_ = epsilon;
 }
 
 
 //-----------------------------------------------------------------------------
-template <class PointType>
+template<class PointType>
 void FindRigidTransformationByICP<PointType>::allocate_(size_t numberOfPoints)
 {
-  if (matchedTargetPoints_.capacity() < numberOfPoints){
+  if (matchedTargetPoints_.capacity() < numberOfPoints) {
     targetPointsNormals_.reserve(numberOfPoints);
     projectedTargetPoints_.reserve(numberOfPoints);
     correspondences_.reserve(numberOfPoints);
@@ -63,32 +74,33 @@ void FindRigidTransformationByICP<PointType>::allocate_(size_t numberOfPoints)
 }
 
 //-----------------------------------------------------------------------------
-template <class PointType>
-bool FindRigidTransformationByICP<PointType>::
-find(const PointSet<PointType> & sourcePoints,
-     const PointSet<PointType> & targetPoints,
-     const TransformationMatrixType & guessRigidTransformation,
-     EstimationMethod estimationMethod)
+template<class PointType>
+bool FindRigidTransformationByICP<PointType>::find(
+  const PointSet<PointType> & sourcePoints,
+  const PointSet<PointType> & targetPoints,
+  const TransformationMatrixType & guessRigidTransformation,
+  EstimationMethod estimationMethod)
 {
   KdTreeType sourcePointsKdTree(sourcePoints);
   KdTreeType targetPointsKdTree(targetPoints);
 
-  return find(sourcePoints, sourcePointsKdTree,
-              targetPoints, targetPointsKdTree,
-              guessRigidTransformation,
-              estimationMethod);
+  return find(
+    sourcePoints, sourcePointsKdTree,
+    targetPoints, targetPointsKdTree,
+    guessRigidTransformation,
+    estimationMethod);
 }
 
 // TODO(jean) a factoriser
 //-----------------------------------------------------------------------------
-template <class PointType>
-bool FindRigidTransformationByICP<PointType>::
-find(const PointSet<PointType> & sourcePoints,
-     const KdTreeType & sourcePointsKdTree,
-     const PointSet<PointType> & targetPoints,
-     const KdTreeType & targetPointsKdTree,
-     const TransformationMatrixType & guessRigidTransformation,
-     EstimationMethod estimationMethod)
+template<class PointType>
+bool FindRigidTransformationByICP<PointType>::find(
+  const PointSet<PointType> & sourcePoints,
+  const KdTreeType & sourcePointsKdTree,
+  const PointSet<PointType> & targetPoints,
+  const KdTreeType & targetPointsKdTree,
+  const TransformationMatrixType & guessRigidTransformation,
+  EstimationMethod estimationMethod)
 {
   size_t numberOfTargetPoints = targetPoints.size();
   allocate_(numberOfTargetPoints);
@@ -104,18 +116,17 @@ find(const PointSet<PointType> & sourcePoints,
   TransformationMatrixType previousEstimatedTransformation = TransformationMatrixType::Identity();
 
   size_t n = 0;
-  for (; n< maximalNumberOfIterations_; ++n)
-  {
+  for (; n < maximalNumberOfIterations_; ++n) {
     // Project target points in source point references frame
     projectedTargetPoints_.resize(numberOfTargetPoints);
     TransformationMatrixType bestInverseRigidTransformation =
-     (bestRigidTransformation*guessRigidTransformation).inverse();
+      (bestRigidTransformation * guessRigidTransformation).inverse();
 
-    for (size_t targetIndex=0; targetIndex < numberOfTargetPoints; ++targetIndex)
-    {
-      projection(bestInverseRigidTransformation,
-                 targetPoints[targetIndex],
-                 projectedTargetPoints_[targetIndex]);
+    for (size_t targetIndex = 0; targetIndex < numberOfTargetPoints; ++targetIndex) {
+      projection(
+        bestInverseRigidTransformation,
+        targetPoints[targetIndex],
+        projectedTargetPoints_[targetIndex]);
     }
 
     // Search for each target point a nearest source point;
@@ -124,42 +135,44 @@ find(const PointSet<PointType> & sourcePoints,
 
     correspondences_.clear();
     assert(correspondences_.capacity() >= numberOfTargetPoints);
-    for (size_t targetIndex=0; targetIndex < numberOfTargetPoints; ++targetIndex)
-    {
-      sourcePointsKdTree.findNearestNeighbor(projectedTargetPoints_[targetIndex],
-                                             sourceIndex, nearestNeighborSquareDistance);
+    for (size_t targetIndex = 0; targetIndex < numberOfTargetPoints; ++targetIndex) {
+      sourcePointsKdTree.findNearestNeighbor(
+        projectedTargetPoints_[targetIndex],
+        sourceIndex, nearestNeighborSquareDistance);
 
       correspondences_.emplace_back(sourceIndex, targetIndex, nearestNeighborSquareDistance);
     }
 
     // Remove wrong correspondences
     std::vector<Correspondence>::iterator itEnd;
-    std::sort(std::begin(correspondences_),
-              std::end(correspondences_),
-              sortBySourceIndexAndDistancePredicate);
+    std::sort(
+      std::begin(correspondences_),
+      std::end(correspondences_),
+      sortBySourceIndexAndDistancePredicate);
 
-    itEnd = std::unique(std::begin(correspondences_),
-                        std::end(correspondences_),
-                        equalSourceIndexesPredicate);
+    itEnd = std::unique(
+      std::begin(correspondences_),
+      std::end(correspondences_),
+      equalSourceIndexesPredicate);
 
 
     // Create matched point sets
     size_t numberOfMatchedPoints = static_cast<size_t>(
-          std::distance(std::begin(correspondences_), itEnd));
+      std::distance(std::begin(correspondences_), itEnd));
     matchedSourcePoints_.resize(numberOfMatchedPoints);
     matchedTargetPoints_.resize(numberOfMatchedPoints);
     matchedTargetNormals_.resize(numberOfMatchedPoints);
     matchedCorrespondences_.resize(numberOfMatchedPoints);
 
-    for (size_t n=0; n < numberOfMatchedPoints;++n)
-    {
+    for (size_t n = 0; n < numberOfMatchedPoints; ++n) {
       const Correspondence & correspondence = correspondences_[n];
       //      matchedSourcePoints_[n]=guessRigidTransformation*sourcePoints[correspondence.sourcePointIndex];
       matchedTargetPoints_[n] = targetPoints[correspondence.targetPointIndex];
       matchedTargetNormals_[n] = targetPointsNormals_[correspondence.targetPointIndex];
 
-      projection(guessRigidTransformation,
-                 sourcePoints[correspondence.sourcePointIndex], matchedSourcePoints_[n]);
+      projection(
+        guessRigidTransformation,
+        sourcePoints[correspondence.sourcePointIndex], matchedSourcePoints_[n]);
 
       matchedCorrespondences_[n].sourcePointIndex = n;
       matchedCorrespondences_[n].targetPointIndex = n;
@@ -169,34 +182,32 @@ find(const PointSet<PointType> & sourcePoints,
     ransacModel_.loadPointSets(&matchedSourcePoints_, &matchedTargetPoints_);
     ransacModel_.loadCorrespondences(&matchedCorrespondences_, numberOfMatchedPoints);
 
-    switch (estimationMethod)
-    {
-    case EstimationMethod::LEAST_SQUARES :
-      ransacModel_.loadTargetNormalSet(&matchedTargetNormals_);
-      break;
-    case EstimationMethod::SVD :
-      ransacModel_.loadTargetNormalSet(nullptr);
-      break;
+    switch (estimationMethod) {
+      case EstimationMethod::LEAST_SQUARES:
+        ransacModel_.loadTargetNormalSet(&matchedTargetNormals_);
+        break;
+      case EstimationMethod::SVD:
+        ransacModel_.loadTargetNormalSet(nullptr);
+        break;
     }
 
     // Estimate transformation
-    if (ransac_.estimateModel())
-    {
+    if (ransac_.estimateModel()) {
       // Difference between consecutive estimated tranformations
       Scalar differenceBetweenTransformations =
-          (ransacModel_.getTransformation()-
-           previousEstimatedTransformation).array().abs().sum();
+        (ransacModel_.getTransformation() -
+        previousEstimatedTransformation).array().abs().sum();
 
       // Backup best estimate
-      if (ransacModel_.getRootMeanSquareError() < bestFittingRMSE)
-      {
+      if (ransacModel_.getRootMeanSquareError() < bestFittingRMSE) {
         bestRigidTransformation = ransacModel_.getTransformation();
         bestFittingRMSE = ransacModel_.getRootMeanSquareError();
       }
 
       // Break loop ?
-      if (differenceBetweenTransformations < transformationEpsilon_)
+      if (differenceBetweenTransformations < transformationEpsilon_) {
         break;
+      }
 
       // Backup current estimation
       previousEstimatedTransformation = ransacModel_.getTransformation();
@@ -207,7 +218,7 @@ find(const PointSet<PointType> & sourcePoints,
 }
 
 //-----------------------------------------------------------------------------
-template <class PointType>
+template<class PointType>
 const typename FindRigidTransformationByICP<PointType>::TransformationMatrixType &
 FindRigidTransformationByICP<PointType>::getTransformation()const
 {

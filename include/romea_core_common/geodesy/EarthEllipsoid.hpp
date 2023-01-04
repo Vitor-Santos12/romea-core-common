@@ -1,7 +1,11 @@
-#ifndef ROMEA_CORE_COMMON_GEODESY_EARTHELLIPSOID_HPP_
-#define ROMEA_CORE_COMMON_GEODESY_EARTHELLIPSOID_HPP_
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
 
-namespace romea {
+#ifndef ROMEA_CORE_COMMON__GEODESY__EARTHELLIPSOID_HPP_
+#define ROMEA_CORE_COMMON__GEODESY__EARTHELLIPSOID_HPP_
+
+namespace romea
+{
 
 class EarthEllipsoid
 {
@@ -10,9 +14,9 @@ public:
 
   EarthEllipsoid(double a, double b);
 
-  double meridionalRadius(const double &latitude) const;
+  double meridionalRadius(const double & latitude) const;
 
-  double transversalRadius(const double &latitude) const;
+  double transversalRadius(const double & latitude) const;
 
   // half long axis
   double a;
@@ -29,4 +33,4 @@ public:
 
 }  // namespace romea
 
-#endif  // ROMEA_CORE_COMMON_GEODESY_EARTHELLIPSOID_HPP_
+#endif  // ROMEA_CORE_COMMON__GEODESY__EARTHELLIPSOID_HPP_

@@ -1,5 +1,8 @@
-#ifndef ROMEA_CORE_COMMON_SIGNAL_FIRSTORDERBUTTERWORTH_HPP_
-#define ROMEA_CORE_COMMON_SIGNAL_FIRSTORDERBUTTERWORTH_HPP_
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+#ifndef ROMEA_CORE_COMMON__SIGNAL__FIRSTORDERBUTTERWORTH_HPP_
+#define ROMEA_CORE_COMMON__SIGNAL__FIRSTORDERBUTTERWORTH_HPP_
 
 namespace romea
 {
@@ -14,7 +17,7 @@ public:
    *                      = 0 : output will be a mean between the 2 last value
    * @param[in] starting_value for the filter
    */
-  explicit FirstOrderButterworth(const double& weighting);
+  explicit FirstOrderButterworth(const double & weighting);
 
 
   double update(const double & measuredVatue);
@@ -33,4 +36,4 @@ private:
 
 }  // namespace romea
 
-#endif  // ROMEA_CORE_COMMON_SIGNAL_FIRSTORDERBUTTERWORTH_HPP_
+#endif  // ROMEA_CORE_COMMON__SIGNAL__FIRSTORDERBUTTERWORTH_HPP_

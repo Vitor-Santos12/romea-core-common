@@ -1,3 +1,6 @@
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
 #ifndef ROMEA_CORE_COMMON_TRANSFORM_ESTIMATION_RANSACRIGIDTRANSFORMATIONMODEL_HPP_
 #define ROMEA_CORE_COMMON_TRANSFORM_ESTIMATION_RANSACRIGIDTRANSFORMATIONMODEL_HPP_
 
@@ -12,45 +15,45 @@
 #include "romea_core_common/regression/ransac/Ransac.hpp"
 #include "romea_core_common/regression/ransac/RansacRandomCorrespondences.hpp"
 
-namespace romea {
+namespace romea
+{
 
-template <class PointType>
+template<class PointType>
 class RansacRigidTransformationModel : public RansacModel
 {
-public :
-
-  using Scalar = typename PointType::Scalar ;
+public:
+  using Scalar = typename PointType::Scalar;
   static constexpr size_t CARTESIAN_DIM = PointTraits<PointType>::DIM;
   static constexpr size_t POINT_SIZE = PointTraits<PointType>::SIZE;
 
-  using PreconditionedPointSetType = PreconditionedPointSet<PointType> ;
-  using PointSetPreconditionerType = PointSetPreconditioner<PointType> ;
-  using TransformationMatrixType = Eigen::Matrix<Scalar, CARTESIAN_DIM +1, CARTESIAN_DIM +1> ;
+  using PreconditionedPointSetType = PreconditionedPointSet<PointType>;
+  using PointSetPreconditionerType = PointSetPreconditioner<PointType>;
+  using TransformationMatrixType = Eigen::Matrix<Scalar, CARTESIAN_DIM + 1, CARTESIAN_DIM + 1>;
 
-public :
-
+public:
   RansacRigidTransformationModel();
 
   virtual ~RansacRigidTransformationModel() = default;
 
-  explicit RansacRigidTransformationModel(const RansacRigidTransformationModel<PointType> & ) = delete;
+  explicit RansacRigidTransformationModel(const RansacRigidTransformationModel<PointType> &) =
+  delete;
 
-  RansacRigidTransformationModel<PointType> & operator=(const RansacRigidTransformationModel<PointType> & ) = delete;
+  RansacRigidTransformationModel<PointType> & operator=(
+    const RansacRigidTransformationModel<PointType> &) = delete;
 
-
-public :
-
-  void loadPointSets(const PointSet<PointType> * sourcePoints,
-                     const PointSet<PointType> * targetPoints);
+public:
+  void loadPointSets(
+    const PointSet<PointType> * sourcePoints,
+    const PointSet<PointType> * targetPoints);
 
   void loadTargetNormalSet(const NormalSet<PointType> * targetNormals);
 
-  void loadCorrespondences(const std::vector<Correspondence> * correspondences,
-                           const size_t & numberOfSourcePointsInCorrespondences);
+  void loadCorrespondences(
+    const std::vector<Correspondence> * correspondences,
+    const size_t & numberOfSourcePointsInCorrespondences);
 
-public :
-
-  virtual bool draw(const double &modelDeviationError);
+public:
+  virtual bool draw(const double & modelDeviationError);
 
   virtual size_t countInliers(const double & modelDeviationError);
 
@@ -66,33 +69,31 @@ public :
 
   const TransformationMatrixType & getTransformation()const;
 
-public :
-
-
-protected :
-
+public:
+protected:
   void allocate_(const size_t & numberOfCorrespondences);
 
-  bool check_(const PointSet<PointType> & sourcePoints,
-              const PointSet<PointType> & targetPoints,
-              const std::vector<Correspondence> & sampleCorrespondences,
-              const double &modelDeviationError);
+  bool check_(
+    const PointSet<PointType> & sourcePoints,
+    const PointSet<PointType> & targetPoints,
+    const std::vector<Correspondence> & sampleCorrespondences,
+    const double & modelDeviationError);
 
-  void compute_(const PreconditionedPointSetType &sourcePoints,
-                const PreconditionedPointSetType &targetPoints,
-                const std::vector<Correspondence> &correspondences);
+  void compute_(
+    const PreconditionedPointSetType & sourcePoints,
+    const PreconditionedPointSetType & targetPoints,
+    const std::vector<Correspondence> & correspondences);
 
-  void setPreconditioner_(const PreconditionedPointSetType &preconditionedSourcePoints,
-                          const PreconditionedPointSetType &preconditionedTargetPoints);
+  void setPreconditioner_(
+    const PreconditionedPointSetType & preconditionedSourcePoints,
+    const PreconditionedPointSetType & preconditionedTargetPoints);
 
-
-protected :
-
+protected:
   const PointSet<PointType> * sourcePoints_;
   const PointSet<PointType> * targetPoints_;
   const NormalSet<PointType> * targetNormals_;
   const std::vector<Correspondence> * correspondences_;
-  const std::vector<double>  * correspondencesWeights_;
+  const std::vector<double> * correspondencesWeights_;
 
   std::size_t numberOfSourcePointsInCorrespondences_;
   std::vector<Correspondence> sortedCorrespondences_;
@@ -102,15 +103,15 @@ protected :
   PointSetPreconditionerType targetPointsPreconditioner_;
   PreconditionedPointSetType precondionedTargetPoints_;
 
-  std::vector<Correspondence>  inlierCorrespondences_;
-  std::vector<Correspondence>  bestInlierCorrespondences_;
+  std::vector<Correspondence> inlierCorrespondences_;
+  std::vector<Correspondence> bestInlierCorrespondences_;
   double bestRootMeanSquareError_;
 
   RansacRandomCorrespondences<PointType> randomCorrespondences_;
 
   TransformationMatrixType transformation_;
   FindRigidTransformationBySVD<PointType> findRigidTransformationBySVD_;
-  FindRigidTransformationByLeastSquares<PointType>findRigidTransformationByLeastSquares_;
+  FindRigidTransformationByLeastSquares<PointType> findRigidTransformationByLeastSquares_;
 };
 
 }  // namespace romea

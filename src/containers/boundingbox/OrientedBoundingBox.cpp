@@ -1,29 +1,34 @@
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
 // romea
 #include "romea_core_common/containers/boundingbox/OrientedBoundingBox.hpp"
 
-namespace romea{
+namespace romea
+{
 
 
 //-----------------------------------------------------------------------------
-template <typename Scalar, size_t DIM>
-OrientedBoundingBox<Scalar, DIM>::OrientedBoundingBox():
-  aabb_(),
+template<typename Scalar, size_t DIM>
+OrientedBoundingBox<Scalar, DIM>::OrientedBoundingBox()
+: aabb_(),
   rotation_(RotationType::Identity())
 {
 }
 
 //-----------------------------------------------------------------------------
-template <typename Scalar, size_t DIM>
-OrientedBoundingBox<Scalar, DIM>::OrientedBoundingBox(const PointType & centerPosition,
-                                                      const PointType & halfWidthExtents,
-                                                      const RotationType & rotationMatrix):
-  aabb_(centerPosition, halfWidthExtents),
+template<typename Scalar, size_t DIM>
+OrientedBoundingBox<Scalar, DIM>::OrientedBoundingBox(
+  const PointType & centerPosition,
+  const PointType & halfWidthExtents,
+  const RotationType & rotationMatrix)
+: aabb_(centerPosition, halfWidthExtents),
   rotation_(rotationMatrix)
 {
 }
 
 //-----------------------------------------------------------------------------
-template <typename Scalar, size_t DIM>
+template<typename Scalar, size_t DIM>
 const typename OrientedBoundingBox<Scalar, DIM>::PointType &
 OrientedBoundingBox<Scalar, DIM>::getCenterPosition()const
 {
@@ -31,7 +36,7 @@ OrientedBoundingBox<Scalar, DIM>::getCenterPosition()const
 }
 
 //-----------------------------------------------------------------------------
-template <typename Scalar, size_t DIM>
+template<typename Scalar, size_t DIM>
 const typename OrientedBoundingBox<Scalar, DIM>::PointType &
 OrientedBoundingBox<Scalar, DIM>::getHalfWidthExtents()const
 {
@@ -39,7 +44,7 @@ OrientedBoundingBox<Scalar, DIM>::getHalfWidthExtents()const
 }
 
 //-----------------------------------------------------------------------------
-template <typename Scalar, size_t DIM>
+template<typename Scalar, size_t DIM>
 const typename OrientedBoundingBox<Scalar, DIM>::RotationType &
 OrientedBoundingBox<Scalar, DIM>::getRotationMatrix()const
 {
@@ -47,24 +52,24 @@ OrientedBoundingBox<Scalar, DIM>::getRotationMatrix()const
 }
 
 //-----------------------------------------------------------------------------
-template <typename Scalar, size_t DIM> bool
-OrientedBoundingBox<Scalar, DIM>::isInside(const PointType &point) const
+template<typename Scalar, size_t DIM>
+bool
+OrientedBoundingBox<Scalar, DIM>::isInside(const PointType & point) const
 {
-  return ((rotation_.transpose()*(point - aabb_.getCenterPosition())).array().abs()
-           <= aabb_.getHalfWidthExtents().array()).prod();
+  return ((rotation_.transpose() * (point - aabb_.getCenterPosition())).array().abs() <=
+         aabb_.getHalfWidthExtents().array()).prod();
 }
 
 //-----------------------------------------------------------------------------
-template <typename Scalar, size_t DIM>
+template<typename Scalar, size_t DIM>
 typename OrientedBoundingBox<Scalar, DIM>::AABBType
 OrientedBoundingBox<Scalar, DIM>::toAxisAlignedBoundingBox()const
 {
   PointType aabbHalfWidthExtents = PointType::Zero();
 
-  for (int n = 0; n<static_cast<int>(DIM); n++)
-  {
+  for (int n = 0; n < static_cast<int>(DIM); n++) {
     aabbHalfWidthExtents.array() +=
-        (rotation_.col(n)*aabb_.getHalfWidthExtents()(n)).array().abs();
+      (rotation_.col(n) * aabb_.getHalfWidthExtents()(n)).array().abs();
   }
 
   return AABBType(aabb_.getCenterPosition(), aabbHalfWidthExtents);

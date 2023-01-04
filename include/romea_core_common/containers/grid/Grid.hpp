@@ -1,5 +1,11 @@
-#ifndef ROMEA_CORE_COMMON_CONTAINERS_GRID_GRID_HPP_
-#define ROMEA_CORE_COMMON_CONTAINERS_GRID_GRID_HPP_
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+#ifndef ROMEA_CORE_COMMON__CONTAINERS__GRID__GRID_HPP_
+#define ROMEA_CORE_COMMON__CONTAINERS__GRID__GRID_HPP_
+
+// Eigen
+#include <Eigen/Core>
 
 // std
 #include <cstddef>
@@ -7,21 +13,17 @@
 #include <algorithm>
 #include <vector>
 
-// Eigen
-#include <Eigen/Core>
 
+namespace romea
+{
 
-namespace romea {
-
-template <typename T , size_t DIM>
+template<typename T, size_t DIM>
 class Grid
 {
-public :
-
+public:
   using CellIndexes = Eigen::Matrix<size_t, DIM, 1>;
 
-public :
-
+public:
   Grid();
 
   explicit Grid(const CellIndexes & numberOfCellsAlongAxes);
@@ -30,28 +32,24 @@ public :
 
   void init(const CellIndexes & numberOfCellsAlongAxes);
 
-public :
-
+public:
   std::vector<T> & getBuffer();
 
   const std::vector<T> & getBuffer() const;
 
   void setValue(const T & value);
 
-public :
-
+public:
   virtual T & operator()(const CellIndexes & cellIndexes);
 
   virtual const T & operator()(const CellIndexes & cellIndexes)const;
 
-  const CellIndexes & getNumberOfCellsAlongAxes() const ;
+  const CellIndexes & getNumberOfCellsAlongAxes() const;
 
-protected :
-
+protected:
   virtual size_t computeCellLinearIndex_(const CellIndexes & CellIndexes) const;
 
-protected :
-
+protected:
   CellIndexes numberOfCellsAlongAxes_;
   CellIndexes indexCoefficients_;
   std::vector<T> buffer_;
@@ -59,18 +57,18 @@ protected :
 
 
 //-----------------------------------------------------------------------------
-template <typename T , size_t DIM>
-Grid<T, DIM>::Grid():
-  numberOfCellsAlongAxes_(),
+template<typename T, size_t DIM>
+Grid<T, DIM>::Grid()
+: numberOfCellsAlongAxes_(),
   indexCoefficients_(),
   buffer_()
 {
 }
 
 //-----------------------------------------------------------------------------
-template <typename T , size_t DIM>
-Grid<T, DIM>::Grid(const CellIndexes & numberOfCellsAlongAxes):
-  numberOfCellsAlongAxes_(),
+template<typename T, size_t DIM>
+Grid<T, DIM>::Grid(const CellIndexes & numberOfCellsAlongAxes)
+: numberOfCellsAlongAxes_(),
   indexCoefficients_(),
   buffer_()
 {
@@ -78,7 +76,7 @@ Grid<T, DIM>::Grid(const CellIndexes & numberOfCellsAlongAxes):
 }
 
 //-----------------------------------------------------------------------------
-template <typename T , size_t DIM>
+template<typename T, size_t DIM>
 void Grid<T, DIM>::init(const CellIndexes & numberOfCellsAlongAxes)
 {
   numberOfCellsAlongAxes_ = numberOfCellsAlongAxes;
@@ -86,27 +84,26 @@ void Grid<T, DIM>::init(const CellIndexes & numberOfCellsAlongAxes)
 
   indexCoefficients_[0] = 1;
   indexCoefficients_[1] = numberOfCellsAlongAxes_[0];
-  //TODO utiliser ici constexpr if
-  if (DIM == 3) indexCoefficients_[2] = numberOfCellsAlongAxes_[1]*numberOfCellsAlongAxes_[0];
-
+  // TODO(Jean) utiliser ici constexpr if
+  if (DIM == 3) {indexCoefficients_[2] = numberOfCellsAlongAxes_[1] * numberOfCellsAlongAxes_[0];}
 }
 
 //-----------------------------------------------------------------------------
-template <typename T , size_t DIM>
+template<typename T, size_t DIM>
 std::vector<T> & Grid<T, DIM>::getBuffer()
 {
   return buffer_;
 }
 
 //-----------------------------------------------------------------------------
-template <typename T , size_t DIM>
+template<typename T, size_t DIM>
 const std::vector<T> & Grid<T, DIM>::getBuffer() const
 {
   return buffer_;
 }
 
 //-----------------------------------------------------------------------------
-template <typename T , size_t DIM>
+template<typename T, size_t DIM>
 size_t Grid<T, DIM>::computeCellLinearIndex_(const CellIndexes & cellIndexes) const
 {
   assert((cellIndexes.array() < numberOfCellsAlongAxes_.array()).prod());
@@ -114,14 +111,14 @@ size_t Grid<T, DIM>::computeCellLinearIndex_(const CellIndexes & cellIndexes) co
 }
 
 //-----------------------------------------------------------------------------
-template <typename T , size_t DIM>
+template<typename T, size_t DIM>
 T & Grid<T, DIM>::operator()(const CellIndexes & cellIndexes)
 {
   return buffer_[computeCellLinearIndex_(cellIndexes)];
 }
 
 //-----------------------------------------------------------------------------
-template <typename T , size_t DIM>
+template<typename T, size_t DIM>
 const T & Grid<T, DIM>::operator()(const CellIndexes & cellIndexes)const
 {
   return buffer_[computeCellLinearIndex_(cellIndexes)];
@@ -129,7 +126,7 @@ const T & Grid<T, DIM>::operator()(const CellIndexes & cellIndexes)const
 
 
 //-----------------------------------------------------------------------------
-template <typename T , size_t DIM>
+template<typename T, size_t DIM>
 const typename Grid<T, DIM>::CellIndexes &
 Grid<T, DIM>::getNumberOfCellsAlongAxes() const
 {
@@ -138,7 +135,7 @@ Grid<T, DIM>::getNumberOfCellsAlongAxes() const
 
 
 //-----------------------------------------------------------------------------
-template <typename T , size_t DIM>
+template<typename T, size_t DIM>
 void Grid<T, DIM>::setValue(const T & value)
 {
   std::fill(std::begin(buffer_), std::end(buffer_), value);
@@ -146,4 +143,4 @@ void Grid<T, DIM>::setValue(const T & value)
 
 }  // namespace romea
 
-#endif  // ROMEA_CORE_COMMON_CONTAINERS_GRID_GRID_HPP_
+#endif  // ROMEA_CORE_COMMON__CONTAINERS__GRID__GRID_HPP_

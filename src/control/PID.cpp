@@ -1,3 +1,6 @@
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
 // romea
 #include "romea_core_common/control/PID.hpp"
 
@@ -10,12 +13,13 @@ namespace romea
 {
 
 //-----------------------------------------------------------------------------
-PID::PID(const double &kp,
-         const double &ki,
-         const double &kd,
-         const double &imin,
-         const double &imax):
-  dt_(0),
+PID::PID(
+  const double & kp,
+  const double & ki,
+  const double & kd,
+  const double & imin,
+  const double & imax)
+: dt_(0),
   kp_(kp),
   ki_(ki),
   kd_(kd),
@@ -46,19 +50,19 @@ const double & PID::kd() const
 }
 
 //-----------------------------------------------------------------------------
-double PID::compute(const Duration & stamp,
-                    const double & setpoint,
-                    const double & measurement)
+double PID::compute(
+  const Duration & stamp,
+  const double & setpoint,
+  const double & measurement)
 {
   double output = 0;
-  double error = measurement-setpoint;
+  double error = measurement - setpoint;
 
-  if (std::isfinite(previous_error_))
-  {
+  if (std::isfinite(previous_error_)) {
     computeDt_(stamp);
     updateIntegral_(error);
     computeDerivative_(error);
-    output = kp_*error + ki_*i_ + kd_*d_;
+    output = kp_ * error + ki_ * i_ + kd_ * d_;
   }
 
   previous_error_ = error;
@@ -69,18 +73,18 @@ double PID::compute(const Duration & stamp,
 //-----------------------------------------------------------------------------
 void PID::computeDt_(const Duration & stamp)
 {
-   dt_ = durationToSecond(stamp - previous_error_stamp_);
+  dt_ = durationToSecond(stamp - previous_error_stamp_);
 }
 //-----------------------------------------------------------------------------
 void PID::computeDerivative_(const double & error)
 {
-  d_ = error-previous_error_/dt_;
+  d_ = error - previous_error_ / dt_;
 }
 
 //-----------------------------------------------------------------------------
 void PID::updateIntegral_(const double & error)
 {
-  i_ = std::clamp(i_+error * dt_, imin_, imax_);
+  i_ = std::clamp(i_ + error * dt_, imin_, imax_);
 }
 
 }  // namespace romea

@@ -1,28 +1,30 @@
-#ifndef ROMEA_CORE_COMMON_POINTSET_ALGORITHMS_POINTSETPRECONDITIONER_HPP_
-#define ROMEA_CORE_COMMON_POINTSET_ALGORITHMS_POINTSETPRECONDITIONER_HPP_
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+#ifndef ROMEA_CORE_COMMON__POINTSET__ALGORITHMS__POINTSETPRECONDITIONER_HPP_
+#define ROMEA_CORE_COMMON__POINTSET__ALGORITHMS__POINTSETPRECONDITIONER_HPP_
+
+// Eigen
+#include <unsupported/Eigen/MatrixFunctions>
 
 // romea
 #include "romea_core_common/pointset/PointSet.hpp"
 #include "romea_core_common/pointset/PointTraits.hpp"
 
-// Eigen
-#include <unsupported/Eigen/MatrixFunctions>
+namespace romea
+{
 
-namespace romea{
-
-template <class PointType>
-class PointSetPreconditioner{
-
-public :
-
-  using Scalar = typename PointType::Scalar ;
+template<class PointType>
+class PointSetPreconditioner
+{
+public:
+  using Scalar = typename PointType::Scalar;
   static constexpr size_t CARTESIAN_DIM = PointTraits<PointType>::DIM;
   static constexpr size_t POINT_SIZE = PointTraits<PointType>::SIZE;
 
-  using TranslationVector = Eigen::Matrix<Scalar, CARTESIAN_DIM, 1> ;
+  using TranslationVector = Eigen::Matrix<Scalar, CARTESIAN_DIM, 1>;
 
-public :
-
+public:
   PointSetPreconditioner();
 
   explicit PointSetPreconditioner(const PointSet<PointType> & points);
@@ -39,8 +41,7 @@ public :
 
   const TranslationVector & getTranslation() const;
 
-private :
-
+private:
   Scalar scale_;
   TranslationVector translation_;
 
@@ -48,11 +49,10 @@ private :
   PointType pointSetMin_;
   PointType pointSetMax_;
 
-public :
-
+public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW_IF_VECTORIZABLE_FIXED_SIZE(Scalar, POINT_SIZE)
 };
 
 }  // namespace romea
 
-#endif  // ROMEA_CORE_COMMON_POINTSET_ALGORITHMS_POINTSETPRECONDITIONER_HPP_
+#endif  // ROMEA_CORE_COMMON__POINTSET__ALGORITHMS__POINTSETPRECONDITIONER_HPP_

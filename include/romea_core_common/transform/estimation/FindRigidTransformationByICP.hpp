@@ -1,5 +1,8 @@
-#ifndef ROMEA_CORE_COMMON_TRANSFORM_ESTIMATION_FINDRIGIDTRANSFORMATIONBYICP_HPP_
-#define ROMEA_CORE_COMMON_TRANSFORM_ESTIMATION_FINDRIGIDTRANSFORMATIONBYICP_HPP_
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+#ifndef ROMEA_CORE_COMMON__TRANSFORM__ESTIMATION__FINDRIGIDTRANSFORMATIONBYICP_HPP_
+#define ROMEA_CORE_COMMON__TRANSFORM__ESTIMATION__FINDRIGIDTRANSFORMATIONBYICP_HPP_
 
 // vector
 #include <vector>
@@ -13,59 +16,53 @@
 namespace romea
 {
 
-template <class PointType>
+template<class PointType>
 class FindRigidTransformationByICP
 {
-public :
-
+public:
   using Scalar = typename PointType::Scalar;
   static constexpr size_t CARTESIAN_DIM = PointTraits<PointType>::DIM;
   static constexpr size_t POINT_SIZE = PointTraits<PointType>::SIZE;
 
-  using KdTreeType = KdTree<PointType> ;
-  using TransformationMatrixType = Eigen::Matrix<Scalar, CARTESIAN_DIM +1, CARTESIAN_DIM +1>;
+  using KdTreeType = KdTree<PointType>;
+  using TransformationMatrixType = Eigen::Matrix<Scalar, CARTESIAN_DIM + 1, CARTESIAN_DIM + 1>;
 
-public :
-
+public:
   enum class EstimationMethod
   {
     LEAST_SQUARES = 0,
     SVD
   };
 
-public :
-
+public:
   explicit FindRigidTransformationByICP(const Scalar & pointsPositionStd);
 
-public :
-
+public:
   void setMaximalNumberOfIterations(const size_t & numberOfIterations);
 
   void setTransformationEspilon(const Scalar & epsilon);
 
-public :
+public:
+  bool find(
+    const PointSet<PointType> & sourcePoints,
+    const PointSet<PointType> & targetPoints,
+    const TransformationMatrixType & guessTransformation,
+    EstimationMethod estimationMethod = EstimationMethod::LEAST_SQUARES);
 
-
-  bool find(const PointSet<PointType> & sourcePoints,
-            const PointSet<PointType> & targetPoints,
-            const TransformationMatrixType & guessTransformation,
-            EstimationMethod estimationMethod = EstimationMethod::LEAST_SQUARES);
-
-  bool find(const PointSet<PointType> & sourcePoints,
-            const KdTreeType & sourcePointsKdTree,
-            const PointSet<PointType> & targetPoints,
-            const KdTreeType & targetPointsKdTree,
-            const TransformationMatrixType & guessTransformation,
-            EstimationMethod estimationMethod = EstimationMethod::LEAST_SQUARES);
+  bool find(
+    const PointSet<PointType> & sourcePoints,
+    const KdTreeType & sourcePointsKdTree,
+    const PointSet<PointType> & targetPoints,
+    const KdTreeType & targetPointsKdTree,
+    const TransformationMatrixType & guessTransformation,
+    EstimationMethod estimationMethod = EstimationMethod::LEAST_SQUARES);
 
   const TransformationMatrixType & getTransformation()const;
 
-protected :
-
+protected:
   void allocate_(size_t numberOfPoints);
 
-protected :
-
+protected:
   PointSet<PointType> targetPointsNormals_;
   PointSet<PointType> projectedTargetPoints_;
   std::vector<Correspondence> correspondences_;
@@ -84,4 +81,4 @@ protected :
 
 }  // namespace romea
 
-#endif  // ROMEA_CORE_COMMON_TRANSFORM_ESTIMATION_FINDRIGIDTRANSFORMATIONBYICP_HPP_
+#endif  // ROMEA_CORE_COMMON__TRANSFORM__ESTIMATION__FINDRIGIDTRANSFORMATIONBYICP_HPP_

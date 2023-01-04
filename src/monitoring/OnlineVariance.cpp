@@ -1,35 +1,37 @@
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
 // romea
 #include "romea_core_common/monitoring/OnlineVariance.hpp"
 
 // std
 #include <cassert>
+#include <limits>
 
-namespace romea {
+namespace romea
+{
 
 
 //-----------------------------------------------------------------------------
-OnlineVariance::OnlineVariance(const double & averagePrecision, size_t windowSize):
-  OnlineAverage(averagePrecision, windowSize),
-  windowSizeMinusOne_(windowSize-1),
-  squaredMultiplier_(multiplier_*multiplier_),
+OnlineVariance::OnlineVariance(const double & averagePrecision, size_t windowSize)
+: OnlineAverage(averagePrecision, windowSize),
+  windowSizeMinusOne_(windowSize - 1),
+  squaredMultiplier_(multiplier_ * multiplier_),
   squaredData_(),
   sumOfSquaredData_(0),
   variance_(std::numeric_limits<double>::quiet_NaN())
 {
-
 }
 
 //-----------------------------------------------------------------------------
-OnlineVariance::OnlineVariance(const double & averagePrecision):
-  OnlineVariance(averagePrecision, 0)
-
+OnlineVariance::OnlineVariance(const double & averagePrecision)
+: OnlineVariance(averagePrecision, 0)
 {
-
 }
 
 //-----------------------------------------------------------------------------
-OnlineVariance::OnlineVariance(const OnlineVariance & onlineVariance):
-  OnlineAverage(onlineVariance),
+OnlineVariance::OnlineVariance(const OnlineVariance & onlineVariance)
+: OnlineAverage(onlineVariance),
   windowSizeMinusOne_(onlineVariance.windowSizeMinusOne_),
   squaredMultiplier_(onlineVariance.squaredMultiplier_),
   squaredData_(onlineVariance.squaredData_),
@@ -42,10 +44,9 @@ OnlineVariance::OnlineVariance(const OnlineVariance & onlineVariance):
 void OnlineVariance::setWindowSize(const size_t & windowSize)
 {
   windowSize_ = windowSize;
-  windowSizeMinusOne_ = windowSize-1;
+  windowSizeMinusOne_ = windowSize - 1;
   data_.reserve(windowSize_);
   squaredData_.reserve(windowSize_);
-
 }
 
 //-----------------------------------------------------------------------------
@@ -59,30 +60,29 @@ double OnlineVariance::getVariance()const
 void OnlineVariance::update(const double & value)
 {
   std::lock_guard<std::mutex> lock(mutex_);
-  long long int integerValue = static_cast<long long int>(value*multiplier_);
-  long long int squaredIntegerValue = integerValue*integerValue;
+  long long int integerValue = static_cast<long long int>(value * multiplier_);
+  long long int squaredIntegerValue = integerValue * integerValue;
 
-  sumOfData_+=integerValue;
+  sumOfData_ += integerValue;
   sumOfSquaredData_ += squaredIntegerValue;
 
-  if (data_.size() != windowSize_)
-  {
+  if (data_.size() != windowSize_) {
     data_.push_back(integerValue);
     squaredData_.push_back(squaredIntegerValue);
   } else {
     sumOfData_ -= data_[index_];
     sumOfSquaredData_ -= squaredData_[index_];
-    data_[index_]= integerValue;
+    data_[index_] = integerValue;
     squaredData_[index_] = squaredIntegerValue;
   }
 
-  double average  = sumOfData_/(double(multiplier_)*data_.size());
-  double squaredAverage = (sumOfSquaredData_)/double(squaredMultiplier_);
-  double variance = (squaredAverage - data_.size()*average*average)/(windowSizeMinusOne_);
+  double average = sumOfData_ / (double(multiplier_) * data_.size());
+  double squaredAverage = (sumOfSquaredData_) / double(squaredMultiplier_);
+  double variance = (squaredAverage - data_.size() * average * average) / (windowSizeMinusOne_);
   average_ = average;
   variance_ = variance;
 
-  index_ = (index_+1)%windowSize_;
+  index_ = (index_ + 1) % windowSize_;
 }
 
 //-----------------------------------------------------------------------------

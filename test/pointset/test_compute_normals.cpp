@@ -1,6 +1,15 @@
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
 // gtest
 #include <gtest/gtest.h>
-#include "test_helper.h"
+
+// std
+#include <vector>
+#include <string>
+
+// local
+#include "../test/test_helper.h"
 #include "test_pointset_utils.hpp"
 
 
@@ -17,14 +26,12 @@ TEST(TestComputeNormal, checkComputeNormals2d)
   nche.compute(pointSet, normalSet, curvatures, reliabilities);
 
   // load theorical normal and curvature values and compare with estimated values
-  std::ifstream data(std::string(TEST_DIR)+std::string("/normals2d.txt"));
+  std::ifstream data(std::string(TEST_DIR) + std::string("/normals2d.txt"));
 
-  if (data.is_open())
-  {
+  if (data.is_open()) {
     size_t n = 0;
     double nx, ny, c, r;
-    while (!data.eof())
-    {
+    while (!data.eof()) {
       data >> nx >> ny >> c >> r;
       EXPECT_NEAR(nx, normalSet[n][0], 0.01);
       EXPECT_NEAR(ny, normalSet[n][1], 0.01);
@@ -49,14 +56,12 @@ TEST(TestComputeNormal, checkComputeNormals3d)
   nche.compute(pointSet, normalSet, curvatures, reliabilities);
 
   // load theorical normal and curvature values and compare with estimated values
-  std::ifstream data(std::string(TEST_DIR)+std::string("/normals3d.txt"));
+  std::ifstream data(std::string(TEST_DIR) + std::string("/normals3d.txt"));
 
-  if (data.is_open())
-  {
+  if (data.is_open()) {
     size_t n = 0;
     double nx, ny, nz, c, r;
-    while (!data.eof())
-    {
+    while (!data.eof()) {
       data >> nx >> ny >> nz >> c >> r;
       EXPECT_NEAR(nx, normalSet[n][0], 0.01);
       EXPECT_NEAR(ny, normalSet[n][1], 0.01);
@@ -70,7 +75,8 @@ TEST(TestComputeNormal, checkComputeNormals3d)
 }
 
 //-----------------------------------------------------------------------------
-int main(int argc, char **argv){
+int main(int argc, char ** argv)
+{
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }

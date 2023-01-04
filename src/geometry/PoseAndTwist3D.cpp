@@ -1,11 +1,14 @@
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
 #include "romea_core_common/geometry/PoseAndTwist3D.hpp"
 
 namespace romea
 {
 
 //--------------------------------------------------------------------------
-PoseAndTwist3D::PoseAndTwist3D():
-  pose(),
+PoseAndTwist3D::PoseAndTwist3D()
+: pose(),
   twist()
 {
 }
@@ -19,15 +22,16 @@ PoseAndTwist2D toPoseAndTwist2D(const PoseAndTwist3D & poseAndTwist3D)
 }
 
 //--------------------------------------------------------------------------
-void toPoseAndTwist2D(const PoseAndTwist3D & poseAndTwist3D,
-                      PoseAndTwist2D & poseAndTwist2D)
+void toPoseAndTwist2D(
+  const PoseAndTwist3D & poseAndTwist3D,
+  PoseAndTwist2D & poseAndTwist2D)
 {
   toPose2D(poseAndTwist3D.pose, poseAndTwist2D.pose);
   toTwist2D(poseAndTwist3D.twist, poseAndTwist2D.twist);
 }
 
 //--------------------------------------------------------------------------
-std::ostream & operator <<(std::ostream & os, const PoseAndTwist3D & poseAndTwist3D)
+std::ostream & operator<<(std::ostream & os, const PoseAndTwist3D & poseAndTwist3D)
 {
   os << poseAndTwist3D.pose;
   os << poseAndTwist3D.twist;

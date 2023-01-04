@@ -1,6 +1,8 @@
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
 // gtest
 #include <gtest/gtest.h>
-
 
 // romea
 #include "romea_core_common/diagnostic/Diagnostic.hpp"
@@ -21,7 +23,6 @@ TEST(TestDiagnosticStatus, checkWorseStatus)
 
   EXPECT_EQ(worse(romea::DiagnosticStatus::OK,
                   romea::DiagnosticStatus::WARN), romea::DiagnosticStatus::WARN);
-
 }
 
 //-----------------------------------------------------------------------------
@@ -31,7 +32,6 @@ TEST(TestDiagnosticStatus, checkToStringConversion)
   EXPECT_STREQ(toString(romea::DiagnosticStatus::WARN).c_str(), "WARN");
   EXPECT_STREQ(toString(romea::DiagnosticStatus::ERROR).c_str(), "ERROR");
   EXPECT_STREQ(toString(romea::DiagnosticStatus::STALE).c_str(), "STALE");
-
 }
 
 //-----------------------------------------------------------------------------

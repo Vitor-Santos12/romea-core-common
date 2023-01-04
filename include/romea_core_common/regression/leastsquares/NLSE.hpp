@@ -1,18 +1,22 @@
-#ifndef ROMEA_CORE_COMMON_REGRESSION_LEASTSQUARES_NLSE_HPP_
-#define ROMEA_CORE_COMMON_REGRESSION_LEASTSQUARES_NLSE_HPP_
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+#ifndef ROMEA_CORE_COMMON__REGRESSION__LEASTSQUARES__NLSE_HPP_
+#define ROMEA_CORE_COMMON__REGRESSION__LEASTSQUARES__NLSE_HPP_
 
 #include "romea_core_common/regression/leastsquares/LeastSquares.hpp"
 
-namespace romea {
+namespace romea
+{
 
-template <typename RealType>
+template<typename RealType>
 class NLSE
 {
-public :
+public:
   using Vector = Eigen::Matrix<RealType, Eigen::Dynamic, 1>;
   using Matrix = Eigen::Matrix<RealType, Eigen::Dynamic, Eigen::Dynamic>;
 
-public :
+public:
   NLSE();
 
   explicit NLSE(const double & estimateEpsilon);
@@ -21,12 +25,12 @@ public :
 
   virtual ~NLSE() = default;
 
-public :
+public:
+  virtual bool estimate(
+    const size_t & maximalNumberOfIterations,
+    const double & dataStd);
 
-  virtual bool estimate(const size_t & maximalNumberOfIterations,
-                        const double & dataStd);
-
-  const size_t &getNumberOfIterations();
+  const size_t & getNumberOfIterations();
 
   const double & getRootMeanSquareError();
 
@@ -34,15 +38,12 @@ public :
 
   const Matrix & getEstimateCovariance();
 
-protected :
-
+protected:
   virtual void computeGuess_() = 0;
 
   virtual void computeJacobianAndY_() = 0;
 
-protected :
-
-
+protected:
   double alpha_;
   Vector estimate_;
   Vector estimateDelta_;

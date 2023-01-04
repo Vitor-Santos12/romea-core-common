@@ -1,5 +1,8 @@
-#ifndef ROMEA_CORE_COMMON_CONTROL_PID_HPP_
-#define ROMEA_CORE_COMMON_CONTROL_PID_HPP_
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+#ifndef ROMEA_CORE_COMMON__CONTROL__PID_HPP_
+#define ROMEA_CORE_COMMON__CONTROL__PID_HPP_
 
 #include "romea_core_common/time/Time.hpp"
 
@@ -8,17 +11,18 @@ namespace romea
 
 class PID
 {
-public :
+public:
+  PID(
+    const double & kp,
+    const double & ki,
+    const double & kd,
+    const double & imin,
+    const double & imax);
 
-  PID(const double & kp,
-      const double & ki,
-      const double & kd,
-      const double & imin,
-      const double & imax);
-
-  double compute(const Duration & stamp,
-                 const double & setpoint,
-                 const double & measurement);
+  double compute(
+    const Duration & stamp,
+    const double & setpoint,
+    const double & measurement);
 
   const double & kp() const;
   const double & ki() const;
@@ -26,16 +30,14 @@ public :
 
   void reset();
 
-private :
-
+private:
   void computeDt_(const Duration & stamp);
 
   void computeDerivative_(const double & error);
 
   void updateIntegral_(const double & error);
 
-private :
-
+private:
   double dt_;
   double kp_;
   double ki_;

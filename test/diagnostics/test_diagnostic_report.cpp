@@ -1,12 +1,19 @@
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
 // gtest
 #include <gtest/gtest.h>
+
+// std
+#include <string>
 
 // romea
 #include "romea_core_common/diagnostic/DiagnosticReport.hpp"
 
 //-----------------------------------------------------------------------------
-const romea::Diagnostic & diagnostic(const romea::DiagnosticReport & report,
-                                     const size_t & index)
+const romea::Diagnostic & diagnostic(
+  const romea::DiagnosticReport & report,
+  const size_t & index)
 {
   return *std::next(std::cbegin(report.diagnostics), index);
 }
@@ -44,17 +51,17 @@ TEST(TestDiagnosticReport, checkAgregation)
 {
   romea::DiagnosticReport report1;
   report1.diagnostics.emplace_back(romea::DiagnosticStatus::OK, std::string("foo"));
-  report1.info["foo"]="0.1";
+  report1.info["foo"] = "0.1";
 
   romea::DiagnosticReport report2;
   report2.diagnostics.emplace_back(romea::DiagnosticStatus::OK, "bar");
   report2.diagnostics.emplace_back(romea::DiagnosticStatus::ERROR, "baz");
-  report2.info["bar"]="enable";
-  report2.info["baz"]="disable";
+  report2.info["bar"] = "enable";
+  report2.info["baz"] = "disable";
 
   romea::DiagnosticReport report3;
-  report3+=report1;
-  report3+=report2;
+  report3 += report1;
+  report3 += report2;
 
   EXPECT_EQ(diagnostic(report3, 0).status, romea::DiagnosticStatus::OK);
   EXPECT_EQ(diagnostic(report3, 0).message, "foo");
@@ -68,7 +75,8 @@ TEST(TestDiagnosticReport, checkAgregation)
 }
 
 //-----------------------------------------------------------------------------
-int main(int argc, char **argv){
+int main(int argc, char ** argv)
+{
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }

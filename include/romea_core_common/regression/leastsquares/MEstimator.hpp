@@ -1,13 +1,17 @@
-#ifndef ROMEA_CORE_COMMON_REGRESSION_LEASTSQUARES_MESTIMATOR_HPP_
-#define ROMEA_CORE_COMMON_REGRESSION_LEASTSQUARES_MESTIMATOR_HPP_
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
 
-// std
-#include <limits>
+#ifndef ROMEA_CORE_COMMON__REGRESSION__LEASTSQUARES__MESTIMATOR_HPP_
+#define ROMEA_CORE_COMMON__REGRESSION__LEASTSQUARES__MESTIMATOR_HPP_
 
 // Eigen
 #include <Eigen/Eigen>
 
-namespace romea{
+// std
+#include <limits>
+
+namespace romea
+{
 
 const float MESTIMATOR_DISCARDED_VALUE_FLOAT = std::numeric_limits<float>::max();
 const double MESTIMATOR_DISCARDED_VALUE_DOUBLE = std::numeric_limits<double>::max();
@@ -22,17 +26,16 @@ public:
 
   RealType computeWeights(const Vector & residuals);
 
-  RealType computeWeights(const Vector & residualsWithDiscardedValue,
-                          const size_t &numberOfDiscardedData);
+  RealType computeWeights(
+    const Vector & residualsWithDiscardedValue,
+    const size_t & numberOfDiscardedData);
 
   const Vector & getWeights()const;
 
-private :
-
+private:
   void allocate_(const int & dataSize);
 
-private :
-
+private:
   int dataSize_;
   RealType dataNoiseStd_;
   Vector sortedVector_;
@@ -43,4 +46,4 @@ private :
 
 }  // namespace romea
 
-#endif  // ROMEA_CORE_COMMON_REGRESSION_LEASTSQUARES_MESTIMATOR_HPP_
+#endif  // ROMEA_CORE_COMMON__REGRESSION__LEASTSQUARES__MESTIMATOR_HPP_

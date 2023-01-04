@@ -1,43 +1,48 @@
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
 // romea
 #include "romea_core_common/geometry/Ellipse.hpp"
 
 // eigen
 #include <Eigen/SVD>
 
-namespace romea {
-
-//-----------------------------------------------------------------------------
-Ellipse::Ellipse(const double &xCenter,
-                 const double &yCenter,
-                 const double &orientation,
-                 const double &majorRadius,
-                 const double &minorRadius):
-  centerPosition_((Eigen::Vector2d()<< xCenter, yCenter).finished()),
-  orientation_(orientation),
-  majorRadius_(majorRadius),
-  minorRadius_(minorRadius)
-
+namespace romea
 {
-}
 
 //-----------------------------------------------------------------------------
-Ellipse::Ellipse(const Eigen::Vector2d &centerPosition,
-                 const double &orientation,
-                 const double &majorRadius,
-                 const double &minorRadius):
-  centerPosition_(centerPosition),
+Ellipse::Ellipse(
+  const double & xCenter,
+  const double & yCenter,
+  const double & orientation,
+  const double & majorRadius,
+  const double & minorRadius)
+: centerPosition_((Eigen::Vector2d() << xCenter, yCenter).finished()),
   orientation_(orientation),
   majorRadius_(majorRadius),
   minorRadius_(minorRadius)
 {
-
 }
 
 //-----------------------------------------------------------------------------
-Ellipse::Ellipse(const Eigen::Vector2d &centerPosition,
-                 const Eigen::Matrix2d &covarianceMatrix,
-                 const double & sigmaScale):
-  centerPosition_(centerPosition),
+Ellipse::Ellipse(
+  const Eigen::Vector2d & centerPosition,
+  const double & orientation,
+  const double & majorRadius,
+  const double & minorRadius)
+: centerPosition_(centerPosition),
+  orientation_(orientation),
+  majorRadius_(majorRadius),
+  minorRadius_(minorRadius)
+{
+}
+
+//-----------------------------------------------------------------------------
+Ellipse::Ellipse(
+  const Eigen::Vector2d & centerPosition,
+  const Eigen::Matrix2d & covarianceMatrix,
+  const double & sigmaScale)
+: centerPosition_(centerPosition),
   orientation_(0),
   majorRadius_(0),
   minorRadius_(0)
@@ -47,8 +52,8 @@ Ellipse::Ellipse(const Eigen::Vector2d &centerPosition,
   Eigen::Matrix2d singularVectors = svd.matrixU();
 
   orientation_ = std::atan2(singularVectors(1, 0), singularVectors(0, 0));
-  majorRadius_ = std::sqrt(singularValues(0))*sigmaScale;
-  minorRadius_ = std::sqrt(singularValues(1))*sigmaScale;
+  majorRadius_ = std::sqrt(singularValues(0)) * sigmaScale;
+  minorRadius_ = std::sqrt(singularValues(1)) * sigmaScale;
 }
 
 //-----------------------------------------------------------------------------

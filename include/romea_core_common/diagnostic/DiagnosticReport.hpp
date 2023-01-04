@@ -1,5 +1,8 @@
-#ifndef ROMEA_CORE_COMMON_DIAGNOSTIC_DIAGNOSTICREPORT_HPP_
-#define ROMEA_CORE_COMMON_DIAGNOSTIC_DIAGNOSTICREPORT_HPP_
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+#ifndef ROMEA_CORE_COMMON__DIAGNOSTIC__DIAGNOSTICREPORT_HPP_
+#define ROMEA_CORE_COMMON__DIAGNOSTIC__DIAGNOSTICREPORT_HPP_
 
 // std
 #include <optional>
@@ -21,12 +24,12 @@ struct DiagnosticReport
   std::map<std::string, std::string> info;
 };
 
-std::ostream & operator <<(std::ostream & os, const DiagnosticReport & report);
+std::ostream & operator<<(std::ostream & os, const DiagnosticReport & report);
 
 DiagnosticReport & operator+=(DiagnosticReport & report1, const DiagnosticReport & report2);
 
 //-----------------------------------------------------------------------------
-template <typename T>
+template<typename T>
 std::string toStringInfoValue(const T & infoValue)
 {
   std::ostringstream os;
@@ -35,22 +38,23 @@ std::string toStringInfoValue(const T & infoValue)
 }
 
 //-----------------------------------------------------------------------------
-template <typename T>
-void setReportInfo(DiagnosticReport & report,
-                   const std::string & infoName,
-                   const T & infoValue)
+template<typename T>
+void setReportInfo(
+  DiagnosticReport & report,
+  const std::string & infoName,
+  const T & infoValue)
 {
   report.info[infoName] = toStringInfoValue(infoValue);
 }
 
 //-----------------------------------------------------------------------------
-template <typename T>
-void setReportInfo(DiagnosticReport & report,
-                   const std::string & infoName,
-                   const std::optional<T> & infoValue)
+template<typename T>
+void setReportInfo(
+  DiagnosticReport & report,
+  const std::string & infoName,
+  const std::optional<T> & infoValue)
 {
-  if (infoValue.has_value())
-  {
+  if (infoValue.has_value()) {
     setReportInfo(report, infoName, *infoValue);
   } else {
     report.info[infoName] = "";
@@ -59,4 +63,4 @@ void setReportInfo(DiagnosticReport & report,
 
 }  // namespace romea
 
-#endif  // ROMEA_CORE_COMMON_DIAGNOSTIC_DIAGNOSTICREPORT_HPP_
+#endif  // ROMEA_CORE_COMMON__DIAGNOSTIC__DIAGNOSTICREPORT_HPP_

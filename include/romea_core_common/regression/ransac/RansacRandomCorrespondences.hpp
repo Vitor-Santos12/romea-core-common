@@ -1,5 +1,12 @@
-#ifndef ROMEA_CORE_COMMON_REGRESSION_RANSAC_RANSACRANDOMCORRESPONDENCES_HPP_
-#define ROMEA_CORE_COMMON_REGRESSION_RANSAC_RANSACRANDOMCORRESPONDENCES_HPP_
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+#ifndef ROMEA_CORE_COMMON__REGRESSION__RANSAC__RANSACRANDOMCORRESPONDENCES_HPP_
+#define ROMEA_CORE_COMMON__REGRESSION__RANSAC__RANSACRANDOMCORRESPONDENCES_HPP_
+
+// Eigen
+#include <Eigen/Eigen>
+#include <unsupported/Eigen/MatrixFunctions>
 
 // stl
 #include <vector>
@@ -10,9 +17,6 @@
 #include "romea_core_common/pointset/PointTraits.hpp"
 #include "romea_core_common/pointset/algorithms/Correspondence.hpp"
 
-// Eigen
-#include <Eigen/Eigen>
-#include <unsupported/Eigen/MatrixFunctions>
 
 namespace romea {
 
@@ -62,4 +66,4 @@ public :
 
 }  // namespace romea
 
-#endif  // ROMEA_CORE_COMMON_REGRESSION_RANSAC_RANSACRANDOMCORRESPONDENCES_HPP_
+#endif  // ROMEA_CORE_COMMON__REGRESSION__RANSAC__RANSACRANDOMCORRESPONDENCES_HPP_

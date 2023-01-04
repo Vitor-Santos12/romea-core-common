@@ -1,10 +1,13 @@
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
 // gtest
 #include <gtest/gtest.h>
 #include <romea_core_common/transform/SmartRotation3D.hpp>
 
-const double a = 60/180.*M_PI;
-const double cosa = std::cos(60/180.*M_PI);
-const double sina = std::sin(60/180.*M_PI);
+const double a = 60 / 180. * M_PI;
+const double cosa = std::cos(60 / 180. * M_PI);
+const double sina = std::sin(60 / 180. * M_PI);
 const double eps = 0.0001;
 
 //-----------------------------------------------------------------------------
@@ -32,7 +35,7 @@ TEST(testSmartRotation3D, check_roll_rotation)
   EXPECT_NEAR(rotation.dRdAngleAroundXAxis()(2, 2), -sina, eps);
 
   Eigen::Vector3d T(1, 2, 3);
-  Eigen::Vector3d RT = rotation*T;
+  Eigen::Vector3d RT = rotation * T;
   EXPECT_NEAR(RT(0), 1.0, eps);
   EXPECT_NEAR(RT(1), -1.5981, eps);
   EXPECT_NEAR(RT(2), 3.2321, eps);
@@ -68,7 +71,7 @@ TEST(testSmartRotation3D, check_pitch_rotation)
   EXPECT_NEAR(rotation.dRdAngleAroundYAxis()(2, 2), -sina, eps);
 
   Eigen::Vector3d T(1, 2, 3);
-  Eigen::Vector3d RT = rotation*T;
+  Eigen::Vector3d RT = rotation * T;
   EXPECT_NEAR(RT(0), 3.0981, eps);
   EXPECT_NEAR(RT(1), 2.0, eps);
   EXPECT_NEAR(RT(2), 0.6340, eps);
@@ -104,7 +107,7 @@ TEST(testSmartRotation3D, check_yaw_rotation)
   EXPECT_NEAR(rotation.dRdAngleAroundZAxis()(2, 2), 1.0, eps);
 
   Eigen::Vector3d T(1, 2, 3);
-  Eigen::Vector3d RT = rotation*T;
+  Eigen::Vector3d RT = rotation * T;
   EXPECT_NEAR(RT(0), -1.2321, eps);
   EXPECT_NEAR(RT(1), 1.8660, eps);
   EXPECT_NEAR(RT(2), 3.0, eps);
@@ -119,15 +122,15 @@ TEST(testSmartRotation3D, check_yaw_rotation)
 TEST(testSmartRotation3D, check_full_rotation)
 {
   romea::SmartRotation3D rotation(a, a, a);
-  EXPECT_NEAR(rotation.R()(0, 0),  0.250000, eps);
+  EXPECT_NEAR(rotation.R()(0, 0), 0.250000, eps);
   EXPECT_NEAR(rotation.R()(0, 1), -0.058013, eps);
-  EXPECT_NEAR(rotation.R()(0, 2),  0.966506, eps);
-  EXPECT_NEAR(rotation.R()(1, 0),  0.433013, eps);
-  EXPECT_NEAR(rotation.R()(1, 1),  0.899519, eps);
+  EXPECT_NEAR(rotation.R()(0, 2), 0.966506, eps);
+  EXPECT_NEAR(rotation.R()(1, 0), 0.433013, eps);
+  EXPECT_NEAR(rotation.R()(1, 1), 0.899519, eps);
   EXPECT_NEAR(rotation.R()(1, 2), -0.058013, eps);
   EXPECT_NEAR(rotation.R()(2, 0), -0.866025, eps);
-  EXPECT_NEAR(rotation.R()(2, 1),  0.433013, eps);
-  EXPECT_NEAR(rotation.R()(2, 2),  0.250000, eps);
+  EXPECT_NEAR(rotation.R()(2, 1), 0.433013, eps);
+  EXPECT_NEAR(rotation.R()(2, 2), 0.250000, eps);
 
   EXPECT_NEAR(rotation.dRdAngleAroundXAxis()(0, 0), 0.25, eps);
   EXPECT_NEAR(rotation.dRdAngleAroundXAxis()(0, 1), 0.966506, eps);
@@ -160,7 +163,7 @@ TEST(testSmartRotation3D, check_full_rotation)
   EXPECT_NEAR(rotation.dRdAngleAroundZAxis()(2, 2), 0.25, eps);
 
   Eigen::Vector3d T(1, 2, 3);
-  Eigen::Vector3d RT = rotation*T;
+  Eigen::Vector3d RT = rotation * T;
   EXPECT_NEAR(RT(0), 3.0335, eps);
   EXPECT_NEAR(RT(1), 2.0580, eps);
   EXPECT_NEAR(RT(2), 0.7500, eps);
@@ -178,7 +181,8 @@ TEST(testSmartRotation3D, check_full_rotation)
 }
 
 //-----------------------------------------------------------------------------
-int main(int argc, char **argv){
+int main(int argc, char ** argv)
+{
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }

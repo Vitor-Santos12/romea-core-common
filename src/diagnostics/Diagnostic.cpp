@@ -1,24 +1,30 @@
-// romea
-#include "romea_core_common/diagnostic/Diagnostic.hpp"
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
 
 // std
 #include <cassert>
+#include <string>
+#include <list>
 
-namespace romea {
+// romea
+#include "romea_core_common/diagnostic/Diagnostic.hpp"
+
+namespace romea
+{
 
 //-----------------------------------------------------------------------------
-Diagnostic::Diagnostic():
-  status(DiagnosticStatus::STALE),
+Diagnostic::Diagnostic()
+: status(DiagnosticStatus::STALE),
   message()
 {
 }
 
 //-----------------------------------------------------------------------------
-Diagnostic::Diagnostic(const DiagnosticStatus & status,
-                       const std::string & message):
-  status(status),
+Diagnostic::Diagnostic(
+  const DiagnosticStatus & status,
+  const std::string & message)
+: status(status),
   message(message)
-
 {
 }
 
@@ -30,8 +36,7 @@ DiagnosticStatus worseStatus(const std::list<Diagnostic> & diagnostics)
   auto it = std::cbegin(diagnostics);
   DiagnosticStatus status = it->status;
 
-  while (++it != std::cend(diagnostics))
-  {
+  while (++it != std::cend(diagnostics)) {
     status = worse(status, it->status);
   }
 
@@ -45,14 +50,11 @@ bool allOK(const std::list<Diagnostic> & diagnostics)
 }
 
 //-----------------------------------------------------------------------------
-std::ostream & operator <<(std::ostream & os, const Diagnostic & diagnostic)
+std::ostream & operator<<(std::ostream & os, const Diagnostic & diagnostic)
 {
-  os<< diagnostic.status <<" : "<< diagnostic.message;
+  os << diagnostic.status << " : " << diagnostic.message;
   return os;
 }
 
 
 }  // namespace romea
-
-
-

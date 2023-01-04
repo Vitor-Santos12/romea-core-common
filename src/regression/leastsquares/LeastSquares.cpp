@@ -1,16 +1,23 @@
-// romea
-#include "romea_core_common/regression/leastsquares/LeastSquares.hpp"
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
 
 // Eigen
 #include <Eigen/LU>
 #include <Eigen/SVD>
 
-namespace romea{
+// std
+#include <limits>
+
+// romea
+#include "romea_core_common/regression/leastsquares/LeastSquares.hpp"
+
+namespace romea
+{
 
 //-----------------------------------------------------------------------------
 template<typename RealType>
-LeastSquares<RealType>::LeastSquares():
-  dataSize_(0),
+LeastSquares<RealType>::LeastSquares()
+: dataSize_(0),
   estimateSize_(),
   Ac_(),
   Bc_(),
@@ -25,8 +32,8 @@ LeastSquares<RealType>::LeastSquares():
 
 //-----------------------------------------------------------------------------
 template<typename RealType>
-LeastSquares<RealType>::LeastSquares(const size_t &estimateSize):
-  dataSize_(0),
+LeastSquares<RealType>::LeastSquares(const size_t & estimateSize)
+: dataSize_(0),
   estimateSize_(static_cast<int>(estimateSize)),
   Ac_(Matrix::Identity(estimateSize_, estimateSize_)),
   Bc_(Vector::Zero(estimateSize_)),
@@ -41,8 +48,8 @@ LeastSquares<RealType>::LeastSquares(const size_t &estimateSize):
 
 //-----------------------------------------------------------------------------
 template<typename RealType>
-LeastSquares<RealType>::LeastSquares(const size_t &estimateSize, const size_t & dataSize):
-  dataSize_(static_cast<int>(dataSize)),
+LeastSquares<RealType>::LeastSquares(const size_t & estimateSize, const size_t & dataSize)
+: dataSize_(static_cast<int>(dataSize)),
   estimateSize_(static_cast<int>(estimateSize)),
   Ac_(Matrix::Identity(estimateSize_, estimateSize_)),
   Bc_(Vector::Zero(estimateSize_)),
@@ -53,7 +60,6 @@ LeastSquares<RealType>::LeastSquares(const size_t &estimateSize, const size_t & 
   inverseJtJ_(Matrix::Zero(estimateSize_, estimateSize_)),
   JtY_(Vector::Zero(estimateSize_))
 {
-
 }
 
 //-----------------------------------------------------------------------------
@@ -105,8 +111,9 @@ LeastSquares<RealType>::getW() const
 }
 
 //-----------------------------------------------------------------------------
-template<typename RealType> void
-LeastSquares<RealType>::setEstimateSize(const size_t &estimateSize)
+template<typename RealType>
+void
+LeastSquares<RealType>::setEstimateSize(const size_t & estimateSize)
 {
   estimateSize_ = int(estimateSize);
   Ac_ = Matrix::Identity(estimateSize_, estimateSize_);
@@ -117,14 +124,14 @@ LeastSquares<RealType>::setEstimateSize(const size_t &estimateSize)
 }
 
 //-----------------------------------------------------------------------------
-template<typename RealType> bool
-LeastSquares<RealType>::setDataSize(const size_t &dataSize)
+template<typename RealType>
+bool
+LeastSquares<RealType>::setDataSize(const size_t & dataSize)
 {
   assert(estimateSize_ != 0);
   dataSize_ = static_cast<int>(dataSize);
 
-  if (Y_.rows() < static_cast<int>(dataSize))
-  {
+  if (Y_.rows() < static_cast<int>(dataSize)) {
     J_.resize(static_cast<int>(dataSize), estimateSize_);
     Y_.resize(static_cast<int>(dataSize));
     W_.resize(static_cast<int>(dataSize));
@@ -138,8 +145,8 @@ LeastSquares<RealType>::setDataSize(const size_t &dataSize)
 //-----------------------------------------------------------------------------
 template<typename RealType>
 void LeastSquares<RealType>::setPreconditionner(
-    const typename LeastSquares<RealType>::Matrix & Ac,
-    const typename LeastSquares<RealType>::Vector & Bc)
+  const typename LeastSquares<RealType>::Matrix & Ac,
+  const typename LeastSquares<RealType>::Vector & Bc)
 {
   Ac_ = Ac;
   Bc_ = Bc;
@@ -158,8 +165,8 @@ typename LeastSquares<RealType>::Vector LeastSquares<RealType>::estimateUsingCho
 {
   computeJTJ_();
   computeJTY_();
-  inverseJtJ_  = JtJ_.ldlt().solve(Matrix::Identity(estimateSize_, estimateSize_));
-  return Ac_*inverseJtJ_*JtY_+Bc_;
+  inverseJtJ_ = JtJ_.ldlt().solve(Matrix::Identity(estimateSize_, estimateSize_));
+  return Ac_ * inverseJtJ_ * JtY_ + Bc_;
 }
 
 //-----------------------------------------------------------------------------
@@ -171,13 +178,15 @@ typename LeastSquares<RealType>::Vector LeastSquares<RealType>::estimateUsingSVD
 
   Eigen::JacobiSVD<Matrix> svd(JtJ_, Eigen::ComputeThinU | Eigen::ComputeThinV);
   inverseJtJ_ = svd.singularValues().asDiagonal();
-  for (int n=0; n< estimateSize_; n++)
-    if (inverseJtJ_(n, n) > std::numeric_limits<RealType>::epsilon())
-      inverseJtJ_(n, n) = 1/inverseJtJ_(n, n);
+  for (int n = 0; n < estimateSize_; n++) {
+    if (inverseJtJ_(n, n) > std::numeric_limits<RealType>::epsilon()) {
+      inverseJtJ_(n, n) = 1 / inverseJtJ_(n, n);
+    }
+  }
 
-  inverseJtJ_ = svd.matrixV()*inverseJtJ_*svd.matrixU().transpose();
+  inverseJtJ_ = svd.matrixV() * inverseJtJ_ * svd.matrixU().transpose();
 
-  return Ac_*inverseJtJ_*JtY_+Bc_;
+  return Ac_ * inverseJtJ_ * JtY_ + Bc_;
 }
 
 //-----------------------------------------------------------------------------
@@ -190,39 +199,43 @@ typename LeastSquares<RealType>::Vector LeastSquares<RealType>::weightedEstimate
 
 //-----------------------------------------------------------------------------
 template<typename RealType>
-typename LeastSquares<RealType>::Matrix LeastSquares<RealType>::
-computeEstimateCovariance(const RealType & dataVariance)
+typename LeastSquares<RealType>::Matrix LeastSquares<RealType>::computeEstimateCovariance(
+  const RealType & dataVariance)
 {
-  return Ac_.transpose()*inverseJtJ_*Ac_*dataVariance;
+  return Ac_.transpose() * inverseJtJ_ * Ac_ * dataVariance;
 }
 
-//TODO paralléliser les trois fonctions ci dessous
+// TODO(Jean) paralléliser les trois fonctions ci dessous
 //-----------------------------------------------------------------------------
 template<typename RealType>
 void LeastSquares<RealType>::weightJAndY_()
 {
   Y_.head(dataSize_).array() *= W_.head(dataSize_).array();
 
-  for (int i=0 ; i < estimateSize_ ; ++i)
+  for (int i = 0; i < estimateSize_; ++i) {
     J_.col(i).head(dataSize_).array() *= W_.head(dataSize_).array();
+  }
 }
 
 //-----------------------------------------------------------------------------
 template<typename RealType>
 void LeastSquares<RealType>::computeJTJ_()
 {
-  for (int i = 0 ; i < estimateSize_ ; ++i)
-    for (int j = i ; j < estimateSize_ ; ++j)
-      JtJ_(i, j) = JtJ_(j, i)= J_.col(i).head(dataSize_).
-          dot(J_.col(j).head(dataSize_));
+  for (int i = 0; i < estimateSize_; ++i) {
+    for (int j = i; j < estimateSize_; ++j) {
+      JtJ_(i, j) = JtJ_(j, i) = J_.col(i).head(dataSize_).
+        dot(J_.col(j).head(dataSize_));
+    }
+  }
 }
 
 //-----------------------------------------------------------------------------
 template<typename RealType>
 void LeastSquares<RealType>::computeJTY_()
 {
-  for (int i = 0 ; i < estimateSize_ ; ++i)
+  for (int i = 0; i < estimateSize_; ++i) {
     JtY_(i) = J_.col(i).head(dataSize_).dot(Y_.head(dataSize_));
+  }
 }
 
 //-----------------------------------------------------------------------------

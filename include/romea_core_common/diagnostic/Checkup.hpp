@@ -1,5 +1,8 @@
-#ifndef ROMEA_CORE_COMMON_DIAGNOSTIC_CHECKUP_HPP_
-#define ROMEA_CORE_COMMON_DIAGNOSTIC_CHECKUP_HPP_
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+#ifndef ROMEA_CORE_COMMON__DIAGNOSTIC__CHECKUP_HPP_
+#define ROMEA_CORE_COMMON__DIAGNOSTIC__CHECKUP_HPP_
 
 // std
 #include <limits>
@@ -10,17 +13,19 @@
 // romea
 #include "romea_core_common/diagnostic/DiagnosticReport.hpp"
 
-namespace romea {
+namespace romea
+{
 
 
-template <typename T>
-class  Checkup
+template<typename T>
+class Checkup
 {
 public:
-  Checkup(const std::string &name,
-          const T & value_to_compare_with_,
-          const T & epsilon,
-          const Diagnostic & diagnostic = Diagnostic());
+  Checkup(
+    const std::string & name,
+    const T & value_to_compare_with_,
+    const T & epsilon,
+    const Diagnostic & diagnostic = Diagnostic());
 
   virtual ~Checkup() = default;
 
@@ -33,8 +38,9 @@ public:
 protected:
   void setValue_(const T & value);
 
-  void setDiagnostic_(const DiagnosticStatus & status,
-                      const std::string & messageEnd);
+  void setDiagnostic_(
+    const DiagnosticStatus & status,
+    const std::string & messageEnd);
 
   const DiagnosticStatus & getStatus_() const;
 
@@ -47,12 +53,13 @@ protected:
 };
 
 //-----------------------------------------------------------------------------
-template <typename T>
-Checkup<T>::Checkup(const std::string & name,
-                    const T & value_to_compare_with,
-                    const T & epsilon,
-                    const Diagnostic & diagnostic):
-  value_to_compare_with_(value_to_compare_with),
+template<typename T>
+Checkup<T>::Checkup(
+  const std::string & name,
+  const T & value_to_compare_with,
+  const T & epsilon,
+  const Diagnostic & diagnostic)
+: value_to_compare_with_(value_to_compare_with),
   epsilon_(epsilon),
   mutex_(),
   report_()
@@ -62,7 +69,7 @@ Checkup<T>::Checkup(const std::string & name,
 }
 
 //-----------------------------------------------------------------------------
-template <typename T>
+template<typename T>
 const DiagnosticReport & Checkup<T>::getReport() const
 {
   std::lock_guard<std::mutex> lock(mutex_);
@@ -70,7 +77,7 @@ const DiagnosticReport & Checkup<T>::getReport() const
 }
 
 //-----------------------------------------------------------------------------
-template <typename T>
+template<typename T>
 void Checkup<T>::timeout()
 {
   std::lock_guard<std::mutex> lock(mutex_);
@@ -80,16 +87,17 @@ void Checkup<T>::timeout()
 
 
 //-----------------------------------------------------------------------------
-template <typename T>
+template<typename T>
 void Checkup<T>::setValue_(const T & value)
 {
   report_.info.begin()->second = toStringInfoValue(value);
 }
 
 //-----------------------------------------------------------------------------
-template <typename T>
-void Checkup<T>::setDiagnostic_(const DiagnosticStatus & status,
-                                const std::string & messageEnd)
+template<typename T>
+void Checkup<T>::setDiagnostic_(
+  const DiagnosticStatus & status,
+  const std::string & messageEnd)
 {
   Diagnostic & diagnostic = report_.diagnostics.front();
   diagnostic.message = report_.info.begin()->first + messageEnd;
@@ -97,7 +105,7 @@ void Checkup<T>::setDiagnostic_(const DiagnosticStatus & status,
 }
 
 //-----------------------------------------------------------------------------
-template <typename T>
+template<typename T>
 const DiagnosticStatus & Checkup<T>::getStatus_() const
 {
   return this->report_.diagnostics.front().status;
@@ -106,4 +114,4 @@ const DiagnosticStatus & Checkup<T>::getStatus_() const
 
 }  // namespace romea
 
-#endif  // ROMEA_CORE_COMMON_DIAGNOSTIC_CHECKUP_HPP_
+#endif  // ROMEA_CORE_COMMON__DIAGNOSTIC__CHECKUP_HPP_

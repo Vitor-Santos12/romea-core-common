@@ -1,5 +1,8 @@
-#ifndef ROMEA_CORE_COMMON_MATH_ALGORITHM_HPP_
-#define ROMEA_CORE_COMMON_MATH_ALGORITHM_HPP_
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+#ifndef ROMEA_CORE_COMMON__MATH__ALGORITHM_HPP_
+#define ROMEA_CORE_COMMON__MATH__ALGORITHM_HPP_
 
 // std
 #include <cmath>
@@ -51,7 +54,7 @@ RealType near(const RealType & value1 ,
   return std::abs(value1-value2) < 0.00001;
 }
 
-//replace by std::clamp with c++17
+// replace by std::clamp with c++17
 //--------------------------------------------------------------------------
 template <typename RealType >
 RealType clamp(const RealType & value ,
@@ -111,4 +114,4 @@ static bool isApproximatelyZero(RealType a,
 
 }  // namespace romea
 
-#endif  // ROMEA_CORE_COMMON_MATH_ALGORITHM_HPP_
+#endif  // ROMEA_CORE_COMMON__MATH__ALGORITHM_HPP_

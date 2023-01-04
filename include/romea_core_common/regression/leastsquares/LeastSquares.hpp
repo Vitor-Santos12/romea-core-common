@@ -1,5 +1,8 @@
-#ifndef ROMEA_CORE_COMMON_REGRESSION_LEASTSQUARES_LEASTSQUARES_HPP_ 
-#define ROMEA_CORE_COMMON_REGRESSION_LEASTSQUARES_LEASTSQUARES_HPP_ 
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+#ifndef ROMEA_CORE_COMMON__REGRESSION__LEASTSQUARES__LEASTSQUARES_HPP_
+#define ROMEA_CORE_COMMON__REGRESSION__LEASTSQUARES__LEASTSQUARES_HPP_
 
 // Eigen
 #include <Eigen/Eigen>
@@ -7,19 +10,19 @@
 namespace romea
 {
 
-template <typename RealType>
+template<typename RealType>
 class LeastSquares
 {
 public:
   using Matrix = Eigen::Matrix<RealType, Eigen::Dynamic, Eigen::Dynamic>;
-  using Vector = Eigen::Matrix<RealType, Eigen::Dynamic, 1> ;
+  using Vector = Eigen::Matrix<RealType, Eigen::Dynamic, 1>;
 
 public:
   LeastSquares();
 
-  explicit LeastSquares(const size_t &estimateSize);
+  explicit LeastSquares(const size_t & estimateSize);
 
-  LeastSquares(const size_t &estimateSize, const size_t & dataSize);
+  LeastSquares(const size_t & estimateSize, const size_t & dataSize);
 
   virtual ~LeastSquares() = default;
 
@@ -27,8 +30,7 @@ public:
 
   bool setDataSize(const size_t & dataSize);
 
-public :
-
+public:
   Vector estimateUsingCholeskyDecomposition();
 
   Vector estimateUsingSVD();
@@ -37,30 +39,26 @@ public :
 
   Matrix computeEstimateCovariance(const RealType & dataVariance);
 
-  void setPreconditionner(const Matrix & Ac , const Vector &Bc);
+  void setPreconditionner(const Matrix & Ac, const Vector & Bc);
 
   void setPreconditionner(const Matrix & Ac);
 
-public :
-
+public:
   Matrix & getJ();
-  const Matrix & getJ()const ;
+  const Matrix & getJ()const;
 
   Vector & getY();
-  const Vector & getY()const ;
+  const Vector & getY()const;
 
   Vector & getW();
-  const Vector & getW()const ;
+  const Vector & getW()const;
 
-private :
-
-
+private:
   void weightJAndY_();
   void computeJTJ_();
   void computeJTY_();
 
-private :
-
+private:
   int dataSize_;
   int estimateSize_;
 
@@ -78,4 +76,4 @@ private :
 
 }  // namespace romea
 
-#endif  // ROMEA_CORE_COMMON_REGRESSION_LEASTSQUARES_LEASTSQUARES_HPP_ 
+#endif  // ROMEA_CORE_COMMON__REGRESSION__LEASTSQUARES__LEASTSQUARES_HPP_

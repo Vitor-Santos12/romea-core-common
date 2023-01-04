@@ -1,5 +1,8 @@
-#ifndef ROMEA_CORE_COMMON_DIAGNOSTIC_CHECKUPRELIABILITY_HPP_
-#define ROMEA_CORE_COMMON_DIAGNOSTIC_CHECKUPRELIABILITY_HPP_
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+#ifndef ROMEA_CORE_COMMON__DIAGNOSTIC__CHECKUPRELIABILITY_HPP_
+#define ROMEA_CORE_COMMON__DIAGNOSTIC__CHECKUPRELIABILITY_HPP_
 
 // std
 #include <string>
@@ -8,25 +11,27 @@
 // romea
 #include "romea_core_common/diagnostic/DiagnosticReport.hpp"
 
-namespace romea {
+namespace romea
+{
 
-class  CheckupReliability
+class CheckupReliability
 {
 public:
-  CheckupReliability(const std::string &name,
-                     const double & low_reliability_threshold,
-                     const double & high_reliability_threshold);
+  CheckupReliability(
+    const std::string & name,
+    const double & low_reliability_threshold,
+    const double & high_reliability_threshold);
 
   DiagnosticStatus evaluate(const double & reliability);
 
   DiagnosticReport getReport()const;
 
-private :
-
+private:
   void setRelabilityValue_(const double & reliability);
 
-  void setDiagnostic_(const DiagnosticStatus & status,
-                      const std::string & messageEnd);
+  void setDiagnostic_(
+    const DiagnosticStatus & status,
+    const std::string & messageEnd);
 
 private:
   double low_reliability_theshold_;
@@ -38,4 +43,4 @@ private:
 
 }  // namespace romea
 
-#endif  // ROMEA_CORE_COMMON_DIAGNOSTIC_CHECKUPRELIABILITY_HPP_
+#endif  // ROMEA_CORE_COMMON__DIAGNOSTIC__CHECKUPRELIABILITY_HPP_

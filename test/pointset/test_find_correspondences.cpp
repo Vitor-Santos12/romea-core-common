@@ -1,10 +1,20 @@
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
 // gtest
 #include <gtest/gtest.h>
-#include "test_helper.h"
+
+// std
+#include <string>
+#include <vector>
+
+// local
+#include "../test/test_helper.h"
 #include "test_pointset_utils.hpp"
 
 //-----------------------------------------------------------------------------
-template <class PointType> size_t findCorrespondences(const std::string & dataFileName)
+template<class PointType>
+size_t findCorrespondences(const std::string & dataFileName)
 {
   // load data
   romea::PointSet<Eigen::Vector2d> pointSet = loadScan<Eigen::Vector2d>(dataFileName);
@@ -16,20 +26,22 @@ template <class PointType> size_t findCorrespondences(const std::string & dataFi
   std::vector<romea::Correspondence> correspondences;
 
   // Find correpondences
-  for (size_t n = 0; n < pointSet.size(); ++n){
+  for (size_t n = 0; n < pointSet.size(); ++n) {
     kdTree.findNearestNeighbor(pointSet[n], nearestIndex, nearestNeighborSquareDistance);
     correspondences.emplace_back(nearestIndex, n, nearestNeighborSquareDistance);
   }
 
   // Remove wrong correspondences
   std::vector<romea::Correspondence>::iterator itEnd;
-  std::sort(std::begin(correspondences),
-            std::end(correspondences),
-            romea::sortBySourceIndexAndDistancePredicate);
+  std::sort(
+    std::begin(correspondences),
+    std::end(correspondences),
+    romea::sortBySourceIndexAndDistancePredicate);
 
-  itEnd = std::unique(std::begin(correspondences),
-                      std::end(correspondences),
-                      romea::equalSourceIndexesPredicate);
+  itEnd = std::unique(
+    std::begin(correspondences),
+    std::end(correspondences),
+    romea::equalSourceIndexesPredicate);
 
   return static_cast<size_t>(std::distance(std::begin(correspondences), itEnd));
 }
@@ -47,7 +59,8 @@ TEST(TestFindCorrespondences, find3DCorrespondences)
 }
 
 //-----------------------------------------------------------------------------
-int main(int argc, char **argv){
+int main(int argc, char ** argv)
+{
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }

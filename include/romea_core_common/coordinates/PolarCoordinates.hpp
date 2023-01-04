@@ -1,28 +1,30 @@
-#ifndef ROMEA_CORE_COMMON_COORDINATES_POLARCOORDINATES_HPP_ 
-#define ROMEA_CORE_COMMON_COORDINATES_POLARCOORDINATES_HPP_ 
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+#ifndef ROMEA_CORE_COMMON__COORDINATES__POLARCOORDINATES_HPP_
+#define ROMEA_CORE_COMMON__COORDINATES__POLARCOORDINATES_HPP_
 
 #include "romea_core_common/coordinates/CartesianCoordinates.hpp"
 #include "romea_core_common/coordinates/HomogeneousCoordinates.hpp"
 
-namespace romea {
+namespace romea
+{
 
 
 //-----------------------------------------------------------------------------
-template < typename Scalar>
+template<typename Scalar>
 class PolarCoordinates
 {
-public :
-
-  PolarCoordinates(Scalar range, Scalar azimut):
-    range_(range),
+public:
+  PolarCoordinates(Scalar range, Scalar azimut)
+  : range_(range),
     azimut_(azimut)
   {
   }
 
   virtual ~PolarCoordinates() = default;
 
-public :
-
+public:
   const Scalar & getRange()const
   {
     return range_;
@@ -33,8 +35,7 @@ public :
     return azimut_;
   }
 
-private :
-
+private:
   Scalar range_;
   Scalar azimut_;
 };
@@ -63,7 +64,7 @@ struct PolarTransform
   template<typename Scalar>
   static Scalar range(const Scalar x, const Scalar & y)
   {
-    return std::sqrt(x*x+y*y);
+    return std::sqrt(x * x + y * y);
   }
 
   template<typename Scalar>
@@ -79,9 +80,9 @@ struct PolarTransform
   }
 
   template<typename Scalar>
-  static Scalar x(const Scalar & range , const Scalar & azimut)
+  static Scalar x(const Scalar & range, const Scalar & azimut)
   {
-    return range*std::cos(azimut);
+    return range * std::cos(azimut);
   }
 
   template<typename Scalar>
@@ -91,9 +92,9 @@ struct PolarTransform
   }
 
   template<typename Scalar>
-  static Scalar y(const Scalar & range , const Scalar & azimut)
+  static Scalar y(const Scalar & range, const Scalar & azimut)
   {
-    return range*std::sin(azimut);
+    return range * std::sin(azimut);
   }
 
   template<typename Scalar>
@@ -104,43 +105,43 @@ struct PolarTransform
 };
 
 
-
-
-
 //-----------------------------------------------------------------------------
 template<typename Scalar>
 PolarCoordinates<Scalar> toPolar(const CartesianCoordinates2<Scalar> & point)
 {
-  return PolarCoordinates<Scalar>(PolarTransform::range(point),
-                                  PolarTransform::azimut(point));
+  return PolarCoordinates<Scalar>(
+    PolarTransform::range(point),
+    PolarTransform::azimut(point));
 }
 
 //-----------------------------------------------------------------------------
 template<typename Scalar>
 PolarCoordinates<Scalar> toHomogeneous(const HomogeneousCoordinates2<Scalar> & point)
 {
-  return PolarCoordinates<Scalar>(PolarTransform::range(point),
-                                  PolarTransform::azimut(point));
+  return PolarCoordinates<Scalar>(
+    PolarTransform::range(point),
+    PolarTransform::azimut(point));
 }
-
 
 
 //-----------------------------------------------------------------------------
 template<typename Scalar>
 CartesianCoordinates2<Scalar> toCartesian(const PolarCoordinates<Scalar> & point)
 {
-  return CartesianCoordinates2<Scalar>(PolarTransform::x(point),
-                                       PolarTransform::y(point));
+  return CartesianCoordinates2<Scalar>(
+    PolarTransform::x(point),
+    PolarTransform::y(point));
 }
 
 //-----------------------------------------------------------------------------
 template<typename Scalar>
 HomogeneousCoordinates2<Scalar> toHomogeneous(const PolarCoordinates<Scalar> & point)
 {
-  return HomogeneousCoordinates2<Scalar>(PolarTransform::x(point),
-                                         PolarTransform::y(point));
+  return HomogeneousCoordinates2<Scalar>(
+    PolarTransform::x(point),
+    PolarTransform::y(point));
 }
 
 }  // namespace romea
 
-#endif  // ROMEA_CORE_COMMON_COORDINATES_POLARCOORDINATES_HPP_ 
+#endif  // ROMEA_CORE_COMMON__COORDINATES__POLARCOORDINATES_HPP_

@@ -1,13 +1,24 @@
-#include "romea_core_common/transform/estimation/RansacRigidTransformationModel.hpp"
-#include <iostream>
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
 
-namespace romea {
+// std
+#include <limits>
+#include <iostream>
+#include <memory>
+#include <algorithm>
+#include <vector>
+
+// local
+#include "romea_core_common/transform/estimation/RansacRigidTransformationModel.hpp"
+
+
+namespace romea
+{
 
 //-----------------------------------------------------------------------------
-template <class PointType>
-RansacRigidTransformationModel<PointType>
-::RansacRigidTransformationModel():
-  sourcePoints_(nullptr),
+template<class PointType>
+RansacRigidTransformationModel<PointType>::RansacRigidTransformationModel()
+: sourcePoints_(nullptr),
   targetPoints_(nullptr),
   targetNormals_(nullptr),
   correspondences_(nullptr),
@@ -57,9 +68,11 @@ RansacRigidTransformationModel<PointType>
 //}
 
 //-----------------------------------------------------------------------------
-template <class PointType> void
-RansacRigidTransformationModel<PointType>::loadPointSets(const PointSet<PointType> * sourcePoints,
-                                                         const PointSet<PointType> * targetPoints)
+template<class PointType>
+void
+RansacRigidTransformationModel<PointType>::loadPointSets(
+  const PointSet<PointType> * sourcePoints,
+  const PointSet<PointType> * targetPoints)
 {
   assert(sourcePoints);
   assert(targetPoints);
@@ -75,20 +88,22 @@ RansacRigidTransformationModel<PointType>::loadPointSets(const PointSet<PointTyp
   this->precondionedSourcePoints_.compute(*sourcePoints, scale);
   this->precondionedTargetPoints_.compute(*targetPoints, scale);
 
-  this->setPreconditioner_(this->precondionedSourcePoints_,
-                           this->precondionedTargetPoints_);
+  this->setPreconditioner_(
+    this->precondionedSourcePoints_,
+    this->precondionedTargetPoints_);
 
-  this->randomCorrespondences_.computeScale(this->sourcePointsPreconditioner_.getPointSetMin(),
-                                            this->sourcePointsPreconditioner_.getPointSetMax());
+  this->randomCorrespondences_.computeScale(
+    this->sourcePointsPreconditioner_.getPointSetMin(),
+    this->sourcePointsPreconditioner_.getPointSetMax());
 }
 
 
-
 //-----------------------------------------------------------------------------
-template <class PointType> void
-RansacRigidTransformationModel<PointType>::
-loadCorrespondences(const std::vector<Correspondence> * correspondences,
-                    const size_t &numberOfSourcePointsInCorrespondences)
+template<class PointType>
+void
+RansacRigidTransformationModel<PointType>::loadCorrespondences(
+  const std::vector<Correspondence> * correspondences,
+  const size_t & numberOfSourcePointsInCorrespondences)
 {
   assert(sourcePoints_);
   assert(targetPoints_);
@@ -101,9 +116,10 @@ loadCorrespondences(const std::vector<Correspondence> * correspondences,
 
   // Sort correspondences by target index and distance
   sortedCorrespondences_ = *correspondences_;
-  std::sort(std::begin(sortedCorrespondences_),
-            std::end(sortedCorrespondences_),
-            sortByTargetIndexAndDistancePredicate);
+  std::sort(
+    std::begin(sortedCorrespondences_),
+    std::end(sortedCorrespondences_),
+    sortByTargetIndexAndDistancePredicate);
 
   // Clear data compute during the last estimation
   bestInlierCorrespondences_.clear();
@@ -113,22 +129,24 @@ loadCorrespondences(const std::vector<Correspondence> * correspondences,
 
 
 //-----------------------------------------------------------------------------
-template <class PointType> void
-RansacRigidTransformationModel<PointType>::
-loadTargetNormalSet(const NormalSet<PointType> * targetNormals)
+template<class PointType>
+void
+RansacRigidTransformationModel<PointType>::loadTargetNormalSet(
+  const NormalSet<PointType> * targetNormals)
 {
-  if (targetNormals)
+  if (targetNormals) {
     assert(this->targetPoints_->size() == targetNormals->size());
+  }
 
   targetNormals_ = targetNormals;
 }
 
 //-----------------------------------------------------------------------------
-template <class PointType> size_t
+template<class PointType>
+size_t
 RansacRigidTransformationModel<PointType>::getNumberOfPointsToDrawModel()const
 {
-  if (CARTESIAN_DIM == 2)
-  {
+  if (CARTESIAN_DIM == 2) {
     return 3;
   } else {
     return 4;
@@ -136,45 +154,47 @@ RansacRigidTransformationModel<PointType>::getNumberOfPointsToDrawModel()const
 }
 
 //-----------------------------------------------------------------------------
-template <class PointType> size_t
+template<class PointType>
+size_t
 RansacRigidTransformationModel<PointType>::getMinimalNumberOfInliers()const
 {
-  static size_t minimalNumberOfInliers = 2* getNumberOfPointsToDrawModel();
+  static size_t minimalNumberOfInliers = 2 * getNumberOfPointsToDrawModel();
   return minimalNumberOfInliers;
 }
 
 //-----------------------------------------------------------------------------
-template <class PointType>
-void RansacRigidTransformationModel<PointType>::
-compute_(const PreconditionedPointSetType &sourcePoints,
-         const PreconditionedPointSetType &targetPoints,
-         const std::vector<Correspondence> &correspondences)
+template<class PointType>
+void RansacRigidTransformationModel<PointType>::compute_(
+  const PreconditionedPointSetType & sourcePoints,
+  const PreconditionedPointSetType & targetPoints,
+  const std::vector<Correspondence> & correspondences)
 {
-  if (targetNormals_){
+  if (targetNormals_) {
     this->transformation_ = findRigidTransformationByLeastSquares_.
-        find(sourcePoints, targetPoints, *targetNormals_, correspondences);
-  }else{
+      find(sourcePoints, targetPoints, *targetNormals_, correspondences);
+  } else {
     this->transformation_ = findRigidTransformationBySVD_.
-        find(sourcePoints, targetPoints, correspondences);
+      find(sourcePoints, targetPoints, correspondences);
   }
 }
 
 //-----------------------------------------------------------------------------
-template <class PointType>
-void RansacRigidTransformationModel<PointType>::
-setPreconditioner_(const PreconditionedPointSetType &preconditionedSourcePoints,
-                   const PreconditionedPointSetType &preconditionedTargetPoints)
+template<class PointType>
+void RansacRigidTransformationModel<PointType>::setPreconditioner_(
+  const PreconditionedPointSetType & preconditionedSourcePoints,
+  const PreconditionedPointSetType & preconditionedTargetPoints)
 {
   findRigidTransformationByLeastSquares_.
-      setPreconditioner(preconditionedSourcePoints,
-                        preconditionedTargetPoints);
+  setPreconditioner(
+    preconditionedSourcePoints,
+    preconditionedTargetPoints);
 }
 
 //-----------------------------------------------------------------------------
-template <class PointType>
+template<class PointType>
 void RansacRigidTransformationModel<PointType>::allocate_(const size_t & numberOfCorrespondences)
 {
-  if (bestInlierCorrespondences_.capacity() < numberOfCorrespondences){
+  if (bestInlierCorrespondences_.capacity() < numberOfCorrespondences) {
     sortedCorrespondences_.reserve(numberOfCorrespondences);
     bestInlierCorrespondences_.reserve(numberOfCorrespondences);
     inlierCorrespondences_.reserve(numberOfCorrespondences);
@@ -186,55 +206,58 @@ void RansacRigidTransformationModel<PointType>::allocate_(const size_t & numberO
 }
 
 //-----------------------------------------------------------------------------
-template <class PointType>
+template<class PointType>
 size_t RansacRigidTransformationModel<PointType>::getNumberOfPoints() const
 {
   return numberOfSourcePointsInCorrespondences_;
 }
 
 //-----------------------------------------------------------------------------
-template <class PointType>
-bool RansacRigidTransformationModel<PointType>::draw(const double &modelDeviationError)
+template<class PointType>
+bool RansacRigidTransformationModel<PointType>::draw(const double & modelDeviationError)
 {
   std::vector<Correspondence> sampleCorrespondences =
-      randomCorrespondences_.drawPoints(*sourcePoints_, *correspondences_,
-                                        getNumberOfPointsToDrawModel());
+    randomCorrespondences_.drawPoints(
+    *sourcePoints_, *correspondences_,
+    getNumberOfPointsToDrawModel());
 
   //  for(size_t n=0, N=sampleCorrespondences.size() ; n< N ;++n)
   //      std::cout << sampleCorrespondences[n].sourcePointIndex << " "<< sampleCorrespondences[n].targetPointIndex <<std::endl;
 
-  compute_(precondionedSourcePoints_,
-           precondionedTargetPoints_,
-           sampleCorrespondences);
+  compute_(
+    precondionedSourcePoints_,
+    precondionedTargetPoints_,
+    sampleCorrespondences);
 
-  return check_(*sourcePoints_,
-                *targetPoints_,
-                sampleCorrespondences,
-                modelDeviationError);
+  return check_(
+    *sourcePoints_,
+    *targetPoints_,
+    sampleCorrespondences,
+    modelDeviationError);
 }
 
 
 //-----------------------------------------------------------------------------
-template <class PointType>
-size_t RansacRigidTransformationModel<PointType>::countInliers(const double &modelDeviationError)
+template<class PointType>
+size_t RansacRigidTransformationModel<PointType>::countInliers(const double & modelDeviationError)
 {
-  const PointSet<PointType> & sourcePoints = * sourcePoints_;
-  const PointSet<PointType> & targetPoints = * targetPoints_;
+  const PointSet<PointType> & sourcePoints = *sourcePoints_;
+  const PointSet<PointType> & targetPoints = *targetPoints_;
 
   // Find inliers points Indexes
   inlierCorrespondences_.clear();
   assert(inlierCorrespondences_.capacity() >= correspondences_->size());
 
   PointType projectedSourcePoint;
-  Scalar threshold = 9*modelDeviationError*modelDeviationError;
-  for (size_t n=0, N= sortedCorrespondences_.size();n < N;n++){
+  Scalar threshold = 9 * modelDeviationError * modelDeviationError;
+  for (size_t n = 0, N = sortedCorrespondences_.size(); n < N; n++) {
     const size_t sourcePointIndex = sortedCorrespondences_[n].sourcePointIndex;
     const size_t targetPointIndex = sortedCorrespondences_[n].targetPointIndex;
     projection(transformation_, sourcePoints[sourcePointIndex], projectedSourcePoint);
-    Scalar squareError = (targetPoints[targetPointIndex]-projectedSourcePoint).array().square().sum();
+    Scalar squareError =
+      (targetPoints[targetPointIndex] - projectedSourcePoint).array().square().sum();
 
-    if (squareError < threshold)
-    {
+    if (squareError < threshold) {
       // std::cout << " inlier "
       //           << sourcePointIndex <<" "
       //           << targetPointIndex << " "
@@ -245,23 +268,25 @@ size_t RansacRigidTransformationModel<PointType>::countInliers(const double &mod
 
 
   // Compute root mean square error
-  std::unique(std::begin(inlierCorrespondences_),
-              std::end(inlierCorrespondences_),
-              equalTargetIndexesPredicate);
+  std::unique(
+    std::begin(inlierCorrespondences_),
+    std::end(inlierCorrespondences_),
+    equalTargetIndexesPredicate);
 
-  double rootMeanSquareError = 0 ;
-  for (size_t n=0, N = inlierCorrespondences_.size(); n < N;++n)
-    rootMeanSquareError+=inlierCorrespondences_[n].squareDistanceBetweenPoints;
+  double rootMeanSquareError = 0;
+  for (size_t n = 0, N = inlierCorrespondences_.size(); n < N; ++n) {
+    rootMeanSquareError += inlierCorrespondences_[n].squareDistanceBetweenPoints;
+  }
   rootMeanSquareError /= double(inlierCorrespondences_.size());
   rootMeanSquareError = std::sqrt(rootMeanSquareError);
 
   // Backup inliers correspondences
   if (inlierCorrespondences_.size() >= getMinimalNumberOfInliers() &&
-     rootMeanSquareError < modelDeviationError)
+    rootMeanSquareError < modelDeviationError)
   {
     if (inlierCorrespondences_.size() > bestInlierCorrespondences_.size() ||
-       (inlierCorrespondences_.size() == bestInlierCorrespondences_.size() &&
-        rootMeanSquareError < bestRootMeanSquareError_))
+      (inlierCorrespondences_.size() == bestInlierCorrespondences_.size() &&
+      rootMeanSquareError < bestRootMeanSquareError_))
     {
       bestInlierCorrespondences_ = inlierCorrespondences_;
       bestRootMeanSquareError_ = rootMeanSquareError;
@@ -272,44 +297,46 @@ size_t RansacRigidTransformationModel<PointType>::countInliers(const double &mod
 
 
 //-----------------------------------------------------------------------------
-template <class PointType>
+template<class PointType>
 void RansacRigidTransformationModel<PointType>::refine()
 {
-  compute_(precondionedSourcePoints_,
-           precondionedTargetPoints_,
-           bestInlierCorrespondences_);
+  compute_(
+    precondionedSourcePoints_,
+    precondionedTargetPoints_,
+    bestInlierCorrespondences_);
 }
 
 //-----------------------------------------------------------------------------
-template <class PointType> bool
-RansacRigidTransformationModel<PointType>::
-check_(const PointSet<PointType> & sourcePoints,
-       const PointSet<PointType> & targetPoints,
-       const std::vector<Correspondence> & sampleCorrespondences,
-       const double &modelDeviationError)
+template<class PointType>
+bool
+RansacRigidTransformationModel<PointType>::check_(
+  const PointSet<PointType> & sourcePoints,
+  const PointSet<PointType> & targetPoints,
+  const std::vector<Correspondence> & sampleCorrespondences,
+  const double & modelDeviationError)
 {
   float mse = 0;
   PointType projectedSourcePoint;
-  for (size_t n=0, N=sampleCorrespondences.size(); n < N ; ++n){
+  for (size_t n = 0, N = sampleCorrespondences.size(); n < N; ++n) {
     const size_t sourcePointIndex = sampleCorrespondences[n].sourcePointIndex;
     const size_t targetPointIndex = sampleCorrespondences[n].targetPointIndex;
     // transformation_(sourcePoints[sourcePointIndex], projectedSourcePoint);
     projection(transformation_, sourcePoints[sourcePointIndex], projectedSourcePoint);
-    mse += (targetPoints[targetPointIndex]-projectedSourcePoint).array().square().sum();
+    mse += (targetPoints[targetPointIndex] - projectedSourcePoint).array().square().sum();
   }
 
-  return (mse/sampleCorrespondences.size()) < modelDeviationError*modelDeviationError;
+  return (mse / sampleCorrespondences.size()) < modelDeviationError * modelDeviationError;
 }
 
 //-----------------------------------------------------------------------------
-template <class PointType>
+template<class PointType>
 double RansacRigidTransformationModel<PointType>::getRootMeanSquareError() const
 {
   return bestRootMeanSquareError_;
 }
 
 //-----------------------------------------------------------------------------
-template <class PointType>
+template<class PointType>
 const typename RansacRigidTransformationModel<PointType>::TransformationMatrixType &
 RansacRigidTransformationModel<PointType>::getTransformation()const
 {

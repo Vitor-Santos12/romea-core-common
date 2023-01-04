@@ -1,11 +1,16 @@
-// std
-#include <iostream>
-#include <chrono>
+
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
 
 // gtest
 #include <gtest/gtest.h>
 
-//romea
+// std
+#include <iostream>
+#include <chrono>
+
+
+// romea
 #include "romea_core_common/containers/grid/GridIndexMapping.hpp"
 #include "romea_core_common/containers/grid/WrappableGrid.hpp"
 #include "romea_core_common/containers/grid/RayTracing.hpp"
@@ -67,7 +72,7 @@ TEST(TestContainers, testRayCasting2d)
 }
 
 //-----------------------------------------------------------------------------
-TEST(TestContainers,testRayIterativeCasting2d)
+TEST(TestContainers, testRayIterativeCasting2d)
 {
 
   typedef typename romea::GridIndexMapping2d::PointType PointType;
@@ -87,8 +92,7 @@ TEST(TestContainers,testRayIterativeCasting2d)
   CellIndexes cellIndexes = originPointIndexes;
 
   ray[0] = originPointIndexes;
-  for (size_t n = 1; n < rayNumberOfCells; n++)
-  {
+  for (size_t n = 1; n < rayNumberOfCells; n++) {
     rayCasting.next(cellIndexes);
     ray[n] = cellIndexes;
   }
@@ -146,12 +150,10 @@ TEST(TestContainers, testRayCasting3d)
 ////  CellIndexes endPointIndexes = rayCasting.getEndPointIndexes();
 
 
-
 //  CellIndexes nextPointIndexes=rayCasting.getOriginPointIndexes();
 //  rayCasting.next(nextPointIndexes);
 
 //}
-
 
 
 ////-----------------------------------------------------------------------------
@@ -207,7 +209,8 @@ TEST(TestContainers, testRayCasting3d)
 
 
 //-----------------------------------------------------------------------------
-int main(int argc, char **argv){
+int main(int argc, char ** argv)
+{
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }

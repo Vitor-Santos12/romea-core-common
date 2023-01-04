@@ -1,3 +1,6 @@
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
 // gtest
 #include <gtest/gtest.h>
 
@@ -55,12 +58,12 @@ TEST(TestAlgorithm, testSignedFloor)
 //-----------------------------------------------------------------------------
 TEST(TestAlgorithm, testIsApproximatelyEqual)
 {
-   EXPECT_EQ(true, romea::isApproximatelyEqual(1.0, 1.0, 1e-10));
-   EXPECT_EQ(false, romea::isApproximatelyEqual(-1.0, 1.0));
-   EXPECT_EQ(true, romea::isApproximatelyEqual(-1.0, -1.0));
-   EXPECT_EQ(true, romea::isApproximatelyEqual(1.0, 2.0/2.0));
-   EXPECT_EQ(true, romea::isApproximatelyEqual(1000.0, 999.5, 1e-3));
-   EXPECT_EQ(false, romea::isApproximatelyEqual(1000.0, 999.0, 1e-3));
+  EXPECT_EQ(true, romea::isApproximatelyEqual(1.0, 1.0, 1e-10));
+  EXPECT_EQ(false, romea::isApproximatelyEqual(-1.0, 1.0));
+  EXPECT_EQ(true, romea::isApproximatelyEqual(-1.0, -1.0));
+  EXPECT_EQ(true, romea::isApproximatelyEqual(1.0, 2.0 / 2.0));
+  EXPECT_EQ(true, romea::isApproximatelyEqual(1000.0, 999.5, 1e-3));
+  EXPECT_EQ(false, romea::isApproximatelyEqual(1000.0, 999.0, 1e-3));
 }
 
 // TEST(TestAlgorithm,testDefinitelyGreaterThan)
@@ -84,7 +87,8 @@ TEST(TestAlgorithm, testIsApproximatelyEqual)
 //}
 
 //-----------------------------------------------------------------------------
-int main(int argc, char **argv){
+int main(int argc, char ** argv)
+{
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }

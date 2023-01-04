@@ -1,3 +1,6 @@
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
 // romea
 #include "romea_core_common/transform/SmartRotation3D.hpp"
 
@@ -5,8 +8,8 @@ namespace romea
 {
 
 //-----------------------------------------------------------------------------
-SmartRotation3D::SmartRotation3D():
-  Rx_(Eigen::Matrix3d::Identity()),
+SmartRotation3D::SmartRotation3D()
+: Rx_(Eigen::Matrix3d::Identity()),
   Ry_(Eigen::Matrix3d::Identity()),
   Rz_(Eigen::Matrix3d::Identity()),
   R_(Eigen::Matrix3d::Identity()),
@@ -17,28 +20,29 @@ SmartRotation3D::SmartRotation3D():
   dRdAngleY_(Eigen::Matrix3d::Zero()),
   dRdAngleZ_(Eigen::Matrix3d::Zero())
 {
-
 }
 
 //-----------------------------------------------------------------------------
-SmartRotation3D::SmartRotation3D(const double & angleAroundXAxis,
-                                 const double & angleAroundYAxis,
-                                 const double & angleAroundZAxis):
-  SmartRotation3D()
+SmartRotation3D::SmartRotation3D(
+  const double & angleAroundXAxis,
+  const double & angleAroundYAxis,
+  const double & angleAroundZAxis)
+: SmartRotation3D()
 {
   init(angleAroundXAxis, angleAroundYAxis, angleAroundZAxis);
 }
 
 //-----------------------------------------------------------------------------
-SmartRotation3D::SmartRotation3D(const Eigen::Vector3d &angles):
-  SmartRotation3D(angles[0], angles[1], angles[2])
+SmartRotation3D::SmartRotation3D(const Eigen::Vector3d & angles)
+: SmartRotation3D(angles[0], angles[1], angles[2])
 {
 }
 
 //-----------------------------------------------------------------------------
-void SmartRotation3D::init(const double & angleAroundXAxis,
-                           const double & angleAroundYAxis,
-                           const double & angleAroundZAxis)
+void SmartRotation3D::init(
+  const double & angleAroundXAxis,
+  const double & angleAroundYAxis,
+  const double & angleAroundZAxis)
 {
   double cosx = std::cos(angleAroundXAxis);
   double sinx = std::sin(angleAroundXAxis);
@@ -68,7 +72,7 @@ void SmartRotation3D::init(const double & angleAroundXAxis,
   Rz_(1, 1) = cosz;
 
   // Compute R
-  R_ = Rz_*Ry_*Rx_;
+  R_ = Rz_ * Ry_ * Rx_;
 
   // compute derivative of Rx with respect x axis angle
   dRxdAngleX_(1, 1) = -sinx;
@@ -89,13 +93,13 @@ void SmartRotation3D::init(const double & angleAroundXAxis,
   dRzdAngleZ_(1, 1) = -sinz;
 
   // compute derivative of R with respect x y z axis angles
-  dRdAngleX_ = Rz_*Ry_*dRxdAngleX_;
-  dRdAngleY_ = Rz_*dRydAngleY_*Rx_;
-  dRdAngleZ_ = dRzdAngleZ_*Ry_*Rx_;
+  dRdAngleX_ = Rz_ * Ry_ * dRxdAngleX_;
+  dRdAngleY_ = Rz_ * dRydAngleY_ * Rx_;
+  dRdAngleZ_ = dRzdAngleZ_ * Ry_ * Rx_;
 }
 
 //-----------------------------------------------------------------------------
-void SmartRotation3D::init(const Eigen::Vector3d &angles)
+void SmartRotation3D::init(const Eigen::Vector3d & angles)
 {
   init(angles[0], angles[1], angles[2]);
 }
@@ -103,7 +107,7 @@ void SmartRotation3D::init(const Eigen::Vector3d &angles)
 //-----------------------------------------------------------------------------
 Eigen::Vector3d SmartRotation3D::operator*(const Eigen::Vector3d & T)const
 {
-  return R_*T;
+  return R_ * T;
 }
 
 //-----------------------------------------------------------------------------
@@ -116,9 +120,9 @@ const Eigen::Matrix3d & SmartRotation3D::R() const
 Eigen::Matrix3d SmartRotation3D::dRTdAngles(const Eigen::Vector3d & T) const
 {
   Eigen::Matrix3d dRTdAngles;
-  dRTdAngles.col(0)= dRdAngleX_ * T;
-  dRTdAngles.col(1)= dRdAngleY_ * T;
-  dRTdAngles.col(2)= dRdAngleZ_ * T;
+  dRTdAngles.col(0) = dRdAngleX_ * T;
+  dRTdAngles.col(1) = dRdAngleY_ * T;
+  dRTdAngles.col(2) = dRdAngleZ_ * T;
   return dRTdAngles;
 }
 

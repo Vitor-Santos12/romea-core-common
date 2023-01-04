@@ -1,11 +1,15 @@
-#ifndef ROMEA_CORE_COMMON_CONCURRENCY_SHAREDVARIABLE_HPP_ 
-#define ROMEA_CORE_COMMON_CONCURRENCY_SHAREDVARIABLE_HPP_ 
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+#ifndef ROMEA_CORE_COMMON__CONCURRENCY__SHAREDVARIABLE_HPP_
+#define ROMEA_CORE_COMMON__CONCURRENCY__SHAREDVARIABLE_HPP_
 
 #include <mutex>
 
-namespace romea {
+namespace romea
+{
 
-template <typename T>
+template<typename T>
 class SharedVariable
 {
 public:
@@ -16,8 +20,7 @@ public:
   SharedVariable(const SharedVariable &) = delete;
   SharedVariable & operator=(const SharedVariable &) = delete;
 
-public :
-
+public:
   operator T() const;
   void store(const T & value);
   T load() const;
@@ -28,22 +31,22 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-template <typename T>
-SharedVariable<T>::SharedVariable() :
-  value_(T()), mutex_()
+template<typename T>
+SharedVariable<T>::SharedVariable()
+: value_(T()), mutex_()
 {
 }
 
 //-----------------------------------------------------------------------------
-template <typename T>
-SharedVariable<T>::SharedVariable(const T & value) :
-  value_(value), mutex_()
+template<typename T>
+SharedVariable<T>::SharedVariable(const T & value)
+: value_(value), mutex_()
 {
 
 }
 
 //-----------------------------------------------------------------------------
-template <typename T>
+template<typename T>
 SharedVariable<T> & SharedVariable<T>::operator=(const T & value)
 {
   store(value);
@@ -51,14 +54,14 @@ SharedVariable<T> & SharedVariable<T>::operator=(const T & value)
 }
 
 //-----------------------------------------------------------------------------
-template <typename T>
+template<typename T>
 SharedVariable<T>::operator T() const
 {
   return load();
 }
 
 //-----------------------------------------------------------------------------
-template <typename T>
+template<typename T>
 void SharedVariable<T>::store(const T & value)
 {
   std::lock_guard<std::mutex> lock(mutex_);
@@ -66,7 +69,7 @@ void SharedVariable<T>::store(const T & value)
 }
 
 //-----------------------------------------------------------------------------
-template <typename T>
+template<typename T>
 T SharedVariable<T>::load() const
 {
   std::lock_guard<std::mutex> lock(mutex_);
@@ -75,4 +78,4 @@ T SharedVariable<T>::load() const
 
 }  // namespace romea
 
-#endif  // ROMEA_CORE_COMMON_CONCURRENCY_SHAREDVARIABLE_HPP_ 
+#endif  // ROMEA_CORE_COMMON__CONCURRENCY__SHAREDVARIABLE_HPP_

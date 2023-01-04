@@ -1,3 +1,6 @@
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
 // gtest
 #include <gtest/gtest.h>
 
@@ -66,7 +69,9 @@ TEST(TestLexical, testStringToUnsignedLong)
 {
   EXPECT_EQ(romea::lexical_cast<unsigned long>("10"), 10);
   EXPECT_EQ(romea::lexical_cast<unsigned long>("-4"), static_cast<unsigned long>(-4));
-  EXPECT_THROW(romea::lexical_cast<unsigned long>("100000000000000000000000000000000000000000"), std::out_of_range);
+  EXPECT_THROW(
+    romea::lexical_cast<unsigned long>(
+      "100000000000000000000000000000000000000000"), std::out_of_range);
   EXPECT_THROW(romea::lexical_cast<unsigned long>("3.14"), std::invalid_argument);
   EXPECT_THROW(romea::lexical_cast<unsigned long>("string"), std::invalid_argument);
 }
@@ -76,13 +81,16 @@ TEST(TestLexical, testStringToUnsignedLongLong)
 {
   EXPECT_EQ(romea::lexical_cast<unsigned long long>("10"), 10);
   EXPECT_EQ(romea::lexical_cast<unsigned long long>("-100"), static_cast<unsigned long long>(-100));
-  EXPECT_THROW(romea::lexical_cast<unsigned long long>("100000000000000000000000000000000000000000"), std::out_of_range);
+  EXPECT_THROW(
+    romea::lexical_cast<unsigned long long>(
+      "100000000000000000000000000000000000000000"), std::out_of_range);
   EXPECT_THROW(romea::lexical_cast<unsigned long long>("3.14"), std::invalid_argument);
   EXPECT_THROW(romea::lexical_cast<unsigned long long>("string"), std::invalid_argument);
 }
 
 //-----------------------------------------------------------------------------
-int main(int argc, char **argv){
+int main(int argc, char ** argv)
+{
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }

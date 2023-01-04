@@ -1,5 +1,8 @@
-#ifndef ROMEA_CORE_COMMON_GEODESY_ECEFCONVERTER_HPP_
-#define ROMEA_CORE_COMMON_GEODESY_ECEFCONVERTER_HPP_
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+#ifndef ROMEA_CORE_COMMON__GEODESY__ECEFCONVERTER_HPP_
+#define ROMEA_CORE_COMMON__GEODESY__ECEFCONVERTER_HPP_
 
 // Eigen
 #include <Eigen/Core>
@@ -8,7 +11,8 @@
 #include "romea_core_common/geodesy/GeodeticCoordinates.hpp"
 #include "romea_core_common/geodesy/EarthEllipsoid.hpp"
 
-namespace romea {
+namespace romea
+{
 
 class ECEFConverter
 {
@@ -25,4 +29,4 @@ protected:
 
 }  // namespace romea
 
-#endif  // ROMEA_CORE_COMMON_GEODESY_ECEFCONVERTER_HPP_
+#endif  // ROMEA_CORE_COMMON__GEODESY__ECEFCONVERTER_HPP_

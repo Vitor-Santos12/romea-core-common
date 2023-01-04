@@ -1,7 +1,9 @@
-#ifndef romea_WGS84Coordinates_hpp
-#define romea_WGS84Coordinates_hpp
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
 
-//std
+#ifndef ROMEA_CORE_COMMON_GEODESY_WGS84COORDINATES_HPP_
+#define ROMEA_CORE_COMMON_GEODESY_WGS84COORDINATES_HPP_
+
 #include <ostream>
 
 namespace romea {
@@ -17,6 +19,6 @@ WGS84Coordinates makeWGS84Coordinates(const double & latitude,
 
 std::ostream & operator<<(std::ostream & os, const WGS84Coordinates & wgs84Coordinates);
 
-}
+}  // namespace romea
 
-#endif
+#endif  // ROMEA_CORE_COMMON_GEODESY_WGS84COORDINATES_HPP_

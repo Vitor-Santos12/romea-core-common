@@ -1,14 +1,18 @@
-#ifndef ROMEA_CORE_COMMON_CONTAINERS_EIGEN_RINGOFEIGENVECTOR_HPP_ 
-#define ROMEA_CORE_COMMON_CONTAINERS_EIGEN_RINGOFEIGENVECTOR_HPP_ 
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+#ifndef ROMEA_CORE_COMMON__CONTAINERS__EIGEN__RINGOFEIGENVECTOR_HPP_
+#define ROMEA_CORE_COMMON__CONTAINERS__EIGEN__RINGOFEIGENVECTOR_HPP_
 
 #include "romea_core_common/containers/Eigen/VectorOfEigenVector.hpp"
 
-namespace romea {
+namespace romea
+{
 
-template <class EigenVectorType>
+template<class EigenVectorType>
 class RingOfEigenVector
 {
-public :
+public:
   explicit RingOfEigenVector(size_t ringSize);
 
   void append(const EigenVectorType & position);
@@ -25,16 +29,16 @@ public :
 
   size_t ringIndex_;
 
-private :
+private:
   size_t ringSize_;
   VectorOfEigenVector<EigenVectorType> ring_;
 };
 
 
 //-----------------------------------------------------------------------------
-template <class EigenVectorType>
-RingOfEigenVector<EigenVectorType>::RingOfEigenVector(size_t ringSize):
-  ringSize_(ringSize),
+template<class EigenVectorType>
+RingOfEigenVector<EigenVectorType>::RingOfEigenVector(size_t ringSize)
+: ringSize_(ringSize),
   ringIndex_(-1),
   ring_()
 {
@@ -42,54 +46,54 @@ RingOfEigenVector<EigenVectorType>::RingOfEigenVector(size_t ringSize):
 }
 
 //-----------------------------------------------------------------------------
-template <class EigenVectorType>
+template<class EigenVectorType>
 VectorOfEigenVector<EigenVectorType> & RingOfEigenVector<EigenVectorType>::get()
 {
   return ring_;
 }
 
 //-----------------------------------------------------------------------------
-template <class EigenVectorType>
+template<class EigenVectorType>
 const VectorOfEigenVector<EigenVectorType> & RingOfEigenVector<EigenVectorType>::get() const
 {
   return ring_;
 }
 
 //-----------------------------------------------------------------------------
-template <class EigenVectorType>
+template<class EigenVectorType>
 void RingOfEigenVector<EigenVectorType>::append(const EigenVectorType & position)
 {
-  ringIndex_ = (ringIndex_+1)%ringSize_ ;
+  ringIndex_ = (ringIndex_ + 1) % ringSize_;
 
-  if (ring_.size() == ringSize_)
-  {
-    ring_[ringIndex_]= position;
-  }else{
+  if (ring_.size() == ringSize_) {
+    ring_[ringIndex_] = position;
+  } else {
     ring_.push_back(position);
   }
 }
 
 //-----------------------------------------------------------------------------
-template <class EigenVectorType>
+template<class EigenVectorType>
 void RingOfEigenVector<EigenVectorType>::clear()
 {
   ring_.clear();
 }
 
 //-----------------------------------------------------------------------------
-template <class EigenVectorType>
+template<class EigenVectorType>
 size_t RingOfEigenVector<EigenVectorType>::size()const
 {
   return ring_.size();
 }
 
 //-----------------------------------------------------------------------------
-template <class EigenVectorType>
+template<class EigenVectorType>
 const EigenVectorType & RingOfEigenVector<EigenVectorType>::operator[](size_t n) const
 {
-  return ring_[(ringIndex_-n)%ring_.size()];
+  return ring_[(ringIndex_ - n) % ring_.size()];
 }
 
 
 }  // namespace romea
-#endif  // ROMEA_CORE_COMMON_CONTAINERS_EIGEN_RINGOFEIGENVECTOR_HPP_ 
+
+#endif  // ROMEA_CORE_COMMON__CONTAINERS__EIGEN__RINGOFEIGENVECTOR_HPP_

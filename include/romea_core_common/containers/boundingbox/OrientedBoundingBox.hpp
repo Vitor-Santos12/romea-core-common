@@ -1,28 +1,33 @@
-#ifndef ROMEA_CORE_COMMON_CONTAINERS_BOUNDINGBOX_ORIENTEDBOUNDINGBOX_HPP_
-#define ROMEA_CORE_COMMON_CONTAINERS_BOUNDINGBOX_ORIENTEDBOUNDINGBOX_HPP_
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+#ifndef ROMEA_CORE_COMMON__CONTAINERS__BOUNDINGBOX__ORIENTEDBOUNDINGBOX_HPP_
+#define ROMEA_CORE_COMMON__CONTAINERS__BOUNDINGBOX__ORIENTEDBOUNDINGBOX_HPP_
 
 #include "romea_core_common/containers/boundingbox/AxisAlignedBoundingBox.hpp"
 
-namespace romea {
+namespace romea
+{
 
-template <typename Scalar, size_t DIM>
+template<typename Scalar, size_t DIM>
 class OrientedBoundingBox
 {
-public :
+public:
   using AABBType = AxisAlignedBoundingBox<Scalar, DIM>;
   using PointType = Eigen::Matrix<Scalar, DIM, 1>;
-  using RotationType = Eigen::Matrix<Scalar, DIM, DIM> ;
+  using RotationType = Eigen::Matrix<Scalar, DIM, DIM>;
 
-public :
+public:
   OrientedBoundingBox();
 
-  OrientedBoundingBox(const PointType & centerPosition,
-                      const PointType & halfWidthExtents,
-                      const RotationType & rotation);
+  OrientedBoundingBox(
+    const PointType & centerPosition,
+    const PointType & halfWidthExtents,
+    const RotationType & rotation);
 
   virtual ~OrientedBoundingBox() = default;
 
-public :
+public:
   const PointType & getCenterPosition()const;
 
   const PointType & getHalfWidthExtents()const;
@@ -33,7 +38,7 @@ public :
 
   virtual bool isInside(const PointType & point) const;
 
-protected :
+protected:
   AABBType aabb_;
   RotationType rotation_;
 };
@@ -45,4 +50,4 @@ typedef OrientedBoundingBox<double, 3> OrientedBoundingBox3d;
 
 }  // namespace romea
 
-#endif  // ROMEA_CORE_COMMON_CONTAINERS_BOUNDINGBOX_ORIENTEDBOUNDINGBOX_HPP_
+#endif  // ROMEA_CORE_COMMON__CONTAINERS__BOUNDINGBOX__ORIENTEDBOUNDINGBOX_HPP_

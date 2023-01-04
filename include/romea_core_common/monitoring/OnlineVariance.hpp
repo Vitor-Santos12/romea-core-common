@@ -1,13 +1,21 @@
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
 #ifndef ROMEA_CORE_COMMON_MONITORING_ONLINEVARIANCE_HPP_
 #define ROMEA_CORE_COMMON_MONITORING_ONLINEVARIANCE_HPP_
 
+// std
+#include <vector>
+
+// local
 #include "romea_core_common/monitoring/OnlineAverage.hpp"
 
-namespace romea {
+namespace romea
+{
 
 class OnlineVariance : public OnlineAverage
 {
-public :
+public:
   explicit OnlineVariance(const double & averagePrecision);
 
   OnlineVariance(const double & averagePrecision, size_t windowSize);
@@ -16,16 +24,16 @@ public :
 
   virtual ~OnlineVariance() = default;
 
-public :
+public:
   void setWindowSize(const size_t & windowSize) override;
 
-  void update(const double &value) override;
+  void update(const double & value) override;
 
   void reset() override;
 
   double getVariance()const;
 
-private :
+private:
   size_t windowSizeMinusOne_;
   int squaredMultiplier_;
 

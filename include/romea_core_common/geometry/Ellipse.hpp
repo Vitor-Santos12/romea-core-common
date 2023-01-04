@@ -1,30 +1,37 @@
-#ifndef ROMEA_CORE_COMMON_GEOMETRY_ELLIPSE_HPP_
-#define ROMEA_CORE_COMMON_GEOMETRY_ELLIPSE_HPP_
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+#ifndef ROMEA_CORE_COMMON__GEOMETRY__ELLIPSE_HPP_
+#define ROMEA_CORE_COMMON__GEOMETRY__ELLIPSE_HPP_
 
 // Eigen
 #include <Eigen/Core>
 
-namespace romea {
+namespace romea
+{
 
-class Ellipse{
-public :
-  Ellipse(const double & xCenter,
-          const double & yCenter,
-          const double & orientation,
-          const double & majorRadius,
-          const double & minorRadius);
+class Ellipse
+{
+public:
+  Ellipse(
+    const double & xCenter,
+    const double & yCenter,
+    const double & orientation,
+    const double & majorRadius,
+    const double & minorRadius);
 
-  Ellipse(const Eigen::Vector2d & centerPosition,
-          const double & orientation,
-          const double & majorRadius,
-          const double & minorRadius);
+  Ellipse(
+    const Eigen::Vector2d & centerPosition,
+    const double & orientation,
+    const double & majorRadius,
+    const double & minorRadius);
 
-  Ellipse(const Eigen::Vector2d &centerPosition,
-          const Eigen::Matrix2d &covarianceMatrix,
-          const double & sigmaScale);
+  Ellipse(
+    const Eigen::Vector2d & centerPosition,
+    const Eigen::Matrix2d & covarianceMatrix,
+    const double & sigmaScale);
 
-public :
-
+public:
   const Eigen::Vector2d & getCenterPosition()const;
 
   const double & getOrientation()const;
@@ -33,8 +40,7 @@ public :
 
   const double & getMinorRadius()const;
 
-protected :
-
+protected:
   Eigen::Vector2d centerPosition_;
   double orientation_;
   double majorRadius_;
@@ -48,4 +54,4 @@ public:
 }  // namespace romea
 
 
-#endif  // ROMEA_CORE_COMMON_GEOMETRY_ELLIPSE_HPP_
+#endif  // ROMEA_CORE_COMMON__GEOMETRY__ELLIPSE_HPP_
