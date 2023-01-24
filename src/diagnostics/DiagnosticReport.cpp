@@ -18,7 +18,7 @@ DiagnosticReport::DiagnosticReport()
 std::ostream & operator<<(std::ostream & os, const DiagnosticReport & report)
 {
   os << " Messages : " << std::endl;
-  for (const auto message : report.diagnostics) {
+  for (const auto & message : report.diagnostics) {
     os << " " << message << std::endl;
   }
   os << " Additional info :" << std::endl;
