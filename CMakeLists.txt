@@ -37,6 +37,7 @@ add_library(${PROJECT_NAME} SHARED
   src/geodesy/EarthEllipsoid.cpp
   src/geodesy/ECEFConverter.cpp
   src/geodesy/ENUConverter.cpp
+  src/geodesy/LambertConverter.cpp
   src/geodesy/GeodeticCoordinates.cpp
   src/geodesy/WGS84Coordinates.cpp
   src/monitoring/RateMonitoring.cpp
