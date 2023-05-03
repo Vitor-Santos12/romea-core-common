@@ -1,21 +1,3 @@
-# cache:
-#   paths:
-#     - ccache/
-
-# melodic_catkin_tests:
-#   image: ros:melodic-robot
-#   stage: build
-#   before_script:
-#    - apt update >/dev/null && apt install -y git >/dev/null
-#    - git clone https://gitlab.com/VictorLamoine/ros_gitlab_ci.git
-#    - source ros_gitlab_ci/gitlab-ci.bash >/dev/null
-#    - apt-get install -y -qq libgtest-dev
-#    - (cd /usr/src/gtest; cmake . && make && cp *.a /usr/lib/)
-#   script:
-#    - catkin build romea_core_common --cmake-args -DBUILD_TESTS=ON
-#    - cd build/romea_core_common
-#    - GTEST_COLOR=1 ctest --output-on-failure
-
 before_script:
   # Install ssh-agent if not already installed, it is required by Docker.
   - "apt-get -qq update -y"
@@ -44,7 +26,7 @@ noetic_catkin_build:
   stage: build
   script:
     - catkin init
-    - catkin build romea_core_common --cmake-args -DBUILD_TESTS=ON
+    - catkin build --cmake-args -DBUILD_TESTS=ON
     - cd build/romea_core_common
     - GTEST_COLOR=1 ctest --output-on-failure
 
