@@ -37,18 +37,14 @@ before_script:
   - vcs import src < ${CI_PROJECT_DIR}/${CI_PROJECT_NAME}.repos
   - rosdep install --from-paths src --ignore-src -y --as-root apt:false
 
-# # noetic
-# noetic_catkin_build:
-#   image: ros:noetic-robot
-#   stage: test
-#   before_script:
-#    - apt update >/dev/null && apt install -y git >/dev/null
-#    - git clone https://gitlab.com/VictorLamoine/ros_gitlab_ci.git
-#    - source ros_gitlab_ci/gitlab-ci.bash >/dev/null
-#   script:
-#    - catkin build romea_core_common --cmake-args -DBUILD_TESTS=ON
-#    - cd build/romea_core_common
-#    - GTEST_COLOR=1 ctest --output-on-failure
+# noetic
+noetic_catkin_build:
+  image: ros:noetic-robot
+  stage: buil
+  script:
+    - catkin build romea_core_common --cmake-args -DBUILD_TESTS=ON
+    - cd build/romea_core_common
+    - GTEST_COLOR=1 ctest --output-on-failure
 
 # galatic
 galactic_focal_build:
