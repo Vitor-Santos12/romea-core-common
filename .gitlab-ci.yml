@@ -41,7 +41,10 @@ before_script:
 noetic_catkin_build:
   image: ros:noetic-robot
   stage: build
+  before_script:
+    - "apt-get -qq install python3-catkin sudo -y"
   script:
+    - catkin init
     - catkin build romea_core_common --cmake-args -DBUILD_TESTS=ON
     - cd build/romea_core_common
     - GTEST_COLOR=1 ctest --output-on-failure
