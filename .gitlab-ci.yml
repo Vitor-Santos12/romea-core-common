@@ -40,7 +40,7 @@ before_script:
 # noetic
 noetic_catkin_build:
   image: ros:noetic-robot
-  stage: buil
+  stage: build
   script:
     - catkin build romea_core_common --cmake-args -DBUILD_TESTS=ON
     - cd build/romea_core_common
