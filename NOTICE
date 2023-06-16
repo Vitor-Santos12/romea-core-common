@@ -1,0 +1,6 @@
+romea_core_common
+Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+
+This product includes software components originally developed in nanoflann library 
+(https://github.com/jlblancoc/nanoflann), licensed under the BSD License. 
+
