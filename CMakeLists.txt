@@ -57,6 +57,7 @@ add_library(${PROJECT_NAME} SHARED
   src/pointset/KdTree.cpp
   src/signal/Noise.cpp
   src/signal/FirstOrderButterworth.cpp
+  src/time/Timer.cpp
   src/transform/estimation/FindRigidTransformationByICP.cpp
   src/transform/estimation/FindRigidTransformationByLeastSquares.cpp
   src/transform/estimation/RansacRigidTransformationModel.cpp
