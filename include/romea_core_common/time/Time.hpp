@@ -32,6 +32,12 @@ using Duration = std::chrono::duration<long long int, std::nano>;
 using TimePoint = std::chrono::time_point<std::chrono::high_resolution_clock>;
 
 //-----------------------------------------------------------------------------
+inline TimePoint now()
+{
+  return std::chrono::high_resolution_clock::now();
+}
+
+//-----------------------------------------------------------------------------
 inline Duration duration(const TimePoint endDate, const TimePoint startDate)
 {
   return std::chrono::duration_cast<Duration>(endDate - startDate);
