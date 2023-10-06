@@ -24,6 +24,13 @@
 namespace romea
 {
 
+
+//-----------------------------------------------------------------------------
+PID::PID(const Parameters & parameters)
+: PID(parameters.kp, parameters.ki, parameters.kp, parameters.imin, parameters.imax)
+{
+}
+
 //-----------------------------------------------------------------------------
 PID::PID(
   const double & kp,

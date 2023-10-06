@@ -70,7 +70,6 @@ target_include_directories( ${PROJECT_NAME} PUBLIC
   $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
   )
 
-message(${EIGEN3_INCLUDE_DIRS})
 target_include_directories( ${PROJECT_NAME} SYSTEM PUBLIC ${EIGEN3_INCLUDE_DIRS})
 target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -O3 -std=c++17)
 

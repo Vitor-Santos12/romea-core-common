@@ -24,6 +24,17 @@ namespace romea
 class PID
 {
 public:
+  struct Parameters
+  {
+    double kp;
+    double ki;
+    double kd;
+    double imin;
+    double imax;
+  };
+
+  PID(const Parameters & parameters);
+
   PID(
     const double & kp,
     const double & ki,
