@@ -20,6 +20,7 @@
 #include <algorithm>
 #include <limits>
 #include <cmath>
+#include <iostream>
 
 namespace romea
 {
@@ -27,7 +28,9 @@ namespace romea
 
 //-----------------------------------------------------------------------------
 PID::PID(const Parameters & parameters)
-: PID(parameters.kp, parameters.ki, parameters.kp, parameters.imin, parameters.imax)
+: PID(parameters.kp, parameters.ki, parameters.kd,
+    parameters.imin, parameters.imax,
+    parameters.error_epsilon)
 {
 }
 
@@ -37,7 +40,8 @@ PID::PID(
   const double & ki,
   const double & kd,
   const double & imin,
-  const double & imax)
+  const double & imax,
+  const double & error_epsilon)
 : dt_(0),
   kp_(kp),
   ki_(ki),
@@ -45,6 +49,8 @@ PID::PID(
   imax_(imax),
   imin_(imin),
   i_(0),
+  d_(0),
+  error_epsilon_(error_epsilon),
   previous_error_(std::numeric_limits<double>::quiet_NaN()),
   previous_error_stamp_()
 {
@@ -75,13 +81,15 @@ double PID::compute(
   const double & measurement)
 {
   double output = 0;
-  double error = measurement - setpoint;
+  double error = setpoint - measurement;
 
   if (std::isfinite(previous_error_)) {
     computeDt_(stamp);
     updateIntegral_(error);
     computeDerivative_(error);
-    output = kp_ * error + ki_ * i_ + kd_ * d_;
+    std::cout << "error" << error << " d " << d_ << " i " << i_ << std::endl;
+    std::cout << "gains " << kp_ << " " << ki_ << "  " << kd_ << std::endl;
+    output = kp_ * setpoint + ki_ * i_ + kd_ * d_;
   }
 
   previous_error_ = error;
@@ -97,13 +105,17 @@ void PID::computeDt_(const Duration & stamp)
 //-----------------------------------------------------------------------------
 void PID::computeDerivative_(const double & error)
 {
-  d_ = error - previous_error_ / dt_;
+  d_ = (error - previous_error_) / dt_;
 }
 
 //-----------------------------------------------------------------------------
 void PID::updateIntegral_(const double & error)
 {
-  i_ = std::clamp(i_ + error * dt_, imin_, imax_);
+  if (std::abs(error) > error_epsilon_) {
+    i_ = std::clamp(i_ + error * dt_, imin_, imax_);
+  } else {
+    i_ = 0;
+  }
 }
 
 }  // namespace romea

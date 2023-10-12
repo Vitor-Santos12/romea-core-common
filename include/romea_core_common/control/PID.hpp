@@ -31,6 +31,7 @@ public:
     double kd;
     double imin;
     double imax;
+    double error_epsilon;
   };
 
   PID(const Parameters & parameters);
@@ -40,7 +41,8 @@ public:
     const double & ki,
     const double & kd,
     const double & imin,
-    const double & imax);
+    const double & imax,
+    const double & error_epsilon);
 
   double compute(
     const Duration & stamp,
@@ -69,6 +71,7 @@ private:
   double imin_;
   double i_;
   double d_;
+  double error_epsilon_;
 
   double previous_error_;
   Duration previous_error_stamp_;
