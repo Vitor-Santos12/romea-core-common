@@ -22,6 +22,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 template<typename Scalar, size_t DIM>
 class RayCasting
@@ -84,6 +86,7 @@ using RayCasting3f = RayCasting<float, 3>;
 using RayCasting2d = RayCasting<double, 2>;
 using RayCasting3d = RayCasting<double, 3>;
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__CONTAINERS__GRID__RAYTRACING_HPP_

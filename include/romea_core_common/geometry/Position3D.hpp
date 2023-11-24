@@ -19,15 +19,20 @@
 // Eigen
 #include <Eigen/Core>
 
-namespace romea {
+namespace romea
+{
+namespace core
+{
 
-struct Position3D {
+struct Position3D
+{
   Position3D();
 
   Eigen::Vector3d position;
   Eigen::Matrix3d covariance;
 };
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__GEOMETRY__POSITION3D_HPP_

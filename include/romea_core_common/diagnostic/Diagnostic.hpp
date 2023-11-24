@@ -25,6 +25,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 struct Diagnostic
 {
@@ -44,6 +46,7 @@ DiagnosticStatus worseStatus(const std::list<Diagnostic> & diagnostics);
 
 bool allOK(const std::list<Diagnostic> & diagnostics);
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__DIAGNOSTIC__DIAGNOSTIC_HPP_

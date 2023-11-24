@@ -21,6 +21,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 template<typename Scalar>
 using CartesianCoordinates2 = Eigen::Matrix<Scalar, 2, 1>;
@@ -37,6 +39,7 @@ using CartesianCoordinates3d = CartesianCoordinates3<double>;
 using CartesianPoint3f = CartesianCoordinates3<float>;
 using CartesianPoint3d = CartesianCoordinates3<double>;
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__COORDINATES__CARTESIANCOORDINATES_HPP_

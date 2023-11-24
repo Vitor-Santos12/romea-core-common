@@ -24,6 +24,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 class OnlineVariance : public OnlineAverage
 {
@@ -54,6 +56,7 @@ private:
   double variance_;
 };
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON_MONITORING_ONLINEVARIANCE_HPP_

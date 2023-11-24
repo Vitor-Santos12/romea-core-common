@@ -36,6 +36,8 @@ void flipNormalTowardOriginCoordinate(const PointType & point, PointType & norma
 
 namespace romea
 {
+namespace core
+{
 
 //-----------------------------------------------------------------------------
 template<class PointType>
@@ -265,4 +267,5 @@ template class NormalAndCurvatureEstimation<HomogeneousCoordinates2d>;
 template class NormalAndCurvatureEstimation<HomogeneousCoordinates3f>;
 template class NormalAndCurvatureEstimation<HomogeneousCoordinates3d>;
 
+}   // namespace core
 }   // namespace romea

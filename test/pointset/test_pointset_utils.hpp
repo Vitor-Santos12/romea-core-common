@@ -24,15 +24,15 @@
 
 //-----------------------------------------------------------------------------
 template<class PointType>
-romea::PointSet<PointType>
+romea::core::PointSet<PointType>
 loadScan(const std::string & filename)
 {
   std::string path = std::string(TEST_DIR);
   std::ifstream data(path + filename);
   //  ASSERT_FALSE(data.is_open());
 
-  romea::PointSet<PointType> scan;
-  if (romea::PointTraits<PointType>::DIM == 2) {
+  romea::core::PointSet<PointType> scan;
+  if (romea::core::PointTraits<PointType>::DIM == 2) {
     PointType p;
     scan.reserve(1081);
     while (!data.eof()) {
@@ -53,13 +53,13 @@ loadScan(const std::string & filename)
 
 //-----------------------------------------------------------------------------
 template<class PointType>
-romea::PointSet<PointType>
+romea::core::PointSet<PointType>
 projectScan(
-  const romea::PointSet<PointType> & sourceScan,
+  const romea::core::PointSet<PointType> & sourceScan,
   const Eigen::Transform<typename PointType::Scalar,
-  romea::PointTraits<PointType>::DIM, Eigen::Affine> & tranformation)
+  romea::core::PointTraits<PointType>::DIM, Eigen::Affine> & tranformation)
 {
-  romea::PointSet<PointType> targetScan(sourceScan.size());
+  romea::core::PointSet<PointType> targetScan(sourceScan.size());
   for (size_t n = 0; n < sourceScan.size(); n++) {
     targetScan[n] = tranformation * sourceScan[n];
   }
@@ -69,19 +69,19 @@ projectScan(
 
 //-----------------------------------------------------------------------------
 template<class PointType>
-romea::NormalSet<PointType>
-computeNormals(const romea::PointSet<PointType> & scan)
+romea::core::NormalSet<PointType>
+computeNormals(const romea::core::PointSet<PointType> & scan)
 {
-  romea::NormalSet<PointType> normals(scan.size());
-  romea::NormalAndCurvatureEstimation<PointType> normalEstimation(20);
+  romea::core::NormalSet<PointType> normals(scan.size());
+  romea::core::NormalAndCurvatureEstimation<PointType> normalEstimation(20);
   normalEstimation.compute(scan, normals);
   return normals;
 }
 
 //-----------------------------------------------------------------------------
-std::vector<romea::Correspondence> fakeCorrespondences(size_t numberOfCorrespondences)
+std::vector<romea::core::Correspondence> fakeCorrespondences(size_t numberOfCorrespondences)
 {
-  std::vector<romea::Correspondence> correspondences(numberOfCorrespondences);
+  std::vector<romea::core::Correspondence> correspondences(numberOfCorrespondences);
 
   for (size_t n = 0; n < numberOfCorrespondences; n++) {
     correspondences[n].sourcePointIndex = n;

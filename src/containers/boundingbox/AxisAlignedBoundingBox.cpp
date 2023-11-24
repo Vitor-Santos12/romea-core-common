@@ -18,6 +18,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 //-----------------------------------------------------------------------------
 template<typename Scalar, size_t DIM>
@@ -101,4 +103,5 @@ template class AxisAlignedBoundingBox<float, 3>;
 template class AxisAlignedBoundingBox<double, 2>;
 template class AxisAlignedBoundingBox<double, 3>;
 
+}  // namespace core
 }  // namespace romea

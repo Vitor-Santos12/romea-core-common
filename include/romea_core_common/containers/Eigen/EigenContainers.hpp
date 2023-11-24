@@ -27,6 +27,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 //-----------------------------------------------------------------------------
 template<class EigenContainerType>
@@ -99,6 +101,7 @@ void transform(
 }
 
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__CONTAINERS__EIGEN__EIGENCONTAINERS_HPP_

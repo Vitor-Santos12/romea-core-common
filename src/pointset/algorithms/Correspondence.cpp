@@ -18,6 +18,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 //-----------------------------------------------------------------------------
 Correspondence::Correspondence()
@@ -55,4 +57,5 @@ Correspondence::Correspondence(
 {
 }
 
+}   // namespace core
 }   // namespace romea

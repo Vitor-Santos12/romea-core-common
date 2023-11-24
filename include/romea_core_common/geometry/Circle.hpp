@@ -19,26 +19,29 @@
 // Eigen
 #include <Eigen/Core>
 
-namespace romea {
+namespace romea
+{
+namespace core
+{
 
-class Circle {
-public :
+class Circle
+{
+public:
+  Circle(
+    const double & xCenter,
+    const double & yCenter,
+    const double & radius);
 
-  Circle(const double & xCenter,
-         const double & yCenter,
-         const double & radius);
+  Circle(
+    const Eigen::Vector2d & centerPosition,
+    const double & radius);
 
-  Circle(const Eigen::Vector2d & centerPosition,
-         const double & radius);
-
-public :
-
+public:
   const Eigen::Vector2d & getCenterPosition()const;
 
   const double & getRadius()const;
 
-protected :
-
+protected:
   Eigen::Vector2d centerPosition_;
   double radius_;
 
@@ -47,6 +50,7 @@ public:
 };
 
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__GEOMETRY__CIRCLE_HPP_

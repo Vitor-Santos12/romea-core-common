@@ -27,6 +27,8 @@ const size_t MAXIMAL_WINDOW_SIZE = 64;
 
 namespace romea
 {
+namespace core
+{
 
 //-----------------------------------------------------------------------------
 RateMonitoring::RateMonitoring()
@@ -106,4 +108,5 @@ bool RateMonitoring::timeout(const Duration & duration)
   return false;
 }
 
+}   // namespace core
 }   // namespace romea

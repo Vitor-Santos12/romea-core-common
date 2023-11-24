@@ -18,6 +18,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 //--------------------------------------------------------------------------
 Position2D::Position2D()
@@ -66,4 +68,6 @@ Ellipse uncertaintyEllipse(
     sigmaScale);
 }
 
+
+}   // namespace core
 }   // namespace romea

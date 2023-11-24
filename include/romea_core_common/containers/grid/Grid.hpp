@@ -28,6 +28,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 template<typename T, size_t DIM>
 class Grid
@@ -153,6 +155,7 @@ void Grid<T, DIM>::setValue(const T & value)
   std::fill(std::begin(buffer_), std::end(buffer_), value);
 }
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__CONTAINERS__GRID__GRID_HPP_

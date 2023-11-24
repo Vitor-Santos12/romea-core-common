@@ -25,6 +25,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 template<class PointType>
 class PointSetPreconditioner
@@ -65,6 +67,7 @@ public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW_IF_VECTORIZABLE_FIXED_SIZE(Scalar, POINT_SIZE)
 };
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__POINTSET__ALGORITHMS__POINTSETPRECONDITIONER_HPP_

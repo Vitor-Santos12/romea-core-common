@@ -23,6 +23,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 template<typename T>
 T lexical_cast(const std::string & str, size_t & pos);
@@ -86,6 +88,7 @@ T lexical_cast(const std::string & str)
   return value;
 }
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__LEXICAL__LEXICALCAST_HPP_

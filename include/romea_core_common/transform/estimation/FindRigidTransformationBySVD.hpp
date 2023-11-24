@@ -30,6 +30,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 template<class PointType>
 class FindRigidTransformationBySVD
@@ -75,6 +77,7 @@ private:
     const PointSet<PointType> & targetPoints);
 };
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__TRANSFORM__ESTIMATION__FINDRIGIDTRANSFORMATIONBYSVD_HPP_

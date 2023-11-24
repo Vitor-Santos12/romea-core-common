@@ -20,6 +20,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 template<typename Scalar, size_t DIM>
 class OrientedBoundingBox
@@ -60,6 +62,7 @@ typedef OrientedBoundingBox<float, 3> OrientedBoundingBox3f;
 typedef OrientedBoundingBox<double, 2> OrientedBoundingBox2d;
 typedef OrientedBoundingBox<double, 3> OrientedBoundingBox3d;
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__CONTAINERS__BOUNDINGBOX__ORIENTEDBOUNDINGBOX_HPP_

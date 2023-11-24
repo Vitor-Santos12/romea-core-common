@@ -24,6 +24,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 
 //-----------------------------------------------------------------------------
@@ -118,4 +120,5 @@ void PID::updateIntegral_(const double & error)
   }
 }
 
+}  // namespace core
 }  // namespace romea

@@ -24,6 +24,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 
 template<typename T>
@@ -66,6 +68,7 @@ DiagnosticStatus CheckupLowerThan<T>::evaluate(const T & value)
   return this->getStatus_();
 }
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__DIAGNOSTIC__CHECKUPLOWERTHAN_HPP_

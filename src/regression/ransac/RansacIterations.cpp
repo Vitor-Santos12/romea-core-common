@@ -28,6 +28,8 @@ const double EPSILON = std::numeric_limits<double>::epsilon();
 
 namespace romea
 {
+namespace core
+{
 
 //-----------------------------------------------------------------------------
 RansacIterations::RansacIterations(
@@ -61,4 +63,5 @@ double RansacIterations::get() const
   return numberOfIterations_;
 }
 
+}  // namespace core
 }  // namespace romea

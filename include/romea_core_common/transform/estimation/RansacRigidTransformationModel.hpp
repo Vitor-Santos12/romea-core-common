@@ -29,6 +29,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 template<class PointType>
 class RansacRigidTransformationModel : public RansacModel
@@ -82,6 +84,7 @@ public:
   const TransformationMatrixType & getTransformation()const;
 
 public:
+
 protected:
   void allocate_(const size_t & numberOfCorrespondences);
 
@@ -126,6 +129,7 @@ protected:
   FindRigidTransformationByLeastSquares<PointType> findRigidTransformationByLeastSquares_;
 };
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON_TRANSFORM_ESTIMATION_RANSACRIGIDTRANSFORMATIONMODEL_HPP_

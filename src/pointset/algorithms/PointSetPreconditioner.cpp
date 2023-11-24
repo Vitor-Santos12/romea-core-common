@@ -22,6 +22,8 @@
 namespace romea
 {
 
+namespace core
+{
 
 //-----------------------------------------------------------------------------
 template<class PointType>
@@ -113,4 +115,5 @@ template class PointSetPreconditioner<HomogeneousCoordinates2d>;
 template class PointSetPreconditioner<HomogeneousCoordinates3f>;
 template class PointSetPreconditioner<HomogeneousCoordinates3d>;
 
+}  // namespace core
 }  // namespace romea

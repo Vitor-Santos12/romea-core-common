@@ -18,7 +18,10 @@
 
 #include <ostream>
 
-namespace romea {
+namespace romea
+{
+namespace core
+{
 
 struct WGS84Coordinates
 {
@@ -26,11 +29,13 @@ struct WGS84Coordinates
   double longitude;
 };
 
-WGS84Coordinates makeWGS84Coordinates(const double & latitude,
-                                      const double & longitude);
+WGS84Coordinates makeWGS84Coordinates(
+  const double & latitude,
+  const double & longitude);
 
 std::ostream & operator<<(std::ostream & os, const WGS84Coordinates & wgs84Coordinates);
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON_GEODESY_WGS84COORDINATES_HPP_

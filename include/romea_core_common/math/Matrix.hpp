@@ -21,6 +21,8 @@ using Matrix6f = Eigen::Matrix<float, 6, 6>;
 
 namespace romea
 {
+namespace core
+{
 
 //-----------------------------------------------------------------------------
 template<class MatrixType>
@@ -78,6 +80,7 @@ Eigen::Matrix<Scalar, 6, 6> toSe3Covariance(const Eigen::Matrix<Scalar, 3, 3> & 
   return se3Covariance;
 }
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON_MATH_MATRIX_HPP_

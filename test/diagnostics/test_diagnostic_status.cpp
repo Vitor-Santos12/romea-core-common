@@ -22,32 +22,37 @@
 //-----------------------------------------------------------------------------
 TEST(TestDiagnosticStatus, checkComparison)
 {
-  EXPECT_TRUE(romea::DiagnosticStatus::OK < romea::DiagnosticStatus::WARN);
-  EXPECT_TRUE(romea::DiagnosticStatus::WARN < romea::DiagnosticStatus::ERROR);
-  EXPECT_TRUE(romea::DiagnosticStatus::ERROR < romea::DiagnosticStatus::STALE);
+  EXPECT_TRUE(romea::core::DiagnosticStatus::OK < romea::core::DiagnosticStatus::WARN);
+  EXPECT_TRUE(romea::core::DiagnosticStatus::WARN < romea::core::DiagnosticStatus::ERROR);
+  EXPECT_TRUE(romea::core::DiagnosticStatus::ERROR < romea::core::DiagnosticStatus::STALE);
 }
 
 //-----------------------------------------------------------------------------
 TEST(TestDiagnosticStatus, checkWorseStatus)
 {
-  EXPECT_EQ(worse(romea::DiagnosticStatus::OK,
-                  romea::DiagnosticStatus::OK), romea::DiagnosticStatus::OK);
+  EXPECT_EQ(
+    worse(
+      romea::core::DiagnosticStatus::OK,
+      romea::core::DiagnosticStatus::OK), romea::core::DiagnosticStatus::OK);
 
-  EXPECT_EQ(worse(romea::DiagnosticStatus::OK,
-                  romea::DiagnosticStatus::WARN), romea::DiagnosticStatus::WARN);
+  EXPECT_EQ(
+    worse(
+      romea::core::DiagnosticStatus::OK,
+      romea::core::DiagnosticStatus::WARN), romea::core::DiagnosticStatus::WARN);
 }
 
 //-----------------------------------------------------------------------------
 TEST(TestDiagnosticStatus, checkToStringConversion)
 {
-  EXPECT_STREQ(toString(romea::DiagnosticStatus::OK).c_str(), "OK");
-  EXPECT_STREQ(toString(romea::DiagnosticStatus::WARN).c_str(), "WARN");
-  EXPECT_STREQ(toString(romea::DiagnosticStatus::ERROR).c_str(), "ERROR");
-  EXPECT_STREQ(toString(romea::DiagnosticStatus::STALE).c_str(), "STALE");
+  EXPECT_STREQ(toString(romea::core::DiagnosticStatus::OK).c_str(), "OK");
+  EXPECT_STREQ(toString(romea::core::DiagnosticStatus::WARN).c_str(), "WARN");
+  EXPECT_STREQ(toString(romea::core::DiagnosticStatus::ERROR).c_str(), "ERROR");
+  EXPECT_STREQ(toString(romea::core::DiagnosticStatus::STALE).c_str(), "STALE");
 }
 
 //-----------------------------------------------------------------------------
-int main(int argc, char **argv){
+int main(int argc, char ** argv)
+{
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }

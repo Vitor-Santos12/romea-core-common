@@ -22,6 +22,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 
 //-----------------------------------------------------------------------------
@@ -111,4 +113,5 @@ void OnlineVariance::reset()
   variance_ = std::numeric_limits<double>::quiet_NaN();
 }
 
+}   // namespace core
 }   // namespace romea

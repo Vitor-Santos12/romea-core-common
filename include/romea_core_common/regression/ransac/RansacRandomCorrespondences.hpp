@@ -30,36 +30,39 @@
 #include "romea_core_common/pointset/algorithms/Correspondence.hpp"
 
 
-namespace romea {
+namespace romea
+{
+namespace core
+{
 
-template <class PointType>
-class RansacRandomCorrespondences{
+template<class PointType>
+class RansacRandomCorrespondences
+{
 
-public :
-
+public:
   RansacRandomCorrespondences();
 
-  void computeScale(const PointType & pointSetMin,
-                    const PointType & pointSetMax);
+  void computeScale(
+    const PointType & pointSetMin,
+    const PointType & pointSetMax);
 
   std::vector<Correspondence>
-  drawPoints(const PointSet<PointType> & sourcePointSet,
-             const std::vector<Correspondence> & correspondences,
-             const size_t & numberOfRandomCorrespondences);
+  drawPoints(
+    const PointSet<PointType> & sourcePointSet,
+    const std::vector<Correspondence> & correspondences,
+    const size_t & numberOfRandomCorrespondences);
 
-private :
-
+private:
   void resetWeights_();
 
   void computeCumSumWeights_();
 
-  void updateWeights_(const PointSet<PointType> & preconditionedSourcePointSet,
-                      const std::vector<Correspondence> & correspondences,
-                      const size_t & correspondenceIndex);
+  void updateWeights_(
+    const PointSet<PointType> & preconditionedSourcePointSet,
+    const std::vector<Correspondence> & correspondences,
+    const size_t & correspondenceIndex);
 
-
-private :
-
+private:
   size_t numberOfCorrespondences_;
 
   PointType scale_;
@@ -70,12 +73,12 @@ private :
   std::default_random_engine randomGenerator_;
   std::uniform_real_distribution<double> uniformDistribution_;
 
-public :
-
+public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW_IF_VECTORIZABLE_FIXED_SIZE(
-      typename PointType::Scalar, PointTraits<PointType>::SIZE)
+    typename PointType::Scalar, PointTraits<PointType>::SIZE)
 };
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__REGRESSION__RANSAC__RANSACRANDOMCORRESPONDENCES_HPP_

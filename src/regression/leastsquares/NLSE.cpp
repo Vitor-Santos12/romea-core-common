@@ -23,6 +23,8 @@ const double DEFAULT_ESTIMATE_EPSILON = 0.01;
 
 namespace romea
 {
+namespace core
+{
 
 //-----------------------------------------------------------------------------
 template<typename RealType>
@@ -135,4 +137,5 @@ const typename NLSE<RealType>::Matrix & NLSE<RealType>::getEstimateCovariance()
 template class NLSE<float>;
 template class NLSE<double>;
 
+}  // namespace core
 }  // namespace romea

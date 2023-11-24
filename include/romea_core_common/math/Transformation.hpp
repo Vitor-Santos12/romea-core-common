@@ -22,6 +22,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 //-----------------------------------------------------------------------------
 template<typename Scalar>
@@ -41,6 +43,7 @@ inline Eigen::Transform<Scalar, 3, Eigen::Affine> rigid_transformation3(
   return rigidTransformation;
 }
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__MATH__TRANSFORMATION_HPP_

@@ -21,6 +21,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 
 //-----------------------------------------------------------------------------
@@ -263,4 +265,5 @@ template class RayCasting<float, 3>;
 template class RayCasting<double, 2>;
 template class RayCasting<double, 3>;
 
+}  // namespace core
 }  // namespace romea

@@ -21,6 +21,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 class Ellipse
 {
@@ -62,7 +64,7 @@ public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 };
 
-
+}  // namespace core
 }  // namespace romea
 
 

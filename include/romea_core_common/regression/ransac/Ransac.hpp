@@ -18,18 +18,21 @@
 
 #include "romea_core_common/regression/ransac/RansacModel.hpp"
 
-namespace romea {
+namespace romea
+{
+namespace core
+{
 
-class Ransac{
-public :
-
-  Ransac(RansacModel * ransacModel,
-         double modelErrorDeviation);
+class Ransac
+{
+public:
+  Ransac(
+    RansacModel * ransacModel,
+    double modelErrorDeviation);
 
   bool estimateModel();
 
-private :
-
+private:
   double fittingProbability_;
   double modelErrorDeviation_;
   int maximalNumberOfIterations_;
@@ -37,6 +40,7 @@ private :
   RansacModel * ransacModel_;
 };
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__REGRESSION__RANSAC__RANSAC_HPP_

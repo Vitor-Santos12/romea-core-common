@@ -21,6 +21,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 double convertNoiseDensityToNoiseStd(
   const double & noiseDensity,
@@ -29,4 +31,5 @@ double convertNoiseDensityToNoiseStd(
   return 1.57 * noiseDensity * std::sqrt(frequency);
 }
 
-}
+}  // namespace core
+}  // namespace romea

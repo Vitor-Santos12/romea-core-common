@@ -29,6 +29,8 @@ const size_t MAXIMAL_NUMBER_OF_ITERATIONS = 1000;
 
 namespace romea
 {
+namespace core
+{
 
 //-----------------------------------------------------------------------------
 Ransac::Ransac(
@@ -81,4 +83,5 @@ bool Ransac::estimateModel()
   return true;
 }
 
+}  // namespace core
 }  // namespace romea

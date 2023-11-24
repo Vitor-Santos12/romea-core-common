@@ -20,6 +20,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 template<typename T>
 class SharedVariable
@@ -88,6 +90,7 @@ T SharedVariable<T>::load() const
   return value_;
 }
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__CONCURRENCY__SHAREDVARIABLE_HPP_

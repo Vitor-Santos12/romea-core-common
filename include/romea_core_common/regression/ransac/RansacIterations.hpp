@@ -21,6 +21,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 class RansacIterations
 {
@@ -42,6 +44,7 @@ private:
   double numberOfIterations_;
 };
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__REGRESSION__RANSAC__RANSACITERATIONS_HPP_

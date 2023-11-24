@@ -25,6 +25,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 template<class PointType>
 class KdTree
@@ -60,6 +62,7 @@ public:
   mutable nanoflann::KNNResultSet<Scalar> singleNNResult_;
 };
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__POINTSET__KDTREE_HPP_

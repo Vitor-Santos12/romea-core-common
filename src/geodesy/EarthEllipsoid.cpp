@@ -21,6 +21,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 //--------------------------------------------------------------------------
 EarthEllipsoid EarthEllipsoid::GRS80(6378137.0, 6356752.314);
@@ -49,4 +51,5 @@ double EarthEllipsoid::transversalRadius(const double & latitude) const
   return a * std::cos(latitude) / std::sqrt(1 - std::pow(e * std::sin(latitude), 2));
 }
 
+}  // namespace core
 }  // namespace romea

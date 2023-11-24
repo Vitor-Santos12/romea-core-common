@@ -6,6 +6,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 struct Twist2D
 {
@@ -18,6 +20,7 @@ struct Twist2D
 
 std::ostream & operator<<(std::ostream & os, const Twist2D & twist2D);
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__GEOMETRY__TWIST2D_HPP_

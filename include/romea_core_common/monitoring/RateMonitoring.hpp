@@ -26,6 +26,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 class RateMonitoring
 {
@@ -54,7 +56,7 @@ private:
   std::atomic<double> rate_;
 };
 
-
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__MONITORING__RATEMONITORING_HPP_

@@ -22,6 +22,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 template<class PointType>
 class PreconditionedPointSet
@@ -78,6 +80,7 @@ private:
   TransformationMatrix preconditioningMatrix_;
 };
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__POINTSET__ALGORITHMS__PRECONDITIONEDPOINTSET_HPP_

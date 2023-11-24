@@ -24,21 +24,23 @@
 #include <iostream>
 #include <optional>
 
-namespace romea{
+namespace romea
+{
+namespace core
+{
 
 //--------------------------------------------------------------------------
-template <typename RealType >
-RealType sign(const RealType  &x)
+template<typename RealType>
+RealType sign(const RealType & x)
 {
-  return (x < 0.) ? -1 : 1 ;
+  return (x < 0.) ? -1 : 1;
 }
 
 //--------------------------------------------------------------------------
-template <typename RealType >
+template<typename RealType>
 double signedMin(const RealType & x, const RealType & y)
 {
-  if ( x >= 0 || y >= 0)
-  {
+  if (x >= 0 || y >= 0) {
     return std::min(x, y);
   } else {
     return std::max(x, y);
@@ -46,84 +48,92 @@ double signedMin(const RealType & x, const RealType & y)
 }
 
 //--------------------------------------------------------------------------
-template <typename RealType >
+template<typename RealType>
 double signedFloor(const RealType & x)
 {
-  if (x >= 0)
-  {
+  if (x >= 0) {
     return std::floor(x);
-  }else{
+  } else {
     return std::ceil(x);
   }
 }
 
 //--------------------------------------------------------------------------
-template <typename RealType >
-RealType near(const RealType & value1 ,
-              const RealType & value2,
-              double epsilon  = std::numeric_limits<RealType>::epsilon())
+template<typename RealType>
+RealType near(
+  const RealType & value1,
+  const RealType & value2,
+  double epsilon = std::numeric_limits<RealType>::epsilon())
 {
-  return std::abs(value1-value2) < 0.00001;
+  return std::abs(value1 - value2) < 0.00001;
 }
 
 // replace by std::clamp with c++17
 //--------------------------------------------------------------------------
-template <typename RealType >
-RealType clamp(const RealType & value ,
-               const RealType & minValue,
-               const RealType & maxValue)
+template<typename RealType>
+RealType clamp(
+  const RealType & value,
+  const RealType & minValue,
+  const RealType & maxValue)
 {
   assert(minValue <= maxValue);
   return std::max(minValue, std::min(maxValue, value));
 }
 
 //--------------------------------------------------------------------------
-template <typename RealType >
-RealType symmetricClamp(const RealType & value ,
-                        const RealType & absoluteMaxValue)
+template<typename RealType>
+RealType symmetricClamp(
+  const RealType & value,
+  const RealType & absoluteMaxValue)
 {
   return clamp(value, -absoluteMaxValue, absoluteMaxValue);
 }
 
 //--------------------------------------------------------------------------
-template <typename RealType >
-std::optional<RealType> safeDivide(const RealType & numerator,
-                                     const RealType & denominator)
+template<typename RealType>
+std::optional<RealType> safeDivide(
+  const RealType & numerator,
+  const RealType & denominator)
 {
-  if (std::abs(denominator) < std::numeric_limits<RealType>::epsilon())
-  {
+  if (std::abs(denominator) < std::numeric_limits<RealType>::epsilon()) {
     return std::optional<RealType>();
   } else {
-    return std::optional<RealType>(numerator/denominator);
+    return std::optional<RealType>(numerator / denominator);
   }
 }
 
 //--------------------------------------------------------------------------
 template<typename RealType>
-static bool isApproximatelyEqual(RealType a,
-                                 RealType b,
-                                 RealType tolerance = std::numeric_limits<RealType>::epsilon())
+static bool isApproximatelyEqual(
+  RealType a,
+  RealType b,
+  RealType tolerance = std::numeric_limits<RealType>::epsilon())
 {
   RealType diff = std::fabs(a - b);
-  if (diff <= tolerance)
+  if (diff <= tolerance) {
     return true;
+  }
 
-  if (diff < std::fmax(std::fabs(a), std::fabs(b)) * tolerance)
+  if (diff < std::fmax(std::fabs(a), std::fabs(b)) * tolerance) {
     return true;
+  }
 
   return false;
 }
 
 //--------------------------------------------------------------------------
 template<typename RealType>
-static bool isApproximatelyZero(RealType a,
-                                RealType tolerance = std::numeric_limits<RealType>::epsilon())
+static bool isApproximatelyZero(
+  RealType a,
+  RealType tolerance = std::numeric_limits<RealType>::epsilon())
 {
-  if (std::fabs(a) <= tolerance)
+  if (std::fabs(a) <= tolerance) {
     return true;
+  }
   return false;
 }
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__MATH__ALGORITHM_HPP_

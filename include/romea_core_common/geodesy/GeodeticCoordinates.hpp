@@ -20,6 +20,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 struct GeodeticCoordinates : WGS84Coordinates
 {
@@ -37,6 +39,7 @@ GeodeticCoordinates makeGeodeticCoordinates(
 
 std::ostream & operator<<(std::ostream & os, const GeodeticCoordinates & geodeticCoordinates);
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__GEODESY__GEODETICCOORDINATES_HPP_

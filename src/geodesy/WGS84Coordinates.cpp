@@ -23,6 +23,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 //--------------------------------------------------------------------------
 WGS84Coordinates makeWGS84Coordinates(
@@ -48,4 +50,5 @@ std::ostream & operator<<(std::ostream & os, const WGS84Coordinates & wgs84Coord
   return os;
 }
 
+}  // namespace core
 }  // namespace romea

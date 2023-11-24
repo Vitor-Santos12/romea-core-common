@@ -21,6 +21,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 template<typename T>
 class SharedOptionalVariable
@@ -84,6 +86,7 @@ std::optional<T> SharedOptionalVariable<T>::consume()
   return value;
 }
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__CONCURRENCY__SHAREDOPTIONALVARIABLE_HPP_

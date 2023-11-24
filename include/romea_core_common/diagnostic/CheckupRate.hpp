@@ -27,6 +27,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 template<typename CheckupType>
 class CheckupRate
@@ -55,6 +57,7 @@ private:
 using CheckupEqualToRate = CheckupRate<CheckupEqualTo<double>>;
 using CheckupGreaterThanRate = CheckupRate<CheckupGreaterThan<double>>;
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__DIAGNOSTIC__CHECKUPRATE_HPP_

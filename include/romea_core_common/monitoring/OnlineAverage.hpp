@@ -25,6 +25,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 
 class OnlineAverage
@@ -63,6 +65,7 @@ protected:
   double average_;
 };
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON_MONITORING_ONLINEAVERAGE_HPP_

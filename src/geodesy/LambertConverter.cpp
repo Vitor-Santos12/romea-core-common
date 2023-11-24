@@ -27,6 +27,8 @@ const double EPSILON = 1e-12;
 
 namespace romea
 {
+namespace core
+{
 
 //-----------------------------------------------------------------------------
 LambertConverter::LambertConverter(
@@ -164,4 +166,5 @@ LambertConverter::ProjectionParameters LambertConverter::computeProjectionParame
   return {parameters.longitude0, n, C, parameters.x0, YS};
 }
 
+}  // namespace core
 }  // namespace romea

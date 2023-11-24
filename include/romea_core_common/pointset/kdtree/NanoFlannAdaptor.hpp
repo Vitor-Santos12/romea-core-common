@@ -29,6 +29,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 template<class PointType, class Distance = nanoflann::metric_L2>
 struct NanoFlannAdaptor
@@ -98,6 +100,7 @@ bool NanoFlannAdaptor<PointType, Distance>::kdtree_get_bbox(BBOX & /*bb*/) const
   return false;
 }
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__POINTSET__KDTREE__NANOFLANNADAPTOR_HPP_

@@ -22,6 +22,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 //-----------------------------------------------------------------------------
 template<class PointType>
@@ -86,4 +88,5 @@ template class KdTree<HomogeneousCoordinates2d>;
 template class KdTree<HomogeneousCoordinates3f>;
 template class KdTree<HomogeneousCoordinates3d>;
 
+}   // namespace core
 }   // namespace romea

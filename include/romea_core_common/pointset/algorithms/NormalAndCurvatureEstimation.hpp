@@ -27,6 +27,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 template<class PointType>
 class NormalAndCurvatureEstimation
@@ -107,6 +109,7 @@ public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW_IF_VECTORIZABLE_FIXED_SIZE(Scalar, CARTESIAN_DIM)
 };
 
+}  // namespace core
 }  // namespace romea
 
 

@@ -25,6 +25,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 class CheckupReliability
 {
@@ -53,6 +55,7 @@ private:
   DiagnosticReport report_;
 };
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__DIAGNOSTIC__CHECKUPRELIABILITY_HPP_

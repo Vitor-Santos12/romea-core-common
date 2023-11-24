@@ -20,6 +20,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 class PID
 {
@@ -77,6 +79,7 @@ private:
   Duration previous_error_stamp_;
 };
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON_CONTROL_PID_HPP_

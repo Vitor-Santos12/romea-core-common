@@ -25,6 +25,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 //-----------------------------------------------------------------------------
 template<typename RealType>
@@ -254,4 +256,5 @@ void LeastSquares<RealType>::computeJTY_()
 template class LeastSquares<float>;
 template class LeastSquares<double>;
 
+}  // namespace core
 }  // namespace romea

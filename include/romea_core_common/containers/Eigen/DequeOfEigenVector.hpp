@@ -27,11 +27,14 @@
 
 namespace romea
 {
+namespace core
+{
 
 template<class EigenVectorType>
 using DequeOfEigenVector =
   std::vector<EigenVectorType, Eigen::aligned_allocator<EigenVectorType>>;
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON_CONTAINERS_EIGEN_DEQUEOFEIGENVECTOR_HPP_

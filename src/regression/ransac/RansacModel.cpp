@@ -18,10 +18,13 @@
 
 namespace romea
 {
+namespace core
+{
 
 //-----------------------------------------------------------------------------
 RansacModel::RansacModel()
 {
 }
 
+}  // namespace core
 }  // namespace romea

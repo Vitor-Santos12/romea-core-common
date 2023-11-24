@@ -26,6 +26,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 //-----------------------------------------------------------------------------
 template<class PointType>
@@ -365,4 +367,5 @@ template class RansacRigidTransformationModel<HomogeneousCoordinates2d>;
 template class RansacRigidTransformationModel<HomogeneousCoordinates3f>;
 template class RansacRigidTransformationModel<HomogeneousCoordinates3d>;
 
+}  // namespace core
 }  // namespace romea

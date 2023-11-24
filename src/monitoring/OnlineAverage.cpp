@@ -21,6 +21,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 //-----------------------------------------------------------------------------
 OnlineAverage::OnlineAverage(const double & averagePrecision, size_t windowSize)
@@ -106,4 +108,5 @@ void OnlineAverage::reset()
   average_ = std::numeric_limits<double>::quiet_NaN();
 }
 
+}  // namespace core
 }  // namespace romea

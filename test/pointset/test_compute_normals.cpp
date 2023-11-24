@@ -29,12 +29,12 @@
 TEST(TestComputeNormal, checkComputeNormals2d)
 {
   // load scan data and compute normals and curvatures
-  romea::PointSet<Eigen::Vector2d> pointSet = loadScan<Eigen::Vector2d>("/scan2d.txt");
+  romea::core::PointSet<Eigen::Vector2d> pointSet = loadScan<Eigen::Vector2d>("/scan2d.txt");
 
-  romea::NormalSet<Eigen::Vector2d> normalSet(pointSet.size());
+  romea::core::NormalSet<Eigen::Vector2d> normalSet(pointSet.size());
   std::vector<double> curvatures(pointSet.size());
   std::vector<double> reliabilities(pointSet.size());
-  romea::NormalAndCurvatureEstimation<Eigen::Vector2d> nche(20);
+  romea::core::NormalAndCurvatureEstimation<Eigen::Vector2d> nche(20);
   nche.compute(pointSet, normalSet, curvatures, reliabilities);
 
   // load theorical normal and curvature values and compare with estimated values
@@ -59,12 +59,13 @@ TEST(TestComputeNormal, checkComputeNormals2d)
 TEST(TestComputeNormal, checkComputeNormals3d)
 {
   // load scan data and compute normals and curvatures
-  romea::PointSet<Eigen::Vector3d> pointSet = loadScan<Eigen::Vector3d>("/scan3d.txt");
+  romea::core::PointSet<Eigen::Vector3d> pointSet =
+    loadScan<Eigen::Vector3d>("/scan3d.txt");
 
-  romea::NormalSet<Eigen::Vector3d> normalSet(pointSet.size());
+  romea::core::NormalSet<Eigen::Vector3d> normalSet(pointSet.size());
   std::vector<double> curvatures(pointSet.size());
   std::vector<double> reliabilities(pointSet.size());
-  romea::NormalAndCurvatureEstimation<Eigen::Vector3d> nche(20);
+  romea::core::NormalAndCurvatureEstimation<Eigen::Vector3d> nche(20);
   nche.compute(pointSet, normalSet, curvatures, reliabilities);
 
   // load theorical normal and curvature values and compare with estimated values

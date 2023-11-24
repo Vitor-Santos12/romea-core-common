@@ -17,6 +17,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 //--------------------------------------------------------------------------
 Twist3D::Twist3D()
@@ -59,4 +61,5 @@ std::ostream & operator<<(std::ostream & os, const Twist3D & twist3D)
   return os;
 }
 
+}   // namespace core
 }   // namespace romea

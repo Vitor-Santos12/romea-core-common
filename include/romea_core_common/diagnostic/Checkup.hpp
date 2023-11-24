@@ -27,6 +27,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 
 template<typename T>
@@ -123,7 +125,7 @@ const DiagnosticStatus & Checkup<T>::getStatus_() const
   return this->report_.diagnostics.front().status;
 }
 
-
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__DIAGNOSTIC__CHECKUP_HPP_

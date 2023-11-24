@@ -18,11 +18,14 @@
 
 namespace romea
 {
+namespace core
+{
 
 double convertNoiseDensityToNoiseStd(
   const double & noiseDensity,
   const double & frequency);
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON_SIGNAL_NOISE_HPP_

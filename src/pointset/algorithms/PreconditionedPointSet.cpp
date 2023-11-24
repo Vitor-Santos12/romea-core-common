@@ -18,6 +18,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 
 //-----------------------------------------------------------------------------
@@ -159,4 +161,5 @@ template class PreconditionedPointSet<HomogeneousCoordinates2d>;
 template class PreconditionedPointSet<HomogeneousCoordinates3f>;
 template class PreconditionedPointSet<HomogeneousCoordinates3d>;
 
+}   // namespace core
 }   // namespace romea

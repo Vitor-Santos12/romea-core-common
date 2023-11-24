@@ -23,9 +23,9 @@
 //-----------------------------------------------------------------------------
 TEST(TestCoordinates, polarToCartesianConversion)
 {
-  romea::CartesianCoordinates2<double> cartesianPoint(10, 34.8);
-  romea::PolarCoordinates<double> polarPoint = romea::toPolar(cartesianPoint);
-  romea::CartesianCoordinates2<double> cartesianPoint2 = romea::toCartesian(polarPoint);
+  romea::core::CartesianCoordinates2<double> cartesianPoint(10, 34.8);
+  romea::core::PolarCoordinates<double> polarPoint = romea::core::toPolar(cartesianPoint);
+  romea::core::CartesianCoordinates2<double> cartesianPoint2 = romea::core::toCartesian(polarPoint);
 
   EXPECT_NEAR(cartesianPoint.norm(), polarPoint.getRange(), 0.001);
   EXPECT_NEAR(cartesianPoint.x(), cartesianPoint2.x(), 0.01);
@@ -35,9 +35,11 @@ TEST(TestCoordinates, polarToCartesianConversion)
 //-----------------------------------------------------------------------------
 TEST(TestCoordinates, sphericalToCartesianConversion)
 {
-  romea::CartesianCoordinates3<double> cartesianPoint(-9.4, 20.2, -3.4);
-  romea::SphericalCoordinates<double> sphericalPoint = romea::toSpherical(cartesianPoint);
-  romea::CartesianCoordinates3<double> cartesianPoint2 = romea::toCartesian(sphericalPoint);
+  romea::core::CartesianCoordinates3<double> cartesianPoint(-9.4, 20.2, -3.4);
+  romea::core::SphericalCoordinates<double> sphericalPoint =
+    romea::core::toSpherical(cartesianPoint);
+  romea::core::CartesianCoordinates3<double> cartesianPoint2 = romea::core::toCartesian(
+    sphericalPoint);
 
   EXPECT_NEAR(cartesianPoint.norm(), sphericalPoint.getRange(), 0.001);
   EXPECT_NEAR(cartesianPoint.x(), cartesianPoint2.x(), 0.01);

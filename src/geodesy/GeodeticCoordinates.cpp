@@ -22,6 +22,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 //--------------------------------------------------------------------------
 GeodeticCoordinates makeGeodeticCoordinates(
@@ -60,4 +62,5 @@ std::ostream & operator<<(std::ostream & os, const GeodeticCoordinates & geodeti
   return os;
 }
 
+}  // namespace core
 }  // namespace romea

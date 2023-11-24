@@ -20,6 +20,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 //--------------------------------------------------------------------------
 Pose3D::Pose3D()
@@ -134,4 +136,5 @@ std::ostream & operator<<(std::ostream & os, const Pose3D & pose3D)
   return os;
 }
 
+}   // namespace core
 }   // namespace romea

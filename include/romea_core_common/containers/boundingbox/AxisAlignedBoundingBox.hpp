@@ -22,6 +22,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 template<typename Scalar, size_t DIM>
 class AxisAlignedBoundingBox
@@ -64,6 +66,7 @@ typedef AxisAlignedBoundingBox<float, 3> AxisAlignedBoundingBox3f;
 typedef AxisAlignedBoundingBox<double, 2> AxisAlignedBoundingBox2d;
 typedef AxisAlignedBoundingBox<double, 3> AxisAlignedBoundingBox3d;
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON___CONTAINERS___BOUNDINGBOX___AXISALIGNEDBOUNDINGBOX_HPP

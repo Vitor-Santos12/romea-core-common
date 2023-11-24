@@ -17,6 +17,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 //--------------------------------------------------------------------------
 PoseAndTwist3D::PoseAndTwist3D()
@@ -50,4 +52,5 @@ std::ostream & operator<<(std::ostream & os, const PoseAndTwist3D & poseAndTwist
   return os;
 }
 
+}   // namespace core
 }   // namespace romea

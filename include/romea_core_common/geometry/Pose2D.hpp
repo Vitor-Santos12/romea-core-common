@@ -20,6 +20,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 struct Pose2D
 {
@@ -38,6 +40,7 @@ Ellipse uncertaintyEllipse(
 
 std::ostream & operator<<(std::ostream & os, const Pose2D & pose2D);
 
+}  // namespace core
 }  // namespace romea
 
 

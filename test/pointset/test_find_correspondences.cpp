@@ -29,13 +29,13 @@ template<class PointType>
 size_t findCorrespondences(const std::string & dataFileName)
 {
   // load data
-  romea::PointSet<Eigen::Vector2d> pointSet = loadScan<Eigen::Vector2d>(dataFileName);
-  romea::KdTree<Eigen::Vector2d> kdTree(pointSet);
+  romea::core::PointSet<Eigen::Vector2d> pointSet = loadScan<Eigen::Vector2d>(dataFileName);
+  romea::core::KdTree<Eigen::Vector2d> kdTree(pointSet);
 
   // Search nearest point;
   size_t nearestIndex;
   double nearestNeighborSquareDistance;
-  std::vector<romea::Correspondence> correspondences;
+  std::vector<romea::core::Correspondence> correspondences;
 
   // Find correpondences
   for (size_t n = 0; n < pointSet.size(); ++n) {
@@ -44,16 +44,16 @@ size_t findCorrespondences(const std::string & dataFileName)
   }
 
   // Remove wrong correspondences
-  std::vector<romea::Correspondence>::iterator itEnd;
+  std::vector<romea::core::Correspondence>::iterator itEnd;
   std::sort(
     std::begin(correspondences),
     std::end(correspondences),
-    romea::sortBySourceIndexAndDistancePredicate);
+    romea::core::sortBySourceIndexAndDistancePredicate);
 
   itEnd = std::unique(
     std::begin(correspondences),
     std::end(correspondences),
-    romea::equalSourceIndexesPredicate);
+    romea::core::equalSourceIndexesPredicate);
 
   return static_cast<size_t>(std::distance(std::begin(correspondences), itEnd));
 }

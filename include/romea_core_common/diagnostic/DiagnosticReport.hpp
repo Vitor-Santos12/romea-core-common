@@ -28,6 +28,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 struct DiagnosticReport
 {
@@ -73,6 +75,7 @@ void setReportInfo(
   }
 }
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__DIAGNOSTIC__DIAGNOSTICREPORT_HPP_

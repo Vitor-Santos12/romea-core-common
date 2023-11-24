@@ -25,6 +25,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 class Timer
 {
@@ -47,7 +49,7 @@ private:
   bool running_;
 };
 
-
-}  // romea
+}  // namespace core
+}  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__TIME__TIMER_HPP_

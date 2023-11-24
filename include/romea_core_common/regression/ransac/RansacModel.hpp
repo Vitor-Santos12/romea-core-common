@@ -21,6 +21,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 // TODO(jean) perhaps use crtp here
 
@@ -46,6 +48,7 @@ public:
   virtual double getRootMeanSquareError() const = 0;
 };
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__REGRESSION__RANSAC__RANSACMODEL_HPP_

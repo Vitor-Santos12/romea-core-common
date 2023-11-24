@@ -18,6 +18,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 class FirstOrderButterworth
 {
@@ -46,6 +48,7 @@ private:
   bool isInitialized_;
 };
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__SIGNAL__FIRSTORDERBUTTERWORTH_HPP_

@@ -27,11 +27,14 @@
 
 namespace romea
 {
+namespace core
+{
 
 template<class EigenVectorType>
 using ListOfEigenVector =
   std::list<EigenVectorType, Eigen::aligned_allocator<EigenVectorType>>;
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__CONTAINERS__EIGEN__LISTOFEIGENVECTOR_HPP_

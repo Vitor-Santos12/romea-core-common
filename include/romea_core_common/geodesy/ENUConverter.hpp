@@ -27,6 +27,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 class ENUConverter
 {
@@ -68,6 +70,7 @@ private:
   bool isAnchored_;
 };
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__GEODESY__ENUCONVERTER_HPP_

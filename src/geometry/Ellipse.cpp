@@ -21,6 +21,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 //-----------------------------------------------------------------------------
 Ellipse::Ellipse(
@@ -89,4 +91,5 @@ const double & Ellipse::getMinorRadius()const
   return minorRadius_;
 }
 
+}   // namespace core
 }   // namespace romea

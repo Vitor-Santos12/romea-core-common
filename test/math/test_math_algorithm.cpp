@@ -23,59 +23,59 @@
 //-----------------------------------------------------------------------------
 TEST(TestAlgorithm, testSign)
 {
-  EXPECT_DOUBLE_EQ(romea::sign(-2.3), -1);
-  EXPECT_DOUBLE_EQ(romea::sign(14.7), 1);
+  EXPECT_DOUBLE_EQ(romea::core::sign(-2.3), -1);
+  EXPECT_DOUBLE_EQ(romea::core::sign(14.7), 1);
 }
 
 //-----------------------------------------------------------------------------
 TEST(TestAlgorithm, testClamp)
 {
-  EXPECT_DOUBLE_EQ(romea::clamp(0.5, -1., 1.), 0.5);
-  EXPECT_DOUBLE_EQ(romea::clamp(1.5, -1., 1.), 1.);
-  EXPECT_DOUBLE_EQ(romea::clamp(-1.5, -1., 1.), -1.);
+  EXPECT_DOUBLE_EQ(romea::core::clamp(0.5, -1., 1.), 0.5);
+  EXPECT_DOUBLE_EQ(romea::core::clamp(1.5, -1., 1.), 1.);
+  EXPECT_DOUBLE_EQ(romea::core::clamp(-1.5, -1., 1.), -1.);
 }
 
 //-----------------------------------------------------------------------------
 TEST(TestAlgorithm, testSymmetricClamp)
 {
-  EXPECT_DOUBLE_EQ(romea::symmetricClamp(0.5, 1.), 0.5);
-  EXPECT_DOUBLE_EQ(romea::symmetricClamp(1.5, 1.), 1.);
-  EXPECT_DOUBLE_EQ(romea::symmetricClamp(-1.5, 1.), -1.);
+  EXPECT_DOUBLE_EQ(romea::core::symmetricClamp(0.5, 1.), 0.5);
+  EXPECT_DOUBLE_EQ(romea::core::symmetricClamp(1.5, 1.), 1.);
+  EXPECT_DOUBLE_EQ(romea::core::symmetricClamp(-1.5, 1.), -1.);
 }
 
 //-----------------------------------------------------------------------------
 TEST(TestAlgorithm, safe_divide)
 {
-  EXPECT_DOUBLE_EQ(romea::safeDivide(1., 2.).value(), 0.5);
-  EXPECT_FALSE(romea::safeDivide(1., 0.).has_value());
+  EXPECT_DOUBLE_EQ(romea::core::safeDivide(1., 2.).value(), 0.5);
+  EXPECT_FALSE(romea::core::safeDivide(1., 0.).has_value());
 }
 
 //-----------------------------------------------------------------------------
 TEST(TestAlgorithm, testSignedMin)
 {
-  EXPECT_DOUBLE_EQ(-10, romea::signedMin(-10., 10.));
-  EXPECT_DOUBLE_EQ(-1, romea::signedMin(-1., -10.));
-  EXPECT_DOUBLE_EQ(1, romea::signedMin(1., 10.));
+  EXPECT_DOUBLE_EQ(-10, romea::core::signedMin(-10., 10.));
+  EXPECT_DOUBLE_EQ(-1, romea::core::signedMin(-1., -10.));
+  EXPECT_DOUBLE_EQ(1, romea::core::signedMin(1., 10.));
 }
 
 //-----------------------------------------------------------------------------
 TEST(TestAlgorithm, testSignedFloor)
 {
-  EXPECT_DOUBLE_EQ(10, romea::signedFloor(10.4));
-  EXPECT_DOUBLE_EQ(10, romea::signedFloor(10.6));
-  EXPECT_DOUBLE_EQ(-10, romea::signedFloor(-10.4));
-  EXPECT_DOUBLE_EQ(-10, romea::signedFloor(-10.6));
+  EXPECT_DOUBLE_EQ(10, romea::core::signedFloor(10.4));
+  EXPECT_DOUBLE_EQ(10, romea::core::signedFloor(10.6));
+  EXPECT_DOUBLE_EQ(-10, romea::core::signedFloor(-10.4));
+  EXPECT_DOUBLE_EQ(-10, romea::core::signedFloor(-10.6));
 }
 
 //-----------------------------------------------------------------------------
 TEST(TestAlgorithm, testIsApproximatelyEqual)
 {
-  EXPECT_EQ(true, romea::isApproximatelyEqual(1.0, 1.0, 1e-10));
-  EXPECT_EQ(false, romea::isApproximatelyEqual(-1.0, 1.0));
-  EXPECT_EQ(true, romea::isApproximatelyEqual(-1.0, -1.0));
-  EXPECT_EQ(true, romea::isApproximatelyEqual(1.0, 2.0 / 2.0));
-  EXPECT_EQ(true, romea::isApproximatelyEqual(1000.0, 999.5, 1e-3));
-  EXPECT_EQ(false, romea::isApproximatelyEqual(1000.0, 999.0, 1e-3));
+  EXPECT_EQ(true, romea::core::isApproximatelyEqual(1.0, 1.0, 1e-10));
+  EXPECT_EQ(false, romea::core::isApproximatelyEqual(-1.0, 1.0));
+  EXPECT_EQ(true, romea::core::isApproximatelyEqual(-1.0, -1.0));
+  EXPECT_EQ(true, romea::core::isApproximatelyEqual(1.0, 2.0 / 2.0));
+  EXPECT_EQ(true, romea::core::isApproximatelyEqual(1000.0, 999.5, 1e-3));
+  EXPECT_EQ(false, romea::core::isApproximatelyEqual(1000.0, 999.0, 1e-3));
 }
 
 // TEST(TestAlgorithm,testDefinitelyGreaterThan)

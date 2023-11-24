@@ -20,10 +20,13 @@
 
 namespace romea
 {
+namespace core
+{
 
 template<class PointType>
 using NormalSet = VectorOfEigenVector<PointType>;
 
+}   // namespace core
 }   // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__POINTSET__NORMALSET_HPP_

@@ -21,6 +21,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 struct Position2D
 {
@@ -37,6 +39,7 @@ Ellipse uncertaintyEllipse(
 
 std::ostream & operator<<(std::ostream & os, const Position2D & position2d);
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__GEOMETRY__POSITION2D_HPP_

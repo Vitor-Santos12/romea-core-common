@@ -21,6 +21,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 
 //-----------------------------------------------------------------------------
@@ -154,6 +156,7 @@ HomogeneousCoordinates2<Scalar> toHomogeneous(const PolarCoordinates<Scalar> & p
     PolarTransform::y(point));
 }
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__COORDINATES__POLARCOORDINATES_HPP_

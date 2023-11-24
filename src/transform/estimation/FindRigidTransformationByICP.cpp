@@ -30,6 +30,8 @@ const double ICP_TRANSFORMATION_EPSILON = 0.001;
 
 namespace romea
 {
+namespace core
+{
 
 //-----------------------------------------------------------------------------
 template<class PointType>
@@ -247,4 +249,5 @@ template class FindRigidTransformationByICP<HomogeneousCoordinates2d>;
 template class FindRigidTransformationByICP<HomogeneousCoordinates3f>;
 template class FindRigidTransformationByICP<HomogeneousCoordinates3d>;
 
+}  // namespace core
 }  // namespace romea

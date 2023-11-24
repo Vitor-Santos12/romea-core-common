@@ -20,6 +20,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 template<typename T, size_t DIM>
 class WrappableGrid : public Grid<T, DIM>
@@ -266,6 +268,7 @@ void WrappableGrid<T, DIM>::translate(
   }
 }
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__CONTAINERS__GRID__WRAPPABLEGRID_HPP_

@@ -23,13 +23,13 @@
 TEST(TestMonitoring, rate)
 {
   double expectedRate = 10;
-  romea::RateMonitoring rateMonitoring(expectedRate);
+  romea::core::RateMonitoring rateMonitoring(expectedRate);
 
-  romea::Duration stamp = romea::durationFromSecond(0);
+  romea::core::Duration stamp = romea::core::durationFromSecond(0);
   EXPECT_DOUBLE_EQ(rateMonitoring.update(stamp), 0.);
 
   for (size_t n = 1; n < 2 / static_cast<size_t>(expectedRate); ++n) {
-    romea::Duration stamp = romea::durationFromSecond(n / expectedRate);
+    romea::core::Duration stamp = romea::core::durationFromSecond(n / expectedRate);
     EXPECT_DOUBLE_EQ(rateMonitoring.update(stamp), expectedRate);
   }
 }

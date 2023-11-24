@@ -24,6 +24,8 @@ const double EPSILON = 1e-11;
 
 namespace romea
 {
+namespace core
+{
 
 //--------------------------------------------------------------------------
 ECEFConverter::ECEFConverter(const EarthEllipsoid & earthEllipsoid)
@@ -82,4 +84,5 @@ GeodeticCoordinates ECEFConverter::toWGS84(const Eigen::Vector3d & ecefPosition)
   return makeGeodeticCoordinates(latitude, longitude, altitude);
 }
 
+}  // namespace core
 }  // namespace romea

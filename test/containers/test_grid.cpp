@@ -24,8 +24,8 @@
 class TestGridIndexMapping2d : public ::testing::Test
 {
 public:
-  using PointType = romea::GridIndexMapping2d::PointType;
-  using CellIndexes = romea::GridIndexMapping2d::CellIndexes;
+  using PointType = romea::core::GridIndexMapping2d::PointType;
+  using CellIndexes = romea::core::GridIndexMapping2d::CellIndexes;
 
   TestGridIndexMapping2d()
   : gridExtremities(PointType(-1, -2), PointType(1, 2)),
@@ -33,8 +33,8 @@ public:
   {
   }
 
-  romea::Interval2D<double> gridExtremities;
-  romea::GridIndexMapping2d gridMapping;
+  romea::core::Interval2D<double> gridExtremities;
+  romea::core::GridIndexMapping2d gridMapping;
 };
 
 //-----------------------------------------------------------------------------
@@ -64,8 +64,8 @@ TEST_F(TestGridIndexMapping2d, iscomputeCellIndexesOK)
 class TestGridIndexMapping3d : public ::testing::Test
 {
 public:
-  using PointType = romea::GridIndexMapping3d::PointType;
-  using CellIndexes = romea::GridIndexMapping3d::CellIndexes;
+  using PointType = romea::core::GridIndexMapping3d::PointType;
+  using CellIndexes = romea::core::GridIndexMapping3d::CellIndexes;
 
   TestGridIndexMapping3d()
   : gridExtremities(PointType(-1, -2, -3), PointType(1, 2, 3)),
@@ -73,8 +73,8 @@ public:
   {
   }
 
-  romea::Interval3D<double> gridExtremities;
-  romea::GridIndexMapping3d gridMapping;
+  romea::core::Interval3D<double> gridExtremities;
+  romea::core::GridIndexMapping3d gridMapping;
 };
 
 //-----------------------------------------------------------------------------
@@ -109,7 +109,7 @@ TEST_F(TestGridIndexMapping3d, iscomputeCellIndexesOK)
 class TestGrid2d : public ::testing::Test
 {
 public:
-  using CellIndexes = romea::Grid<int, 2>::CellIndexes;
+  using CellIndexes = romea::core::Grid<int, 2>::CellIndexes;
 
   TestGrid2d()
   : grid(CellIndexes(3, 3))
@@ -126,7 +126,7 @@ public:
     }
   }
 
-  romea::Grid<int, 2> grid;
+  romea::core::Grid<int, 2> grid;
 };
 
 //-----------------------------------------------------------------------------
@@ -151,7 +151,7 @@ TEST_F(TestGrid2d, setDefaultValue)
 class TestGrid3d : public ::testing::Test
 {
 public:
-  using CellIndexes = romea::Grid<int, 3>::CellIndexes;
+  using CellIndexes = romea::core::Grid<int, 3>::CellIndexes;
 
   TestGrid3d()
   : grid(CellIndexes(3, 3, 3))
@@ -170,7 +170,7 @@ public:
     }
   }
 
-  romea::Grid<int, 3> grid;
+  romea::core::Grid<int, 3> grid;
 };
 
 //-----------------------------------------------------------------------------
@@ -194,10 +194,10 @@ TEST_F(TestGrid3d, setDefaultValue)
 //-----------------------------------------------------------------------------
 TEST(TestContainers, testCircularGrid2D)
 {
-  using CellIndexes = romea::WrappableGrid<int, 2>::CellIndexes;
-  using CellIndexesOffset = romea::WrappableGrid<int, 2>::CellIndexesOffset;
+  using CellIndexes = romea::core::WrappableGrid<int, 2>::CellIndexes;
+  using CellIndexesOffset = romea::core::WrappableGrid<int, 2>::CellIndexesOffset;
 
-  romea::WrappableGrid<int, 2> grid(CellIndexes(3, 3));
+  romea::core::WrappableGrid<int, 2> grid(CellIndexes(3, 3));
 
   int n = 0;
   for (size_t yi = 0; yi < 3; ++yi) {
@@ -221,8 +221,8 @@ TEST(TestContainers, testCircularGrid2D)
 class TestCircularGrid3D : public ::testing::Test
 {
 public:
-  using CellIndexes = romea::WrappableGrid<int, 3>::CellIndexes;
-  using CellIndexesOffset = romea::WrappableGrid<int, 3>::CellIndexesOffset;
+  using CellIndexes = romea::core::WrappableGrid<int, 3>::CellIndexes;
+  using CellIndexesOffset = romea::core::WrappableGrid<int, 3>::CellIndexesOffset;
 
   TestCircularGrid3D()
   : grid(CellIndexes(3, 3, 3))
@@ -241,7 +241,7 @@ public:
     }
   }
 
-  romea::WrappableGrid<int, 3> grid;
+  romea::core::WrappableGrid<int, 3> grid;
 };
 
 //-----------------------------------------------------------------------------

@@ -25,7 +25,7 @@ const double eps = 0.0001;
 //-----------------------------------------------------------------------------
 TEST(testSmartRotation3D, check_roll_rotation)
 {
-  romea::SmartRotation3D rotation(a, 0, 0);
+  romea::core::SmartRotation3D rotation(a, 0, 0);
   EXPECT_NEAR(rotation.R()(0, 0), 1.0, eps);
   EXPECT_NEAR(rotation.R()(0, 1), 0.0, eps);
   EXPECT_NEAR(rotation.R()(0, 2), 0.0, eps);
@@ -61,7 +61,7 @@ TEST(testSmartRotation3D, check_roll_rotation)
 //-----------------------------------------------------------------------------
 TEST(testSmartRotation3D, check_pitch_rotation)
 {
-  romea::SmartRotation3D rotation(0, a, 0);
+  romea::core::SmartRotation3D rotation(0, a, 0);
   EXPECT_NEAR(rotation.R()(0, 0), cosa, eps);
   EXPECT_NEAR(rotation.R()(0, 1), 0.0, eps);
   EXPECT_NEAR(rotation.R()(0, 2), sina, eps);
@@ -97,7 +97,7 @@ TEST(testSmartRotation3D, check_pitch_rotation)
 //-----------------------------------------------------------------------------
 TEST(testSmartRotation3D, check_yaw_rotation)
 {
-  romea::SmartRotation3D rotation(0, 0, a);
+  romea::core::SmartRotation3D rotation(0, 0, a);
   EXPECT_NEAR(rotation.R()(0, 0), cosa, eps);
   EXPECT_NEAR(rotation.R()(0, 1), -sina, eps);
   EXPECT_NEAR(rotation.R()(0, 2), 0.0, eps);
@@ -133,7 +133,7 @@ TEST(testSmartRotation3D, check_yaw_rotation)
 //-----------------------------------------------------------------------------
 TEST(testSmartRotation3D, check_full_rotation)
 {
-  romea::SmartRotation3D rotation(a, a, a);
+  romea::core::SmartRotation3D rotation(a, a, a);
   EXPECT_NEAR(rotation.R()(0, 0), 0.250000, eps);
   EXPECT_NEAR(rotation.R()(0, 1), -0.058013, eps);
   EXPECT_NEAR(rotation.R()(0, 2), 0.966506, eps);

@@ -21,6 +21,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 //-----------------------------------------------------------------------------
 FirstOrderButterworth::FirstOrderButterworth(const double & weighting)
@@ -60,4 +62,5 @@ void FirstOrderButterworth::reset()
   isInitialized_ = false;
 }
 
+}  // namespace core
 }  // namespace romea

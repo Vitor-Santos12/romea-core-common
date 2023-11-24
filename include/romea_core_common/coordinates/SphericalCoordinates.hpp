@@ -21,6 +21,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 template<typename Scalar>
 class SphericalCoordinates : public PolarCoordinates<Scalar>
@@ -190,6 +192,7 @@ HomogeneousCoordinates3<Scalar> toHomogeneous(const SphericalCoordinates<Scalar>
     SphericalTransform::z(point));
 }
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__COORDINATES__SPHERICALCOORDINATES_HPP_

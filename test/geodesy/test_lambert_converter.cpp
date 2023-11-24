@@ -25,15 +25,15 @@ TEST(testLambertConverter, comptureIsometricLatitude)
   double e = 0.08199188998;
   double eps = 1e-11;
   EXPECT_NEAR(
-    romea::LambertConverter::computeIsometricLatitude(0.87266462600, e),
+    romea::core::LambertConverter::computeIsometricLatitude(0.87266462600, e),
     1.00552653649, eps);
 
   EXPECT_NEAR(
-    romea::LambertConverter::computeIsometricLatitude(-0.3, e),
+    romea::core::LambertConverter::computeIsometricLatitude(-0.3, e),
     -0.30261690063, eps);
 
   EXPECT_NEAR(
-    romea::LambertConverter::computeIsometricLatitude(0.19998903370, e),
+    romea::core::LambertConverter::computeIsometricLatitude(0.19998903370, e),
     0.200000000009, eps);
 }
 
@@ -41,9 +41,15 @@ TEST(testLambertConverter, comptureIsometricLatitude)
 TEST(testLambertConverter, Latitude)
 {
   double e = 0.08199188998;
-  EXPECT_NEAR(romea::LambertConverter::computeLatitude(1.00552653648, e), 0.87266462600, 1e-11);
-  EXPECT_NEAR(romea::LambertConverter::computeLatitude(-0.30261690060, e), -0.29999999997, 1e-11);
-  EXPECT_NEAR(romea::LambertConverter::computeLatitude(0.2, e), 0.19998903369, 1e-11);
+  EXPECT_NEAR(
+    romea::core::LambertConverter::computeLatitude(1.00552653648, e),
+    0.87266462600, 1e-11);
+  EXPECT_NEAR(
+    romea::core::LambertConverter::computeLatitude(-0.30261690060, e),
+    -0.29999999997, 1e-11);
+  EXPECT_NEAR(
+    romea::core::LambertConverter::computeLatitude(0.2, e),
+    0.19998903369, 1e-11);
 }
 
 //-----------------------------------------------------------------------------
@@ -53,23 +59,25 @@ TEST(testLambertConverter, comptureGrandNormal)
   double e = 0.081991890;
   double latitude = 0.97738438100;
   double eps = 0.0001;
-  EXPECT_NEAR(romea::LambertConverter::computeGrandeNormal(latitude, a, e), 6393174.9755, eps);
+  EXPECT_NEAR(
+    romea::core::LambertConverter::computeGrandeNormal(latitude, a, e), 6393174.9755,
+    eps);
 }
 
 //-----------------------------------------------------------------------------
 TEST(testLambertConverter, computeParametersFromTangentProjectionParemeters)
 {
   {
-    romea::LambertConverter::TangentProjectionParameters sp;
+    romea::core::LambertConverter::TangentProjectionParameters sp;
     sp.longitude0 = 0.18112808800;
     sp.latitude0 = 0.97738438100;
     sp.k0 = 1.;
     sp.x0 = 0.;
     sp.y0 = 0.;
 
-    romea::EarthEllipsoid e(6378388, 6356911.946116942);
+    romea::core::EarthEllipsoid e(6378388, 6356911.946116942);
 
-    auto p = romea::LambertConverter::computeProjectionParameters(sp, e);
+    auto p = romea::core::LambertConverter::computeProjectionParameters(sp, e);
     EXPECT_DOUBLE_EQ(p.longitude0, sp.longitude0);
     EXPECT_NEAR(p.n, 0.8290375725, 1e-09);
     EXPECT_NEAR(p.c, 11464828.2192, 0.001);
@@ -78,16 +86,16 @@ TEST(testLambertConverter, computeParametersFromTangentProjectionParemeters)
   }
 
   {
-    romea::LambertConverter::TangentProjectionParameters sp;
+    romea::core::LambertConverter::TangentProjectionParameters sp;
     sp.longitude0 = 0.04079234433;
     sp.latitude0 = 0.86393798000;
     sp.k0 = 0.9998773400;
     sp.x0 = 600000.;
     sp.y0 = 200000.;
 
-    romea::EarthEllipsoid e(6378249.200, 6356514.999980688);
+    romea::core::EarthEllipsoid e(6378249.200, 6356514.999980688);
 
-    auto p = romea::LambertConverter::computeProjectionParameters(sp, e);
+    auto p = romea::core::LambertConverter::computeProjectionParameters(sp, e);
     EXPECT_DOUBLE_EQ(p.longitude0, sp.longitude0);
     EXPECT_NEAR(p.n, 0.7604059658, 1e-09);
     EXPECT_NEAR(p.c, 11603796.9760, 0.001);
@@ -98,10 +106,10 @@ TEST(testLambertConverter, computeParametersFromTangentProjectionParemeters)
 //-----------------------------------------------------------------------------
 TEST(testLambertConverter, computeParametersFromSecantProjectionParemeters)
 {
-  romea::EarthEllipsoid e(6378388, 6356911.946116942);
+  romea::core::EarthEllipsoid e(6378388, 6356911.946116942);
 
   {
-    romea::LambertConverter::SecantProjectionParameters sp;
+    romea::core::LambertConverter::SecantProjectionParameters sp;
     sp.longitude0 = 0.;
     sp.latitude0 = 0.;
     sp.latitude1 = -0.57595865300;
@@ -109,7 +117,7 @@ TEST(testLambertConverter, computeParametersFromSecantProjectionParemeters)
     sp.x0 = 0.;
     sp.y0 = 0.;
 
-    auto p = romea::LambertConverter::computeProjectionParameters(sp, e);
+    auto p = romea::core::LambertConverter::computeProjectionParameters(sp, e);
     EXPECT_DOUBLE_EQ(p.longitude0, sp.longitude0);
     EXPECT_NEAR(p.n, -0.6304963300, 1e-09);
     EXPECT_NEAR(p.c, -12453174.1795, 0.001);
@@ -118,7 +126,7 @@ TEST(testLambertConverter, computeParametersFromSecantProjectionParemeters)
   }
 
   {
-    romea::LambertConverter::SecantProjectionParameters sp;
+    romea::core::LambertConverter::SecantProjectionParameters sp;
     sp.longitude0 = 0.07623554539;
     sp.latitude0 = 1.57079632700;
     sp.latitude1 = 0.869755744;
@@ -126,7 +134,7 @@ TEST(testLambertConverter, computeParametersFromSecantProjectionParemeters)
     sp.x0 = 150000.;
     sp.y0 = 5400000.;
 
-    auto p = romea::LambertConverter::computeProjectionParameters(sp, e);
+    auto p = romea::core::LambertConverter::computeProjectionParameters(sp, e);
     EXPECT_DOUBLE_EQ(p.longitude0, sp.longitude0);
     EXPECT_NEAR(p.n, 0.7716421867, 1e-09);
     EXPECT_NEAR(p.c, 11565915.8294, 0.001);
@@ -138,7 +146,7 @@ TEST(testLambertConverter, computeParametersFromSecantProjectionParemeters)
 //-----------------------------------------------------------------------------
 TEST(testLambertConverter, toLambert)
 {
-  romea::LambertConverter converter(
+  romea::core::LambertConverter converter(
     0.0407923443,
     0.760405966,
     11603796.9767,
@@ -146,7 +154,7 @@ TEST(testLambertConverter, toLambert)
     5657616.6740,
     0.0824832568);
 
-  romea::WGS84Coordinates wgs84Coordinates;
+  romea::core::WGS84Coordinates wgs84Coordinates;
   wgs84Coordinates.latitude = 0.8726646260;
   wgs84Coordinates.longitude = 0.14551209900;
 
@@ -159,7 +167,7 @@ TEST(testLambertConverter, toLambert)
 //-----------------------------------------------------------------------------
 TEST(testLambertConverter, toLambertCC46)
 {
-  romea::LambertConverter::SecantProjectionParameters parameters;
+  romea::core::LambertConverter::SecantProjectionParameters parameters;
   parameters.longitude0 = 3.0 / 180. * M_PI;
   parameters.latitude0 = 46.0 / 180. * M_PI;
   parameters.latitude1 = 45.25 / 180. * M_PI;
@@ -167,9 +175,9 @@ TEST(testLambertConverter, toLambertCC46)
   parameters.x0 = 1700000.;
   parameters.y0 = 5200000.;
 
-  romea::LambertConverter converter(parameters, romea::EarthEllipsoid::GRS80);
+  romea::core::LambertConverter converter(parameters, romea::core::EarthEllipsoid::GRS80);
 
-  romea::WGS84Coordinates wgs84Coordinates;
+  romea::core::WGS84Coordinates wgs84Coordinates;
   wgs84Coordinates.latitude = 45.693834 / 180. * M_PI;
   wgs84Coordinates.longitude = 3.100827 / 180. * M_PI;
 
@@ -181,7 +189,7 @@ TEST(testLambertConverter, toLambertCC46)
 //-----------------------------------------------------------------------------
 TEST(testLambertConverter, toWGS84)
 {
-  romea::LambertConverter converter(
+  romea::core::LambertConverter converter(
     0.04079234433,
     0.760405966,
     11603796.9767,

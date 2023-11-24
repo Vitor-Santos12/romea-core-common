@@ -20,6 +20,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 template<class EigenVectorType>
 class RingOfEigenVector
@@ -106,6 +108,7 @@ const EigenVectorType & RingOfEigenVector<EigenVectorType>::operator[](size_t n)
 }
 
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__CONTAINERS__EIGEN__RINGOFEIGENVECTOR_HPP_

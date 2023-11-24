@@ -22,6 +22,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 //-----------------------------------------------------------------------------
 Timer::Timer(
@@ -64,4 +66,5 @@ Timer::~Timer()
   }
 }
 
+}  // namespace core
 }  // namespace romea

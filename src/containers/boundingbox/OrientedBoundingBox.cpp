@@ -18,6 +18,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 
 //-----------------------------------------------------------------------------
@@ -92,4 +94,5 @@ template class OrientedBoundingBox<float, 3>;
 template class OrientedBoundingBox<double, 2>;
 template class OrientedBoundingBox<double, 3>;
 
+}  // namespace core
 }  // namespace romea

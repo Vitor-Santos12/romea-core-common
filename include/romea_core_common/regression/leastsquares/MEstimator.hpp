@@ -24,6 +24,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 const float MESTIMATOR_DISCARDED_VALUE_FLOAT = std::numeric_limits<float>::max();
 const double MESTIMATOR_DISCARDED_VALUE_DOUBLE = std::numeric_limits<double>::max();
@@ -56,6 +58,7 @@ private:
   Vector ones_;
 };
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__REGRESSION__LEASTSQUARES__MESTIMATOR_HPP_

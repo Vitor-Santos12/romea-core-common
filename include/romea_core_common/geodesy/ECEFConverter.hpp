@@ -25,6 +25,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 class ECEFConverter
 {
@@ -39,6 +41,7 @@ protected:
   EarthEllipsoid ellipsoid_;
 };
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__GEODESY__ECEFCONVERTER_HPP_

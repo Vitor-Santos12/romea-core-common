@@ -27,19 +27,19 @@ TEST(TestMatrix, testPositiveSemiDefiniteMatrix)
   se2Covariance.row(0) << 0.1, 0.3, -0.4;
   se2Covariance.row(1) << 0.3, 0.2, 0.3;
   se2Covariance.row(2) << -0.4, 0.3, 0.5;
-  EXPECT_TRUE(romea::isPositiveSemiDefiniteMatrix(se2Covariance));
+  EXPECT_TRUE(romea::core::isPositiveSemiDefiniteMatrix(se2Covariance));
 
   Eigen::Matrix3d badSe2Covariance1 = se2Covariance;
   badSe2Covariance1(0, 1) = 0.2;
-  EXPECT_FALSE(romea::isPositiveSemiDefiniteMatrix(badSe2Covariance1));
+  EXPECT_FALSE(romea::core::isPositiveSemiDefiniteMatrix(badSe2Covariance1));
 
   Eigen::Matrix3d badSe2Covariance2 = se2Covariance;
   badSe2Covariance2(0, 2) = 0.4;
-  EXPECT_FALSE(romea::isPositiveSemiDefiniteMatrix(badSe2Covariance2));
+  EXPECT_FALSE(romea::core::isPositiveSemiDefiniteMatrix(badSe2Covariance2));
 
   Eigen::Matrix3d badSe2Covariance3 = se2Covariance;
   badSe2Covariance3(0, 0) = -0.1;
-  EXPECT_FALSE(romea::isPositiveSemiDefiniteMatrix(badSe2Covariance3));
+  EXPECT_FALSE(romea::core::isPositiveSemiDefiniteMatrix(badSe2Covariance3));
 
 }
 
@@ -50,7 +50,7 @@ TEST(TestMatrix, testSe2ToSe3Covariance)
   se2Covariance.row(0) << 0.1, 0.3, -0.4;
   se2Covariance.row(1) << 0.3, 0.2, 0.3;
   se2Covariance.row(2) << -0.4, 0.3, 0.5;
-  auto se3Covariance = romea::toSe3Covariance(se2Covariance);
+  auto se3Covariance = romea::core::toSe3Covariance(se2Covariance);
 
   EXPECT_DOUBLE_EQ(se3Covariance(0, 0), se2Covariance(0, 0));
   EXPECT_DOUBLE_EQ(se3Covariance(0, 1), se2Covariance(0, 1));
@@ -106,7 +106,7 @@ TEST(TestMatrix, testSe3ToSe2Covariance)
   se3Covariance.row(4) << -0.6, -0.3, 0.2, -0.1, 0.3, -0.4;
   se3Covariance.row(5) << 1.2, 0.7, 0.8, 0.9, 0.4, 0.6;
 
-  auto se2Covariance = romea::toSe2Covariance(se3Covariance);
+  auto se2Covariance = romea::core::toSe2Covariance(se3Covariance);
 
   EXPECT_DOUBLE_EQ(se3Covariance(0, 0), se2Covariance(0, 0));
   EXPECT_DOUBLE_EQ(se3Covariance(0, 1), se2Covariance(0, 1));

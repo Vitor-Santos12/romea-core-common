@@ -17,6 +17,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 //-----------------------------------------------------------------------------
 DiagnosticReport::DiagnosticReport()
@@ -55,5 +57,5 @@ DiagnosticReport & operator+=(DiagnosticReport & report1, const DiagnosticReport
   return report1;
 }
 
-
+}  // namespace  core
 }  // namespace  romea

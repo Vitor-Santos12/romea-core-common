@@ -22,6 +22,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 //-----------------------------------------------------------------------------
 template<class PointType>
@@ -182,4 +184,5 @@ template class FindRigidTransformationBySVD<HomogeneousCoordinates2d>;
 template class FindRigidTransformationBySVD<HomogeneousCoordinates3f>;
 template class FindRigidTransformationBySVD<HomogeneousCoordinates3d>;
 
+}   // namespace core
 }   // namespace romea

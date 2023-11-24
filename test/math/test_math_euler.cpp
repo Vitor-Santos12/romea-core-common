@@ -24,8 +24,8 @@ TEST(TestEuler, testRX)
 {
   double roll = 0.8;
   Eigen::Vector3d eulerAngles(roll, 0, 0);
-  Eigen::Matrix3d R = romea::eulerAnglesToRotation3D(eulerAngles);
-  eulerAngles = romea::rotation3DToEulerAngles(R);
+  Eigen::Matrix3d R = romea::core::eulerAnglesToRotation3D(eulerAngles);
+  eulerAngles = romea::core::rotation3DToEulerAngles(R);
 
   EXPECT_NEAR(R(0, 0), 1, 0.001);
   EXPECT_NEAR(R(0, 1), 0, 0.001);
@@ -43,8 +43,8 @@ TEST(TestEuler, testRY)
 {
   double pitch = M_PI_2 - 0.5;
   Eigen::Vector3d eulerAngles(0, pitch, 0);
-  Eigen::Matrix3d R = romea::eulerAnglesToRotation3D(eulerAngles);
-  eulerAngles = romea::rotation3DToEulerAngles(R);
+  Eigen::Matrix3d R = romea::core::eulerAnglesToRotation3D(eulerAngles);
+  eulerAngles = romea::core::rotation3DToEulerAngles(R);
 
   EXPECT_NEAR(R(0, 1), 0, 0.001);
   EXPECT_NEAR(R(1, 0), 0, 0.001);
@@ -63,8 +63,8 @@ TEST(TestEuler, testRZ)
 {
   double yaw = 1.1;
   Eigen::Vector3d eulerAngles(0, 0, yaw);
-  Eigen::Matrix3d R = romea::eulerAnglesToRotation3D(eulerAngles);
-  eulerAngles = romea::rotation3DToEulerAngles(R);
+  Eigen::Matrix3d R = romea::core::eulerAnglesToRotation3D(eulerAngles);
+  eulerAngles = romea::core::rotation3DToEulerAngles(R);
 
   EXPECT_NEAR(R(0, 2), 0, 0.001);
   EXPECT_NEAR(R(1, 2), 0, 0.001);
@@ -85,7 +85,8 @@ TEST(TestEuler, testR)
   double yaw = 1.1;
 
   Eigen::Vector3d eulerAngles(roll, pitch, yaw);
-  eulerAngles = romea::rotation3DToEulerAngles(romea::eulerAnglesToRotation3D(eulerAngles));
+  eulerAngles = romea::core::rotation3DToEulerAngles(
+    romea::core::eulerAnglesToRotation3D(eulerAngles));
   EXPECT_NEAR(eulerAngles.x(), roll, 0.001);
   EXPECT_NEAR(eulerAngles.y(), pitch, 0.001);
   EXPECT_NEAR(eulerAngles.z(), yaw, 0.001);
@@ -98,11 +99,12 @@ TEST(TestEuler, quaternionToEulerAngles)
   double pitch = -0.2;
   double yaw = 2.1;
   Eigen::Vector3d eulerAngles(roll, pitch, yaw);
-  Eigen::Quaterniond q = Eigen::Quaterniond(romea::eulerAnglesToRotation3D(eulerAngles));
-  eulerAngles = romea::quaternionToEulerAngles(q);
-  EXPECT_NEAR(eulerAngles.x(), romea::between0And2Pi(roll), 0.001);
-  EXPECT_NEAR(eulerAngles.y(), romea::between0And2Pi(pitch), 0.001);
-  EXPECT_NEAR(eulerAngles.z(), romea::between0And2Pi(yaw), 0.001);
+  Eigen::Quaterniond q = Eigen::Quaterniond(
+    romea::core::eulerAnglesToRotation3D(eulerAngles));
+  eulerAngles = romea::core::quaternionToEulerAngles(q);
+  EXPECT_NEAR(eulerAngles.x(), romea::core::between0And2Pi(roll), 0.001);
+  EXPECT_NEAR(eulerAngles.y(), romea::core::between0And2Pi(pitch), 0.001);
+  EXPECT_NEAR(eulerAngles.z(), romea::core::between0And2Pi(yaw), 0.001);
 }
 
 //-----------------------------------------------------------------------------
@@ -112,7 +114,7 @@ inline void testRotationPrediction(
   const double & dt)
 {
   size_t N = 1000;
-  Eigen::Matrix3d rotation = romea::eulerAnglesToRotation3D(initialEulerAngles);
+  Eigen::Matrix3d rotation = romea::core::eulerAnglesToRotation3D(initialEulerAngles);
 
   double dti = dt / N;
   Eigen::Matrix3d F;
@@ -126,21 +128,22 @@ inline void testRotationPrediction(
       std::cos(eulerAngles[0]) / std::cos(eulerAngles[1]);
     eulerAngles += F * angularSpeeds * dti;
 
-    rotation = rotation * romea::eulerAnglesToRotation3D(Eigen::Vector3d(angularSpeeds * dti));
+    rotation = rotation *
+      romea::core::eulerAnglesToRotation3D(Eigen::Vector3d(angularSpeeds * dti));
   }
 
   EXPECT_LT(
-    romea::betweenMinusPiAndPi(
+    romea::core::betweenMinusPiAndPi(
       eulerAngles.x() -
-      romea::rotation3DToEulerAngles(rotation).x()), 0.01);
+      romea::core::rotation3DToEulerAngles(rotation).x()), 0.01);
   EXPECT_LT(
-    romea::betweenMinusPiAndPi(
+    romea::core::betweenMinusPiAndPi(
       eulerAngles.y() -
-      romea::rotation3DToEulerAngles(rotation).y()), 0.01);
+      romea::core::rotation3DToEulerAngles(rotation).y()), 0.01);
   EXPECT_LT(
-    romea::betweenMinusPiAndPi(
+    romea::core::betweenMinusPiAndPi(
       eulerAngles.z() -
-      romea::rotation3DToEulerAngles(rotation).z()), 0.01);
+      romea::core::rotation3DToEulerAngles(rotation).z()), 0.01);
 }
 
 //-----------------------------------------------------------------------------

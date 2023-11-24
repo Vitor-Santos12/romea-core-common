@@ -18,6 +18,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 class EarthEllipsoid
 {
@@ -43,6 +45,7 @@ public:
   double e;
 };
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__GEODESY__EARTHELLIPSOID_HPP_

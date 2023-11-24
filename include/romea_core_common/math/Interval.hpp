@@ -28,6 +28,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 
 template<typename Scalar, size_t DIM = 1>
@@ -260,6 +262,7 @@ Interval2D<Scalar> to2D(const Interval3D<Scalar> & interval3D)
     interval3D.upper().template segment<2>(0));
 }
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__MATH__INTERVAL_HPP_

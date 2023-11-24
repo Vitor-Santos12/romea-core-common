@@ -26,6 +26,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 class SimpleFileLogger
 {
@@ -101,6 +103,7 @@ private:
   std::ofstream file_;
 };
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__LOG__SIMPLEFILELOGGER_HPP_

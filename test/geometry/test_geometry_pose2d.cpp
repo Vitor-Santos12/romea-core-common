@@ -23,7 +23,7 @@
 //-----------------------------------------------------------------------------
 TEST(TestPose2D, checkComputeEllipse)
 {
-  romea::Pose2D pose2d;
+  romea::core::Pose2D pose2d;
 }
 
 

@@ -21,6 +21,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 
 template<class PointType>
@@ -86,6 +88,7 @@ struct PointTraits<HomogeneousCoordinates3d>
   static constexpr int SIZE = 4;
 };
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__POINTSET__POINTTRAITS_HPP_

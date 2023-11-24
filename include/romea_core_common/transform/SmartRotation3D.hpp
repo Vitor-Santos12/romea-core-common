@@ -20,6 +20,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 class SmartRotation3D
 {
@@ -66,6 +68,7 @@ private:
   Eigen::Matrix3d dRdAngleZ_;
 };
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__TRANSFORM__SMARTROTATION3D_HPP_

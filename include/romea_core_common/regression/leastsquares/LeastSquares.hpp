@@ -21,6 +21,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 template<typename RealType>
 class LeastSquares
@@ -86,6 +88,7 @@ private:
   Vector JtY_;
 };
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__REGRESSION__LEASTSQUARES__LEASTSQUARES_HPP_

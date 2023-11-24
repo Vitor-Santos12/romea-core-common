@@ -21,6 +21,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 enum class DiagnosticStatus
 {
@@ -36,6 +38,7 @@ std::ostream & operator<<(std::ostream & os, const DiagnosticStatus & status);
 
 DiagnosticStatus worse(const DiagnosticStatus & status1, const DiagnosticStatus & status2);
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__DIAGNOSTIC__DIAGNOSTICSTATUS_HPP_

@@ -22,6 +22,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 //--------------------------------------------------------------------------
 ENUConverter::ENUConverter()
@@ -138,4 +140,5 @@ void ENUConverter::reset()
   isAnchored_ = false;
 }
 
+}  // namespace core
 }  // namespace romea

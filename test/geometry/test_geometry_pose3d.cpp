@@ -23,12 +23,12 @@
 //-----------------------------------------------------------------------------
 TEST(TestPose3D, checkConvertToPose2D)
 {
-  romea::Pose3D pose3d;
+  romea::core::Pose3D pose3d;
   fillEigenVector(pose3d.position, 1);
   fillEigenVector(pose3d.orientation, 4);
   fillEigenCovariance(pose3d.covariance);
 
-  romea::Pose2D pose2d = romea::toPose2D(pose3d);
+  romea::core::Pose2D pose2d = romea::core::toPose2D(pose3d);
 
   EXPECT_DOUBLE_EQ(pose2d.yaw, pose3d.orientation.z());
   EXPECT_DOUBLE_EQ(pose2d.position.x(), pose3d.position.x());
@@ -47,12 +47,12 @@ TEST(TestPose3D, checkConvertToPose2D)
 //-----------------------------------------------------------------------------
 TEST(TestPose3D, checkConvertToPosition3D)
 {
-  romea::Pose3D pose3d;
+  romea::core::Pose3D pose3d;
   fillEigenVector(pose3d.position, 1);
   fillEigenVector(pose3d.orientation, 4);
   fillEigenCovariance(pose3d.covariance);
 
-  romea::Position3D posisition3d = romea::toPosition3D(pose3d);
+  romea::core::Position3D posisition3d = romea::core::toPosition3D(pose3d);
   EXPECT_DOUBLE_EQ(posisition3d.position.x(), pose3d.position.x());
   EXPECT_DOUBLE_EQ(posisition3d.position.y(), pose3d.position.y());
   EXPECT_DOUBLE_EQ(posisition3d.position.z(), pose3d.position.z());

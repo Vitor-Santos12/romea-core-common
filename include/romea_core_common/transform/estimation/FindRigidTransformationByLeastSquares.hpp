@@ -29,6 +29,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 template<class PointType>
 class FindRigidTransformationByLeastSquares
@@ -87,6 +89,7 @@ private:
   LeastSquares<Scalar> leastSquares_;
 };
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__TRANSFORM__ESTIMATION__FINDRIGIDTRANSFORMATIONBYLEASTSQUARES_HPP_

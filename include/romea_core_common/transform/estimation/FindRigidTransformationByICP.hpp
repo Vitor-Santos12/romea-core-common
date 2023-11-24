@@ -27,6 +27,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 template<class PointType>
 class FindRigidTransformationByICP
@@ -91,6 +93,7 @@ protected:
   Scalar transformationEpsilon_;
 };
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__TRANSFORM__ESTIMATION__FINDRIGIDTRANSFORMATIONBYICP_HPP_

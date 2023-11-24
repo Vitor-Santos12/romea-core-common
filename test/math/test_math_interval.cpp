@@ -26,7 +26,7 @@ TEST(TestInterval, testInterval1Di)
 {
   int lower1 = 0;
   int upper1 = 10;
-  romea::Interval1D<int> interval1(lower1, upper1);
+  romea::core::Interval1D<int> interval1(lower1, upper1);
   EXPECT_EQ(interval1.lower(), lower1);
   EXPECT_EQ(interval1.upper(), upper1);
   EXPECT_EQ(interval1.center(), 5);
@@ -34,7 +34,7 @@ TEST(TestInterval, testInterval1Di)
 
   int lower2 = -3;
   int upper2 = 10;
-  romea::Interval1D<int> interval2(lower2, upper2);
+  romea::core::Interval1D<int> interval2(lower2, upper2);
   EXPECT_EQ(interval2.lower(), lower2);
   EXPECT_EQ(interval2.upper(), upper2);
   EXPECT_EQ(interval2.center(), 3);
@@ -47,7 +47,7 @@ TEST(TestInterval, testInterval1Df)
 {
   double lower1 = 0.;
   double upper1 = 10.;
-  romea::Interval1D<double> interval1(lower1, upper1);
+  romea::core::Interval1D<double> interval1(lower1, upper1);
   EXPECT_DOUBLE_EQ(interval1.lower(), lower1);
   EXPECT_DOUBLE_EQ(interval1.upper(), upper1);
   EXPECT_DOUBLE_EQ(interval1.center(), 5.);
@@ -55,7 +55,7 @@ TEST(TestInterval, testInterval1Df)
 
   double lower2 = -3.;
   double upper2 = 10.;
-  romea::Interval1D<double> interval2(lower2, upper2);
+  romea::core::Interval1D<double> interval2(lower2, upper2);
   EXPECT_DOUBLE_EQ(interval2.lower(), lower2);
   EXPECT_DOUBLE_EQ(interval2.upper(), upper2);
   EXPECT_DOUBLE_EQ(interval2.center(), 3.5);
@@ -67,7 +67,7 @@ TEST(TestInterval, testInsideInterval1Di)
 {
   int lower = 0;
   int upper = 10;
-  romea::Interval1D<int> interval(lower, upper);
+  romea::core::Interval1D<int> interval(lower, upper);
   EXPECT_TRUE(interval.inside(lower));
   EXPECT_TRUE(interval.inside(upper));
   EXPECT_TRUE(interval.inside(interval.center()));
@@ -81,7 +81,7 @@ TEST(TestInterval, testInsideInterval1Df)
 {
   double lower = 0.3;
   double upper = 10.2;
-  romea::Interval1D<double> interval(lower, upper);
+  romea::core::Interval1D<double> interval(lower, upper);
   EXPECT_TRUE(interval.inside(lower));
   EXPECT_TRUE(interval.inside(upper));
   EXPECT_TRUE(interval.inside(interval.center()));
@@ -94,7 +94,7 @@ TEST(TestInterval, testInsideInterval2Di)
 {
   Eigen::Vector2i lower{0, -5};
   Eigen::Vector2i upper{10, 20};
-  romea::Interval2D<int> interval(lower, upper);
+  romea::core::Interval2D<int> interval(lower, upper);
   EXPECT_EQ(interval.lower().x(), lower.x());
   EXPECT_EQ(interval.lower().y(), lower.y());
   EXPECT_EQ(interval.upper().x(), upper.x());
@@ -113,7 +113,7 @@ TEST(TestInterval, testInsideInterval2Df)
 {
   Eigen::Vector2d lower{0.4, -5.2};
   Eigen::Vector2d upper{10.2, 20.5};
-  romea::Interval2D<double> interval(lower, upper);
+  romea::core::Interval2D<double> interval(lower, upper);
   EXPECT_DOUBLE_EQ(interval.lower().x(), lower.x());
   EXPECT_DOUBLE_EQ(interval.lower().y(), lower.y());
   EXPECT_DOUBLE_EQ(interval.upper().x(), upper.x());
@@ -139,17 +139,17 @@ TEST(TestInterval, testInterval1DiInclude)
   int lower4 = -2;
   int upper4 = 8;
 
-  romea::Interval1D<int> interval(lower1, upper1);
+  romea::core::Interval1D<int> interval(lower1, upper1);
 
-  interval.include(romea::Interval1D<int>(lower2, upper2));
+  interval.include(romea::core::Interval1D<int>(lower2, upper2));
   EXPECT_EQ(interval.lower(), lower1);
   EXPECT_EQ(interval.upper(), upper2);
 
-  interval.include(romea::Interval1D<int>(lower3, upper3));
+  interval.include(romea::core::Interval1D<int>(lower3, upper3));
   EXPECT_EQ(interval.lower(), lower3);
   EXPECT_EQ(interval.upper(), upper3);
 
-  interval.include(romea::Interval1D<int>(lower4, upper4));
+  interval.include(romea::core::Interval1D<int>(lower4, upper4));
   EXPECT_EQ(interval.lower(), lower3);
   EXPECT_EQ(interval.upper(), upper3);
 }
@@ -166,21 +166,21 @@ TEST(TestInterval, testInterval2DiInclude)
   Eigen::Vector2i lower4(5, 15);
   Eigen::Vector2i upper4(8, 20);
 
-  romea::Interval2D<int> interval(lower1, upper1);
+  romea::core::Interval2D<int> interval(lower1, upper1);
 
-  interval.include(romea::Interval2D<int>(lower2, upper2));
+  interval.include(romea::core::Interval2D<int>(lower2, upper2));
   EXPECT_EQ(interval.lower().x(), lower2.x());
   EXPECT_EQ(interval.lower().y(), lower1.y());
   EXPECT_EQ(interval.upper().x(), upper1.x());
   EXPECT_EQ(interval.upper().y(), upper2.y());
 
-  interval.include(romea::Interval2D<int>(lower3, upper3));
+  interval.include(romea::core::Interval2D<int>(lower3, upper3));
   EXPECT_EQ(interval.lower().x(), lower2.x());
   EXPECT_EQ(interval.lower().y(), lower1.y());
   EXPECT_EQ(interval.upper().x(), upper3.x());
   EXPECT_EQ(interval.upper().y(), upper3.y());
 
-  interval.include(romea::Interval2D<int>(lower4, upper4));
+  interval.include(romea::core::Interval2D<int>(lower4, upper4));
   EXPECT_EQ(interval.lower().x(), lower2.x());
   EXPECT_EQ(interval.lower().y(), lower1.y());
   EXPECT_EQ(interval.upper().x(), upper3.x());

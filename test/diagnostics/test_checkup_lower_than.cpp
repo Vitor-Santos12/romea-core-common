@@ -23,8 +23,8 @@
 //-----------------------------------------------------------------------------
 TEST(TestCheckupLowerThan, checkValueIsOK)
 {
-  romea::CheckupEqualTo<double> checkup("foo", 1.0, 0.1);
-  EXPECT_EQ(checkup.evaluate(1.05), romea::DiagnosticStatus::OK);
+  romea::core::CheckupEqualTo<double> checkup("foo", 1.0, 0.1);
+  EXPECT_EQ(checkup.evaluate(1.05), romea::core::DiagnosticStatus::OK);
   EXPECT_STREQ(checkup.getReport().info.at("foo").c_str(), "1.05");
   EXPECT_STREQ(checkup.getReport().diagnostics.front().message.c_str(), "foo is OK.");
 }
@@ -32,8 +32,8 @@ TEST(TestCheckupLowerThan, checkValueIsOK)
 //-----------------------------------------------------------------------------
 TEST(TestCheckupLowerThan, checkValueIsTooHigh)
 {
-  romea::CheckupEqualTo<double> checkup("foo", 1.0, 0.1);
-  EXPECT_EQ(checkup.evaluate(1.15), romea::DiagnosticStatus::ERROR);
+  romea::core::CheckupEqualTo<double> checkup("foo", 1.0, 0.1);
+  EXPECT_EQ(checkup.evaluate(1.15), romea::core::DiagnosticStatus::ERROR);
   EXPECT_STREQ(checkup.getReport().info.at("foo").c_str(), "1.15");
   EXPECT_STREQ(checkup.getReport().diagnostics.front().message.c_str(), "foo is too high.");
 }

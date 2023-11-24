@@ -31,6 +31,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 template<typename Scalar, size_t DIM, template<class> class ContainerBase = Eigen::MatrixBase,
   class PRNG = std::mt19937>
@@ -43,8 +45,7 @@ public:
 
 public:
   NormalRandomMatrixGenerator()
-  :
-  // engine_(std::random_device{}()),
+  :// engine_(std::random_device{}()),
     engine_(0),
     mean_(MeanVector::Zero()),
     covariance_(CovarianceMatrix::Zero()),
@@ -102,7 +103,7 @@ class NormalRandomMatrixGenerator<Scalar, 1, ContainerBase, PRNG>
 {
 public:
   NormalRandomMatrixGenerator()
-  : engine_(std::random_device{} ()),
+  : engine_(std::random_device{}()),
     mean_(0),
     std_(0)
   {
@@ -145,6 +146,7 @@ using NormalRandomArrayGenerator3D = NormalRandomMatrixGenerator<Scalar, 3, Eige
 template<typename Scalar>
 using NormalRandomArrayGenerator = NormalRandomMatrixGenerator<Scalar, 1, Eigen::ArrayBase>;
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__MATH__NORMALRANDOMMATRIXGENERATOR_HPP_

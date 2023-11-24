@@ -18,6 +18,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 //-----------------------------------------------------------------------------
 SmartRotation3D::SmartRotation3D()
@@ -156,4 +158,5 @@ const Eigen::Matrix3d & SmartRotation3D::dRdAngleAroundZAxis()const
   return dRdAngleZ_;
 }
 
+}   // namespace core
 }   // namespace romea

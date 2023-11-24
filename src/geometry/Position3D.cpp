@@ -18,6 +18,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 //--------------------------------------------------------------------------
 Position3D::Position3D()
@@ -26,4 +28,5 @@ Position3D::Position3D()
 {
 }
 
+}   // namespace core
 }   // namespace romea

@@ -27,6 +27,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 class LambertConverter
 {
@@ -116,6 +118,7 @@ private:
   double e_;
 };
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__GEODESY__LAMBERTCONVERTER_HPP_

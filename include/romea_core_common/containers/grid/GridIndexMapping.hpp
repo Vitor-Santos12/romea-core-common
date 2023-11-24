@@ -28,6 +28,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 template<typename Scalar, size_t DIM>
 class GridIndexMapping
@@ -75,6 +77,7 @@ using GridIndexMapping3f = GridIndexMapping<float, 3>;
 using GridIndexMapping2d = GridIndexMapping<double, 2>;
 using GridIndexMapping3d = GridIndexMapping<double, 3>;
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON_CONTAINERS_GRID_GRIDINDEXMAPPING_HPP_

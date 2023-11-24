@@ -24,6 +24,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 //-----------------------------------------------------------------------------
 template<typename CheckupType>
@@ -69,4 +71,5 @@ bool CheckupRate<CheckupType>::heartBeatCallback(const Duration & stamp)
 template class CheckupRate<CheckupGreaterThan<double>>;
 template class CheckupRate<CheckupEqualTo<double>>;
 
+}  // namespace core
 }  // namespace romea

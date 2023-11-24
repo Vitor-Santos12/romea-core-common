@@ -23,6 +23,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 //-----------------------------------------------------------------------------
 Diagnostic::Diagnostic()
@@ -68,5 +70,5 @@ std::ostream & operator<<(std::ostream & os, const Diagnostic & diagnostic)
   return os;
 }
 
-
+}  // namespace core
 }  // namespace romea

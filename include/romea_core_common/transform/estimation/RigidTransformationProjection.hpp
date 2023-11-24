@@ -21,6 +21,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 //-----------------------------------------------------------------------------
 template<typename Scalar>
@@ -64,6 +66,7 @@ void projection(
   targetPoint = tranformationMatrix * sourcePoint;
 }
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON_TRANSFORM_ESTIMATION_RIGIDTRANSFORMATIONPROJECTION_HPP_

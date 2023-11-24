@@ -21,6 +21,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 //----------------------------------------------------------------------------
 template<typename RealType>
@@ -99,4 +101,5 @@ MEstimator<RealType>::computeWeights(
 template class MEstimator<float>;
 template class MEstimator<double>;
 
+}  // namespace core
 }  // namespace romea

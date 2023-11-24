@@ -21,6 +21,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 //-----------------------------------------------------------------------------
 template<typename Scalar, size_t DIM>
@@ -121,4 +123,5 @@ template class GridIndexMapping<float, 3>;
 template class GridIndexMapping<double, 2>;
 template class GridIndexMapping<double, 3>;
 
+}  // namespace core
 }  // namespace romea

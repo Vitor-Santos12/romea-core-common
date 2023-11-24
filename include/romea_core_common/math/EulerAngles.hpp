@@ -26,6 +26,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 
 static constexpr auto M_2PI = 2 * M_PI;
@@ -110,6 +112,7 @@ Eigen::Matrix<Scalar, 3, 3> eulerAnglesToRotation3D(const Eigen::Matrix<Scalar, 
   return Eigen::Matrix<Scalar, 3, 3>(eulerAnglesToQuaternion(eulerAngles));
 }
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__MATH__EULERANGLES_HPP_

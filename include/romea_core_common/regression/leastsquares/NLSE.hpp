@@ -20,6 +20,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 template<typename RealType>
 class NLSE
@@ -66,6 +68,7 @@ protected:
   double rmse_;
 };
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON_REGRESSION_LEASTSQUARES_NLSE_HPP_

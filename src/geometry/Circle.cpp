@@ -18,6 +18,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 
 //-----------------------------------------------------------------------------
@@ -51,4 +53,5 @@ const double & Circle::getRadius()const
   return radius_;
 }
 
+}  // namespace core
 }  // namespace romea

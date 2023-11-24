@@ -22,6 +22,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 //-----------------------------------------------------------------------------
 template<class PointType>
@@ -277,4 +279,5 @@ template class FindRigidTransformationByLeastSquares<HomogeneousCoordinates2d>;
 template class FindRigidTransformationByLeastSquares<HomogeneousCoordinates3f>;
 template class FindRigidTransformationByLeastSquares<HomogeneousCoordinates3d>;
 
+}  // namespace core
 }  // namespace romea

@@ -13,7 +13,6 @@
 // limitations under the License.
 
 
-
 // std
 #include <string>
 
@@ -21,6 +20,8 @@
 #include "romea_core_common/diagnostic/DiagnosticStatus.hpp"
 
 namespace romea
+{
+namespace core
 {
 
 //-----------------------------------------------------------------------------
@@ -60,5 +61,5 @@ std::ostream & operator<<(std::ostream & os, const DiagnosticStatus & status)
   return os;
 }
 
-
+}  // namespace core
 }  // namespace romea

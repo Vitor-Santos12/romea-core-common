@@ -23,6 +23,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 //-----------------------------------------------------------------------------
 template<class PointType>
@@ -150,4 +152,5 @@ template class RansacRandomCorrespondences<HomogeneousCoordinates2d>;
 template class RansacRandomCorrespondences<HomogeneousCoordinates3f>;
 template class RansacRandomCorrespondences<HomogeneousCoordinates3d>;
 
+}  // namespace core
 }  // namespace romea

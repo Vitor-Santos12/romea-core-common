@@ -21,6 +21,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 struct Correspondence
 {
@@ -59,7 +61,8 @@ inline bool sortByTargetIndexAndDistancePredicate(
   if (c1.targetPointIndex < c2.targetPointIndex) {
     return true;
   } else if ((c1.targetPointIndex == c2.targetPointIndex) &&
-    (c1.squareDistanceBetweenPoints < c2.squareDistanceBetweenPoints)) {
+    (c1.squareDistanceBetweenPoints < c2.squareDistanceBetweenPoints))
+  {
     return true;
   }
   return false;
@@ -73,7 +76,8 @@ inline bool sortBySourceIndexAndDistancePredicate(
   if (c1.sourcePointIndex < c2.sourcePointIndex) {
     return true;
   } else if ((c1.sourcePointIndex == c2.sourcePointIndex) &&
-    (c1.squareDistanceBetweenPoints < c2.squareDistanceBetweenPoints)){
+    (c1.squareDistanceBetweenPoints < c2.squareDistanceBetweenPoints))
+  {
     return true;
   }
   return false;
@@ -95,6 +99,7 @@ inline bool equalSourceIndexesPredicate(
   return c1.sourcePointIndex == c2.sourcePointIndex;
 }
 
+}  // namespace core
 }  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__POINTSET__ALGORITHMS__CORRESPONDENCE_HPP_

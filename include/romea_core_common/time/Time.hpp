@@ -26,6 +26,8 @@
 
 namespace romea
 {
+namespace core
+{
 
 using Duration = std::chrono::duration<long long int, std::nano>;
 
@@ -191,6 +193,7 @@ bool operator>(
   return sd1.stamp > sd2.stamp;
 }
 
-}  // romea
+}  // namespace core
+}  // namespace romea
 
 #endif  // ROMEA_CORE_COMMON__TIME__TIME_HPP_
