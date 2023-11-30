@@ -54,6 +54,11 @@ public:
   {
   }
 
+  SimpleFileLogger(const std::string & filename, std::string separator = ",")
+  {
+    init(filename, separator);
+  }
+
   void init(
     const std::string & filename,
     std::string separator = ",")
